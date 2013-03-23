@@ -1,6 +1,6 @@
 <?php
 //xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);
-xhprof_enable();
+// xhprof_enable();
 /**
  * The directory in which your application specific resources are located.
  * The application directory must contain the bootstrap.php file.
@@ -30,6 +30,7 @@ $system = 'system';
  *
  * @link http://kohanaframework.org/guide/about.install#ext
  */
+define('URL_SUFFIX', '.html');
 define('EXT', '.php');
 
 /**

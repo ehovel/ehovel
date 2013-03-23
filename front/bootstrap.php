@@ -119,3 +119,4 @@ Route::set('default', '(<controller>(/<action>(/<id>)))')
 		'controller' => 'welcome',
 		'action'     => 'index',
 	));
+Cookie::$salt = 'EHOVEL_FRONT';

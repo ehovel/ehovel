@@ -1,0 +1,17 @@
+{
+	"sProcessing":   "Processing...",
+	"sLengthMenu":   "Show _MENU_ Results",
+	"sZeroRecords":  "No Match Results",
+	"sInfo":         "Display From _START_ To _END_ Results，Total _TOTAL_ Results",
+	"sInfoEmpty":    "Display From 0 To 0 Results，Total 0 Results",
+	"sInfoFiltered": "(_MAX_ Results By Filter)",
+	"sInfoPostFix":  "",
+	"sSearch":       "Search:",
+	"sUrl":          "",
+	"oPaginate": {
+		"sFirst":    "First Page",
+		"sPrevious": "Previous Page",
+		"sNext":     "Next Page",
+		"sLast":     "Last Page"
+	}
+}

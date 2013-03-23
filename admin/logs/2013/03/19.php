@@ -1,0 +1,47 @@
+<?php defined('SYSPATH') OR die('No direct script access.'); ?>
+
+2013-03-19 02:02:46 --- CRITICAL: Kohana_Exception [ 0 ]: The position property does not exist in the Model_Content class ~ MODPATH\orm\classes\kohana\orm.php [ 684 ] in D:\web\ehovel\source\modules\orm\classes\kohana\orm.php:600
+2013-03-19 02:02:46 --- DEBUG: #0 D:\web\ehovel\source\modules\orm\classes\kohana\orm.php(600): Kohana_ORM->get('position')
+#1 D:\web\ehovel\source\modules\orm\classes\orm.php(207): Kohana_ORM->__get('position')
+#2 D:\web\ehovel\source\modules\cms\views\content\editform.php(161): ORM->__get('position')
+#3 D:\web\ehovel\source\system\classes\kohana\view.php(61): include('D:\web\ehovel\s...')
+#4 D:\web\ehovel\source\system\classes\kohana\view.php(348): Kohana_View::capture('D:\web\ehovel\s...', Array)
+#5 D:\web\ehovel\source\system\classes\view.php(92): Kohana_View->render(NULL)
+#6 D:\web\ehovel\source\system\classes\kohana\view.php(228): View->render()
+#7 D:\web\ehovel\source\admin\classes\controller\admin\base.php(77): Kohana_View->__toString()
+#8 D:\web\ehovel\source\modules\cms\classes\controller\admin\cms\content.php(114): Controller_Admin_Base->after()
+#9 D:\web\ehovel\source\system\classes\kohana\controller.php(87): Controller_Admin_Cms_Content->after()
+#10 [internal function]: Kohana_Controller->execute()
+#11 D:\web\ehovel\source\system\classes\kohana\request\client\internal.php(97): ReflectionMethod->invoke(Object(Controller_Admin_Cms_Content))
+#12 D:\web\ehovel\source\system\classes\kohana\request\client.php(114): Kohana_Request_Client_Internal->execute_request(Object(Request), Object(Response))
+#13 D:\web\ehovel\source\system\classes\kohana\request.php(990): Kohana_Request_Client->execute(Object(Request))
+#14 D:\web\ehovel\source\admin.php(102): Kohana_Request->execute()
+#15 {main} in D:\web\ehovel\source\modules\orm\classes\kohana\orm.php:600
+2013-03-19 02:03:39 --- CRITICAL: ErrorException [ 2 ]: Missing argument 2 for Kohana_Message::set(), called in D:\web\ehovel\source\modules\cms\classes\controller\admin\cms\content.php on line 93 and defined ~ MODPATH\message\classes\kohana\message.php [ 39 ] in D:\web\ehovel\source\modules\message\classes\kohana\message.php:39
+2013-03-19 02:03:39 --- DEBUG: #0 D:\web\ehovel\source\modules\message\classes\kohana\message.php(39): Kohana_Core::error_handler(2, 'Missing argumen...', 'D:\web\ehovel\s...', 39, Array)
+#1 D:\web\ehovel\source\modules\cms\classes\controller\admin\cms\content.php(93): Kohana_Message::set(Object(Kohana_Exception))
+#2 D:\web\ehovel\source\system\classes\kohana\controller.php(84): Controller_Admin_Cms_Content->action_edit()
+#3 [internal function]: Kohana_Controller->execute()
+#4 D:\web\ehovel\source\system\classes\kohana\request\client\internal.php(97): ReflectionMethod->invoke(Object(Controller_Admin_Cms_Content))
+#5 D:\web\ehovel\source\system\classes\kohana\request\client.php(114): Kohana_Request_Client_Internal->execute_request(Object(Request), Object(Response))
+#6 D:\web\ehovel\source\system\classes\kohana\request.php(990): Kohana_Request_Client->execute(Object(Request))
+#7 D:\web\ehovel\source\admin.php(102): Kohana_Request->execute()
+#8 {main} in D:\web\ehovel\source\modules\message\classes\kohana\message.php:39
+2013-03-19 20:58:39 --- CRITICAL: ErrorException [ 8 ]: Undefined index: category_id ~ MODPATH\orm\classes\kohana\orm.php [ 630 ] in D:\web\ehovel\source\modules\orm\classes\kohana\orm.php:630
+2013-03-19 20:58:39 --- DEBUG: #0 D:\web\ehovel\source\modules\orm\classes\kohana\orm.php(630): Kohana_Core::error_handler(8, 'Undefined index...', 'D:\web\ehovel\s...', 630, Array)
+#1 D:\web\ehovel\source\modules\orm\classes\kohana\orm.php(600): Kohana_ORM->get('category')
+#2 D:\web\ehovel\source\modules\orm\classes\orm.php(207): Kohana_ORM->__get('category')
+#3 D:\web\ehovel\source\modules\cms\views\content\editform.php(16): ORM->__get('category')
+#4 D:\web\ehovel\source\system\classes\kohana\view.php(61): include('D:\web\ehovel\s...')
+#5 D:\web\ehovel\source\system\classes\kohana\view.php(348): Kohana_View::capture('D:\web\ehovel\s...', Array)
+#6 D:\web\ehovel\source\system\classes\view.php(92): Kohana_View->render(NULL)
+#7 D:\web\ehovel\source\system\classes\kohana\view.php(228): View->render()
+#8 D:\web\ehovel\source\admin\classes\controller\admin\base.php(77): Kohana_View->__toString()
+#9 D:\web\ehovel\source\modules\cms\classes\controller\admin\cms\content.php(114): Controller_Admin_Base->after()
+#10 D:\web\ehovel\source\system\classes\kohana\controller.php(87): Controller_Admin_Cms_Content->after()
+#11 [internal function]: Kohana_Controller->execute()
+#12 D:\web\ehovel\source\system\classes\kohana\request\client\internal.php(97): ReflectionMethod->invoke(Object(Controller_Admin_Cms_Content))
+#13 D:\web\ehovel\source\system\classes\kohana\request\client.php(114): Kohana_Request_Client_Internal->execute_request(Object(Request), Object(Response))
+#14 D:\web\ehovel\source\system\classes\kohana\request.php(990): Kohana_Request_Client->execute(Object(Request))
+#15 D:\web\ehovel\source\admin.php(102): Kohana_Request->execute()
+#16 {main} in D:\web\ehovel\source\modules\orm\classes\kohana\orm.php:630
