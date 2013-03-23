@@ -1,0 +1,1569 @@
+﻿#new
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file:   .htaccess
+#	new file:   admin.php
+#	modified:   admin/bootstrap.php
+#	new file:   admin/cache/a4/a4b50012e9a6c5200c40dc59b07a59c958d72207.txt
+#	new file:   admin/classes/controller/admin/base.php
+#	new file:   admin/classes/controller/admin/base/site.php
+#	new file:   admin/classes/controller/admin/base/site/column.php
+#	new file:   admin/classes/controller/admin/index.php
+#	new file:   admin/classes/controller/admin/kindediter.php
+#	new file:   admin/classes/controller/admin/login.php
+#	new file:   admin/classes/controller/admin/menu.php
+#	new file:   admin/classes/controller/admin/test.php
+#	new file:   admin/classes/controller/admin/upload.php
+#	new file:   admin/classes/grid.php
+#	new file:   admin/classes/helper/menu.php
+#	new file:   admin/classes/helper/tool.php
+#	new file:   admin/classes/helper/toolbar.php
+#	new file:   admin/classes/model/category.php
+#	new file:   admin/classes/model/menu.php
+#	new file:   admin/config/core_node.php
+#	new file:   admin/config/database.php
+#	new file:   admin/i18n/zh.php
+#	new file:   admin/logs/2013/03/05.php
+#	new file:   admin/logs/2013/03/06.php
+#	new file:   admin/logs/2013/03/07.php
+#	new file:   admin/logs/2013/03/08.php
+#	new file:   admin/logs/2013/03/12.php
+#	new file:   admin/logs/2013/03/13.php
+#	new file:   admin/logs/2013/03/14.php
+#	new file:   admin/logs/2013/03/15.php
+#	new file:   admin/logs/2013/03/18.php
+#	new file:   admin/logs/2013/03/19.php
+#	new file:   admin/logs/2013/03/20.php
+#	new file:   admin/logs/2013/03/22.php
+#	new file:   admin/logs/2013/03/23.php
+#	new file:   admin/views/footer.php
+#	new file:   admin/views/header.php
+#	new file:   admin/views/index.php
+#	new file:   admin/views/layout/default.php
+#	new file:   admin/views/layout/login.php
+#	new file:   admin/views/login.php
+#	new file:   admin/views/menu/edit.php
+#	new file:   admin/views/menu/index.php
+#	new file:   admin/views/pagination/basic.php
+#	new file:   admin/views/upload/dialog.php
+#	modified:   front/bootstrap.php
+#	new file:   front/logs/2013/03/06.php
+#	new file:   front/logs/2013/03/07.php
+#	new file:   front/logs/2013/03/08.php
+#	new file:   front/logs/2013/03/10.php
+#	new file:   front/logs/2013/03/12.php
+#	modified:   index.php
+#	new file:   jqgrid_demo40/36ajaxing.html
+#	new file:   jqgrid_demo40/36ajaxing.js
+#	new file:   jqgrid_demo40/36colreorder.html
+#	new file:   jqgrid_demo40/36colreorder.js
+#	new file:   jqgrid_demo40/36columnchoice.html
+#	new file:   jqgrid_demo40/36columnchoice.js
+#	new file:   jqgrid_demo40/36custinput.html
+#	new file:   jqgrid_demo40/36custinput.js
+#	new file:   jqgrid_demo40/36custvalid.html
+#	new file:   jqgrid_demo40/36custvalid.js
+#	new file:   jqgrid_demo40/36draganddrop.html
+#	new file:   jqgrid_demo40/36draganddrop.js
+#	new file:   jqgrid_demo40/36newapi.html
+#	new file:   jqgrid_demo40/36newapi.js
+#	new file:   jqgrid_demo40/36resize.html
+#	new file:   jqgrid_demo40/36resize.js
+#	new file:   jqgrid_demo40/36rtl.html
+#	new file:   jqgrid_demo40/36rtl.js
+#	new file:   jqgrid_demo40/36scrolling.html
+#	new file:   jqgrid_demo40/36scrolling.js
+#	new file:   jqgrid_demo40/36sortrows.html
+#	new file:   jqgrid_demo40/36sortrows.js
+#	new file:   jqgrid_demo40/37array.html
+#	new file:   jqgrid_demo40/37array.js
+#	new file:   jqgrid_demo40/37crud.html
+#	new file:   jqgrid_demo40/37crud.js
+#	new file:   jqgrid_demo40/37multiple.html
+#	new file:   jqgrid_demo40/37multiple.js
+#	new file:   jqgrid_demo40/37scroll.html
+#	new file:   jqgrid_demo40/37scroll.js
+#	new file:   jqgrid_demo40/37server.html
+#	new file:   jqgrid_demo40/37server.js
+#	new file:   jqgrid_demo40/37single.html
+#	new file:   jqgrid_demo40/37single.js
+#	new file:   jqgrid_demo40/37toolbar.html
+#	new file:   jqgrid_demo40/37toolbar.js
+#	new file:   jqgrid_demo40/38array.html
+#	new file:   jqgrid_demo40/38array.js
+#	new file:   jqgrid_demo40/38array2.html
+#	new file:   jqgrid_demo40/38array2.js
+#	new file:   jqgrid_demo40/38array3.html
+#	new file:   jqgrid_demo40/38array3.js
+#	new file:   jqgrid_demo40/38array4.html
+#	new file:   jqgrid_demo40/38array4.js
+#	new file:   jqgrid_demo40/38array5.html
+#	new file:   jqgrid_demo40/38array5.js
+#	new file:   jqgrid_demo40/38array6.html
+#	new file:   jqgrid_demo40/38array6.js
+#	new file:   jqgrid_demo40/38remote1.html
+#	new file:   jqgrid_demo40/38remote1.js
+#	new file:   jqgrid_demo40/38remote2.html
+#	new file:   jqgrid_demo40/38remote2.js
+#	new file:   jqgrid_demo40/38remote3.html
+#	new file:   jqgrid_demo40/38remote3.js
+#	new file:   jqgrid_demo40/38remote4.html
+#	new file:   jqgrid_demo40/38remote4.js
+#	new file:   jqgrid_demo40/38remote5.html
+#	new file:   jqgrid_demo40/38remote5.js
+#	new file:   jqgrid_demo40/40addnode.html
+#	new file:   jqgrid_demo40/40addnode.js
+#	new file:   jqgrid_demo40/40cmtmpl.html
+#	new file:   jqgrid_demo40/40cmtmpl.js
+#	new file:   jqgrid_demo40/40colspan.html
+#	new file:   jqgrid_demo40/40colspan.js
+#	new file:   jqgrid_demo40/40frmactions.html
+#	new file:   jqgrid_demo40/40frmactions.js
+#	new file:   jqgrid_demo40/40grpsearch.html
+#	new file:   jqgrid_demo40/40grpsearch.js
+#	new file:   jqgrid_demo40/40grpsearch1.html
+#	new file:   jqgrid_demo40/40grpsearch1.js
+#	new file:   jqgrid_demo40/40grpsearch2.html
+#	new file:   jqgrid_demo40/40grpsearch2.js
+#	new file:   jqgrid_demo40/40grpsearch3.html
+#	new file:   jqgrid_demo40/40grpsearch3.js
+#	new file:   jqgrid_demo40/40keyboard.html
+#	new file:   jqgrid_demo40/40keyboard.js
+#	new file:   jqgrid_demo40/40subgrid1.html
+#	new file:   jqgrid_demo40/40subgrid1.js
+#	new file:   jqgrid_demo40/40subgrid2.html
+#	new file:   jqgrid_demo40/40subgrid2.js
+#	new file:   jqgrid_demo40/40subgrid3.html
+#	new file:   jqgrid_demo40/40subgrid3.js
+#	new file:   jqgrid_demo40/JSON.php
+#	new file:   jqgrid_demo40/adding.html
+#	new file:   jqgrid_demo40/adding.js
+#	new file:   jqgrid_demo40/afterinsrow.html
+#	new file:   jqgrid_demo40/afterinsrow.js
+#	new file:   jqgrid_demo40/autowidth.html
+#	new file:   jqgrid_demo40/bigset.html
+#	new file:   jqgrid_demo40/bigset.js
+#	new file:   jqgrid_demo40/bigset.php
+#	new file:   jqgrid_demo40/books.xml
+#	new file:   jqgrid_demo40/calen.js
+#	new file:   jqgrid_demo40/calendar.html
+#	new file:   jqgrid_demo40/cellbug.html
+#	new file:   jqgrid_demo40/celledit.html
+#	new file:   jqgrid_demo40/celledit.js
+#	new file:   jqgrid_demo40/cmultiex.html
+#	new file:   jqgrid_demo40/cmultiex.js
+#	new file:   jqgrid_demo40/csvalid.html
+#	new file:   jqgrid_demo40/csvalid.js
+#	new file:   jqgrid_demo40/custbutt.html
+#	new file:   jqgrid_demo40/custbutt.js
+#	new file:   jqgrid_demo40/custfrm.html
+#	new file:   jqgrid_demo40/custfrm.js
+#	new file:   jqgrid_demo40/database.sql
+#	new file:   jqgrid_demo40/datatype.html
+#	new file:   jqgrid_demo40/datatype.js
+#	new file:   jqgrid_demo40/dbconfig.php
+#	new file:   jqgrid_demo40/defparams.html
+#	new file:   jqgrid_demo40/defparams.js
+#	new file:   jqgrid_demo40/deleting.html
+#	new file:   jqgrid_demo40/deleting.js
+#	new file:   jqgrid_demo40/demo.html
+#	new file:   jqgrid_demo40/editing.html
+#	new file:   jqgrid_demo40/editing.js
+#	new file:   jqgrid_demo40/editing.php
+#	new file:   jqgrid_demo40/example.html
+#	new file:   jqgrid_demo40/example.php
+#	new file:   jqgrid_demo40/exportex.html
+#	new file:   jqgrid_demo40/exportex.js
+#	new file:   jqgrid_demo40/formatter.html
+#	new file:   jqgrid_demo40/formatter.js
+#	new file:   jqgrid_demo40/getex.html
+#	new file:   jqgrid_demo40/getex.js
+#	new file:   jqgrid_demo40/gridwidth.html
+#	new file:   jqgrid_demo40/gridwidth.js
+#	new file:   jqgrid_demo40/hiddengrid.html
+#	new file:   jqgrid_demo40/hiddengrid.js
+#	new file:   jqgrid_demo40/hidedyn.html
+#	new file:   jqgrid_demo40/hidedyn.js
+#	new file:   jqgrid_demo40/hideex.html
+#	new file:   jqgrid_demo40/hideex.js
+#	new file:   jqgrid_demo40/hideshow.html
+#	new file:   jqgrid_demo40/hideshow.js
+#	new file:   jqgrid_demo40/jqgrid.html
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-bg.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-bg1251.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-cat.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-cs.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-de.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-dk.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-el.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-en.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-fa.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-fi.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-fr.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-he.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-is.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-it.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-jp.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-nl.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-no.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-pl.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-pt-br.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-pt.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-ro.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-ru.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-sp.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-sv.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-tr.js
+#	new file:   jqgrid_demo40/js/i18n/grid.locale-ua.js
+#	new file:   jqgrid_demo40/js/jquery-ui-1.8.2.custom.min.js
+#	new file:   jqgrid_demo40/js/jquery.contextmenu.js
+#	new file:   jqgrid_demo40/js/jquery.jqGrid.js
+#	new file:   jqgrid_demo40/js/jquery.jqGrid.min.js
+#	new file:   jqgrid_demo40/js/jquery.js
+#	new file:   jqgrid_demo40/js/jquery.layout.js
+#	new file:   jqgrid_demo40/js/jquery.min.js
+#	new file:   jqgrid_demo40/js/jquery.tablednd.js
+#	new file:   jqgrid_demo40/js/src/JsonXml.js
+#	new file:   jqgrid_demo40/js/src/css/ellipsis-xbl.xml
+#	new file:   jqgrid_demo40/js/src/css/jquery.searchFilter.css
+#	new file:   jqgrid_demo40/js/src/css/ui.jqgrid.css
+#	new file:   jqgrid_demo40/js/src/css/ui.multiselect.css
+#	new file:   jqgrid_demo40/js/src/grid.base.js
+#	new file:   jqgrid_demo40/js/src/grid.celledit.js
+#	new file:   jqgrid_demo40/js/src/grid.common.js
+#	new file:   jqgrid_demo40/js/src/grid.custom.js
+#	new file:   jqgrid_demo40/js/src/grid.filter.js
+#	new file:   jqgrid_demo40/js/src/grid.formedit.js
+#	new file:   jqgrid_demo40/js/src/grid.grouping.js
+#	new file:   jqgrid_demo40/js/src/grid.import.js
+#	new file:   jqgrid_demo40/js/src/grid.inlinedit.js
+#	new file:   jqgrid_demo40/js/src/grid.jqueryui.js
+#	new file:   jqgrid_demo40/js/src/grid.loader.js
+#	new file:   jqgrid_demo40/js/src/grid.postext.js
+#	new file:   jqgrid_demo40/js/src/grid.setcolumns.js
+#	new file:   jqgrid_demo40/js/src/grid.subgrid.js
+#	new file:   jqgrid_demo40/js/src/grid.tbltogrid.js
+#	new file:   jqgrid_demo40/js/src/grid.treegrid.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-ar.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-bg.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-bg1251.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-cat.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-cn.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-cs.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-da.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-de.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-dk.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-el.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-en.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-es.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-fa.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-fi.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-fr.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-gl.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-he.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-hu.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-is.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-it.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-ja.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-jp.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-lt.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-mne.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-nl.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-no.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-pl.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-pt-br.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-pt.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-ro.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-ru.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-sk.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-sp.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-sr.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-sv.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-th.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-tr.js
+#	new file:   jqgrid_demo40/js/src/i18n/grid.locale-ua.js
+#	new file:   jqgrid_demo40/js/src/jqDnR.js
+#	new file:   jqgrid_demo40/js/src/jqModal.js
+#	new file:   jqgrid_demo40/js/src/jquery.fmatter.js
+#	new file:   jqgrid_demo40/js/src/jquery.searchFilter.js
+#	new file:   jqgrid_demo40/js/src/ui.multiselect.js
+#	new file:   jqgrid_demo40/js/tablednd.js
+#	new file:   jqgrid_demo40/js/ui.multiselect.js
+#	new file:   jqgrid_demo40/jsonex.html
+#	new file:   jqgrid_demo40/jsonex.js
+#	new file:   jqgrid_demo40/jsonmap.html
+#	new file:   jqgrid_demo40/jsonmap.js
+#	new file:   jqgrid_demo40/jsonopt.html
+#	new file:   jqgrid_demo40/jsonopt.js
+#	new file:   jqgrid_demo40/jsubgrid.html
+#	new file:   jqgrid_demo40/jsubgrid.js
+#	new file:   jqgrid_demo40/loadcml.html
+#	new file:   jqgrid_demo40/loadcml.js
+#	new file:   jqgrid_demo40/loaderror.html
+#	new file:   jqgrid_demo40/loaderror.js
+#	new file:   jqgrid_demo40/loadoncex.html
+#	new file:   jqgrid_demo40/loadoncex.js
+#	new file:   jqgrid_demo40/localex.html
+#	new file:   jqgrid_demo40/localex.js
+#	new file:   jqgrid_demo40/localset.php
+#	new file:   jqgrid_demo40/longtext.txt
+#	new file:   jqgrid_demo40/manipex.html
+#	new file:   jqgrid_demo40/manipex.js
+#	new file:   jqgrid_demo40/masterex.html
+#	new file:   jqgrid_demo40/masterex.js
+#	new file:   jqgrid_demo40/methods.html
+#	new file:   jqgrid_demo40/methods.js
+#	new file:   jqgrid_demo40/methods32.html
+#	new file:   jqgrid_demo40/methods32.js
+#	new file:   jqgrid_demo40/multibug.html
+#	new file:   jqgrid_demo40/multiex.html
+#	new file:   jqgrid_demo40/multiex.js
+#	new file:   jqgrid_demo40/navgrid.html
+#	new file:   jqgrid_demo40/navgrid.js
+#	new file:   jqgrid_demo40/navgrid2.html
+#	new file:   jqgrid_demo40/navgrid2.js
+#	new file:   jqgrid_demo40/navgrid3.html
+#	new file:   jqgrid_demo40/navgrid3.js
+#	new file:   jqgrid_demo40/navgrid4.html
+#	new file:   jqgrid_demo40/navgrid4.js
+#	new file:   jqgrid_demo40/postdata.html
+#	new file:   jqgrid_demo40/postdata.js
+#	new file:   jqgrid_demo40/readme.txt
+#	new file:   jqgrid_demo40/refactor.html
+#	new file:   jqgrid_demo40/resizecol.html
+#	new file:   jqgrid_demo40/resizecol.js
+#	new file:   jqgrid_demo40/resizeex.html
+#	new file:   jqgrid_demo40/resizeex.js
+#	new file:   jqgrid_demo40/rowedex1.html
+#	new file:   jqgrid_demo40/rowedex1.js
+#	new file:   jqgrid_demo40/rowedex2.html
+#	new file:   jqgrid_demo40/rowedex2.js
+#	new file:   jqgrid_demo40/rowedex3.html
+#	new file:   jqgrid_demo40/rowedex3.js
+#	new file:   jqgrid_demo40/rowedex4.html
+#	new file:   jqgrid_demo40/rowedex4.js
+#	new file:   jqgrid_demo40/rowedex5.html
+#	new file:   jqgrid_demo40/rowedex5.js
+#	new file:   jqgrid_demo40/scrgrid.html
+#	new file:   jqgrid_demo40/scrgrid.js
+#	new file:   jqgrid_demo40/search.php
+#	new file:   jqgrid_demo40/search1.html
+#	new file:   jqgrid_demo40/search1.js
+#	new file:   jqgrid_demo40/search2.html
+#	new file:   jqgrid_demo40/search2.js
+#	new file:   jqgrid_demo40/search3.html
+#	new file:   jqgrid_demo40/search3.js
+#	new file:   jqgrid_demo40/search4.html
+#	new file:   jqgrid_demo40/search4.js
+#	new file:   jqgrid_demo40/search_adv.php
+#	new file:   jqgrid_demo40/searching.html
+#	new file:   jqgrid_demo40/searching.js
+#	new file:   jqgrid_demo40/selectall.html
+#	new file:   jqgrid_demo40/selectall.js
+#	new file:   jqgrid_demo40/server.json
+#	new file:   jqgrid_demo40/server.php
+#	new file:   jqgrid_demo40/server1.php
+#	new file:   jqgrid_demo40/server_ado.php
+#	new file:   jqgrid_demo40/setcolumns.html
+#	new file:   jqgrid_demo40/setcolumns.js
+#	new file:   jqgrid_demo40/setex.html
+#	new file:   jqgrid_demo40/setex.js
+#	new file:   jqgrid_demo40/someurl.php
+#	new file:   jqgrid_demo40/sortcols.html
+#	new file:   jqgrid_demo40/sortcols.js
+#	new file:   jqgrid_demo40/speed.html
+#	new file:   jqgrid_demo40/speed.js
+#	new file:   jqgrid_demo40/subgrid.html
+#	new file:   jqgrid_demo40/subgrid.js
+#	new file:   jqgrid_demo40/subgrid.php
+#	new file:   jqgrid_demo40/subgrid_grid.html
+#	new file:   jqgrid_demo40/subgrid_grid.js
+#	new file:   jqgrid_demo40/summary.html
+#	new file:   jqgrid_demo40/summary.js
+#	new file:   jqgrid_demo40/tablednd.html
+#	new file:   jqgrid_demo40/tablednd.js
+#	new file:   jqgrid_demo40/tbltogrid.html
+#	new file:   jqgrid_demo40/tbltogrid.js
+#	new file:   jqgrid_demo40/test.txt
+#	new file:   jqgrid_demo40/testxml.xml
+#	new file:   jqgrid_demo40/themes/ellipsis-xbl.xml
+#	new file:   jqgrid_demo40/themes/redmond/images/ui-anim_basic_16x16.gif
+#	new file:   jqgrid_demo40/themes/redmond/images/ui-bg_flat_0_aaaaaa_40x100.png
+#	new file:   jqgrid_demo40/themes/redmond/images/ui-bg_flat_55_fbec88_40x100.png
+#	new file:   jqgrid_demo40/themes/redmond/images/ui-bg_glass_75_d0e5f5_1x400.png
+#	new file:   jqgrid_demo40/themes/redmond/images/ui-bg_glass_85_dfeffc_1x400.png
+#	new file:   jqgrid_demo40/themes/redmond/images/ui-bg_glass_95_fef1ec_1x400.png
+#	new file:   jqgrid_demo40/themes/redmond/images/ui-bg_gloss-wave_55_5c9ccc_500x100.png
+#	new file:   jqgrid_demo40/themes/redmond/images/ui-bg_inset-hard_100_f5f8f9_1x100.png
+#	new file:   jqgrid_demo40/themes/redmond/images/ui-bg_inset-hard_100_fcfdfd_1x100.png
+#	new file:   jqgrid_demo40/themes/redmond/images/ui-icons_217bc0_256x240.png
+#	new file:   jqgrid_demo40/themes/redmond/images/ui-icons_2e83ff_256x240.png
+#	new file:   jqgrid_demo40/themes/redmond/images/ui-icons_469bdd_256x240.png
+#	new file:   jqgrid_demo40/themes/redmond/images/ui-icons_6da8d5_256x240.png
+#	new file:   jqgrid_demo40/themes/redmond/images/ui-icons_cd0a0a_256x240.png
+#	new file:   jqgrid_demo40/themes/redmond/images/ui-icons_d8e7f3_256x240.png
+#	new file:   jqgrid_demo40/themes/redmond/images/ui-icons_f9bd01_256x240.png
+#	new file:   jqgrid_demo40/themes/redmond/jquery-ui-1.8.2.custom.css
+#	new file:   jqgrid_demo40/themes/ui.jqgrid.css
+#	new file:   jqgrid_demo40/themes/ui.multiselect.css
+#	new file:   jqgrid_demo40/toolbar.html
+#	new file:   jqgrid_demo40/toolbar.js
+#	new file:   jqgrid_demo40/tree.xml
+#	new file:   jqgrid_demo40/treegrid.html
+#	new file:   jqgrid_demo40/treegrid.js
+#	new file:   jqgrid_demo40/treegrid2.html
+#	new file:   jqgrid_demo40/treegrid2.js
+#	new file:   jqgrid_demo40/treegridadv.html
+#	new file:   jqgrid_demo40/treegridadv.js
+#	new file:   jqgrid_demo40/xmlex.html
+#	new file:   jqgrid_demo40/xmlex.js
+#	new file:   jqgrid_demo40/xmlex2.html
+#	new file:   jqgrid_demo40/xmlimp.html
+#	new file:   jqgrid_demo40/xmlimp.js
+#	new file:   jqgrid_demo40/xmlmap.html
+#	new file:   jqgrid_demo40/xmlmap.js
+#	new file:   modules/Kohana-Log-Viewer-master/README.md
+#	new file:   modules/Kohana-Log-Viewer-master/assets/bootstrap.min.css
+#	new file:   modules/Kohana-Log-Viewer-master/assets/jquery.js
+#	new file:   modules/Kohana-Log-Viewer-master/assets/style.css
+#	new file:   modules/Kohana-Log-Viewer-master/classes/controller/logs.php
+#	new file:   modules/Kohana-Log-Viewer-master/classes/model/logreport.php
+#	new file:   modules/Kohana-Log-Viewer-master/config/logviewer.php
+#	new file:   modules/Kohana-Log-Viewer-master/init.php
+#	new file:   modules/Kohana-Log-Viewer-master/views/logs/daylist.php
+#	new file:   modules/Kohana-Log-Viewer-master/views/logs/layout.php
+#	new file:   modules/Kohana-Log-Viewer-master/views/logs/monthlist.php
+#	new file:   modules/Kohana-Log-Viewer-master/views/logs/report.php
+#	modified:   modules/auth/classes/auth.php
+#	modified:   modules/auth/classes/auth/file.php
+#	new file:   modules/auth/classes/controller/admin/auth/admin.php
+#	new file:   modules/auth/classes/controller/admin/auth/log.php
+#	new file:   modules/auth/classes/controller/admin/auth/role.php
+#	new file:   modules/auth/classes/helper/auth.php
+#	modified:   modules/auth/classes/kohana/auth.php
+#	modified:   modules/auth/classes/kohana/auth/file.php
+#	new file:   modules/auth/classes/model/auth/admin.php
+#	new file:   modules/auth/classes/model/auth/admin/site/relation.php
+#	new file:   modules/auth/classes/model/auth/log.php
+#	new file:   modules/auth/classes/model/auth/node.php
+#	new file:   modules/auth/classes/model/auth/role.php
+#	modified:   modules/auth/config/auth.php
+#	modified:   modules/auth/config/userguide.php
+#	renamed:    system/classes/route.php -> modules/cache/classes/HTTP/Cache.php
+#	new file:   modules/cache/classes/kohana/HTTP/Cache.php
+#	modified:   modules/cache/tests/cache/CacheTest.php
+#	modified:   modules/cache/tests/cache/FileTest.php
+#	modified:   modules/cache/tests/cache/SqliteTest.php
+#	modified:   modules/cache/tests/cache/arithmetic/MemcacheTest.php
+#	new file:   modules/cache/tests/cache/request/client/CacheTest.php
+#	new file:   modules/cms/classes/controller/admin/cms/category.php
+#	new file:   modules/cms/classes/controller/admin/cms/comment.php
+#	new file:   modules/cms/classes/controller/admin/cms/content.php
+#	new file:   modules/cms/classes/controller/admin/cms/setting.php
+#	new file:   modules/cms/classes/controller/admin/cms/tag.php
+#	new file:   modules/cms/classes/model/comment.php
+#	new file:   modules/cms/classes/model/content.php
+#	new file:   modules/cms/classes/model/content/category.php
+#	new file:   modules/cms/classes/model/tag.php
+#	new file:   modules/cms/config/forms/content.xml
+#	new file:   modules/cms/config/forms/index.html
+#	new file:   modules/cms/i18n/ru.php
+#	new file:   modules/cms/i18n/zh.php
+#	new file:   modules/cms/init.php
+#	new file:   modules/cms/module.info
+#	new file:   modules/cms/views/content/editform.php
+#	new file:   modules/cms/views/content/index.php
+#	modified:   modules/codebench/classes/controller/codebench.php
+#	modified:   modules/codebench/init.php
+#	modified:   modules/database/classes/config/database/reader.php
+#	modified:   modules/database/classes/config/database/writer.php
+#	modified:   modules/database/classes/kohana/config/database/reader.php
+#	modified:   modules/database/classes/kohana/config/database/writer.php
+#	modified:   modules/database/classes/kohana/database.php
+#	modified:   modules/database/classes/kohana/database/mysql.php
+#	modified:   modules/database/classes/kohana/database/pdo.php
+#	modified:   modules/database/classes/kohana/database/query.php
+#	modified:   modules/database/classes/kohana/database/query/builder/delete.php
+#	modified:   modules/database/classes/kohana/database/query/builder/insert.php
+#	modified:   modules/database/classes/kohana/database/query/builder/join.php
+#	modified:   modules/database/classes/kohana/database/query/builder/select.php
+#	modified:   modules/database/classes/kohana/database/query/builder/update.php
+#	modified:   modules/database/classes/kohana/database/query/builder/where.php
+#	modified:   modules/database/config/database.php
+#	modified:   modules/database/guide/database/config.md
+#	modified:   modules/database/guide/database/examples.md
+#	modified:   modules/database/guide/database/query/builder.md
+#	modified:   modules/database/guide/database/results.md
+#	new file:   modules/ehovel/README.md
+#	new file:   modules/ehovel/classes/eform.php
+#	new file:   modules/ehovel/classes/ehovel.php
+#	new file:   modules/ehovel/classes/model/eform.php
+#	new file:   modules/ehovel/classes/model/eitem.php
+#	new file:   modules/ehovel/classes/model/elist.php
+#	new file:   modules/ehovel/classes/url.php
+#	new file:   modules/ehovel/config/auth.php
+#	new file:   modules/ehovel/config/userguide.php
+#	new file:   modules/ehovel/guide/auth/config.md
+#	new file:   modules/ehovel/guide/auth/driver/develop.md
+#	new file:   modules/ehovel/guide/auth/driver/file.md
+#	new file:   modules/ehovel/guide/auth/index.md
+#	new file:   modules/ehovel/guide/auth/login.md
+#	new file:   modules/ehovel/guide/auth/menu.md
+#	modified:   modules/image/classes/image/imagick.php
+#	modified:   modules/image/classes/kohana/image/imagick.php
+#	new file:   modules/message/classes/kohana/message.php
+#	renamed:    modules/orm/classes/orm.php -> modules/message/classes/message.php
+#	new file:   modules/message/views/message/basic.php
+#	new file:   modules/minion/README.md
+#	new file:   modules/minion/classes/Kohana/Minion/CLI.php
+#	new file:   modules/minion/classes/Kohana/Minion/Exception.php
+#	new file:   modules/minion/classes/Kohana/Minion/Exception/InvalidTask.php
+#	new file:   modules/minion/classes/Kohana/Minion/Task.php
+#	new file:   modules/minion/classes/Minion/CLI.php
+#	new file:   modules/minion/classes/Minion/Exception.php
+#	new file:   modules/minion/classes/Minion/Exception/InvalidTask.php
+#	new file:   modules/minion/classes/Minion/Task.php
+#	new file:   modules/minion/classes/Task/Help.php
+#	new file:   modules/minion/config/userguide.php
+#	new file:   modules/minion/guide/minion/index.md
+#	new file:   modules/minion/guide/minion/menu.md
+#	new file:   modules/minion/guide/minion/setup.md
+#	new file:   modules/minion/guide/minion/tasks.md
+#	new file:   modules/minion/messages/validation.php
+#	new file:   modules/minion/minion
+#	new file:   modules/minion/miniond
+#	new file:   modules/minion/tests/minion/task.php
+#	new file:   modules/minion/views/minion/error/validation.php
+#	new file:   modules/minion/views/minion/help/error.php
+#	new file:   modules/minion/views/minion/help/list.php
+#	new file:   modules/minion/views/minion/help/task.php
+#	new file:   modules/orm-mptt-KO3.1-master.zip
+#	modified:   modules/orm/auth-schema-mysql.sql
+#	modified:   modules/orm/classes/auth/orm.php
+#	modified:   modules/orm/classes/kohana/auth/orm.php
+#	modified:   modules/orm/classes/kohana/orm.php
+#	modified:   modules/orm/classes/kohana/orm/validation/exception.php
+#	modified:   modules/orm/classes/model/auth/role.php
+#	modified:   modules/orm/classes/model/auth/user.php
+#	modified:   modules/orm/classes/model/auth/user/token.php
+#	modified:   modules/orm/classes/model/role.php
+#	modified:   modules/orm/classes/model/user.php
+#	modified:   modules/orm/classes/model/user/token.php
+#	modified:   modules/orm/classes/orm.php
+#	modified:   modules/orm/classes/orm/validation/exception.php
+#	modified:   modules/orm/config/userguide.php
+#	modified:   modules/orm/guide/orm/examples/simple.md
+#	modified:   modules/orm/guide/orm/examples/validation.md
+#	modified:   modules/orm/guide/orm/relationships.md
+#	modified:   modules/orm/guide/orm/using.md
+#	modified:   modules/orm/guide/orm/validation.md
+#	new file:   modules/ormmptt/README.md
+#	new file:   modules/ormmptt/classes/kohana/orm/mptt.php
+#	new file:   modules/ormmptt/classes/model/test/orm/mptt.php
+#	new file:   modules/ormmptt/classes/orm/mptt.php
+#	new file:   modules/ormmptt/tests/orm_mptt/test_data/dataset.xml
+#	new file:   modules/ormmptt/tests/orm_mptt/test_orm_mptt.php
+#	new file:   modules/pagination/.gitignore
+#	new file:   modules/pagination/classes/kohana/pagination.php
+#	new file:   modules/pagination/classes/pagination.php
+#	new file:   modules/pagination/config/pagination.php
+#	new file:   modules/pagination/views/pagination/basic.php
+#	new file:   modules/pagination/views/pagination/floating.php
+#	new file:   modules/profilertoolbar/HISTORY.md
+#	new file:   modules/profilertoolbar/README.md
+#	new file:   modules/profilertoolbar/classes/controller.php
+#	new file:   modules/profilertoolbar/classes/kohana/cache/apc.php
+#	new file:   modules/profilertoolbar/classes/kohana/cache/file.php
+#	new file:   modules/profilertoolbar/classes/kohana/cache/memcache.php
+#	new file:   modules/profilertoolbar/classes/kohana/cache/sqlite.php
+#	new file:   modules/profilertoolbar/classes/kohana/cache/wincache.php
+#	new file:   modules/profilertoolbar/classes/kohana/database/mysql.php
+#	new file:   modules/profilertoolbar/classes/kohana/database/pdo.php
+#	new file:   modules/profilertoolbar/classes/kohana/profilertoolbar.php
+#	new file:   modules/profilertoolbar/classes/profilertoolbar.php
+#	new file:   modules/profilertoolbar/config/profilertoolbar.php
+#	new file:   modules/profilertoolbar/init.php
+#	new file:   modules/profilertoolbar/vendor/FirePHPCore/FirePHP.class.php
+#	new file:   modules/profilertoolbar/vendor/geshi/geshi.php
+#	new file:   modules/profilertoolbar/vendor/geshi/geshi/php.php
+#	new file:   modules/profilertoolbar/vendor/geshi/geshi/sql.php
+#	new file:   modules/profilertoolbar/views/PTB/css.php
+#	new file:   modules/profilertoolbar/views/PTB/items/cache.php
+#	new file:   modules/profilertoolbar/views/PTB/items/custom.php
+#	new file:   modules/profilertoolbar/views/PTB/items/files.php
+#	new file:   modules/profilertoolbar/views/PTB/items/route.php
+#	new file:   modules/profilertoolbar/views/PTB/items/sql.php
+#	new file:   modules/profilertoolbar/views/PTB/items/vars.php
+#	new file:   modules/profilertoolbar/views/PTB/js.php
+#	new file:   modules/profilertoolbar/views/PTB/tpl.php
+#	new file:   modules/profilertoolbar/views/kohana/error.php
+#	modified:   modules/unittest/classes/kohana/unittest/tests.php
+#	modified:   modules/unittest/config/unittest.php
+#	new file:   modules/unittest/config/userguide.php
+#	new file:   modules/unittest/guide/unittest/index.md
+#	new file:   modules/unittest/guide/unittest/menu.md
+#	new file:   modules/unittest/guide/unittest/mockobjects.md
+#	new file:   modules/unittest/guide/unittest/testing.md
+#	new file:   modules/unittest/guide/unittest/testing_workflows.md
+#	new file:   modules/unittest/guide/unittest/troubleshooting.md
+#	modified:   modules/unittest/tests.php
+#	modified:   modules/userguide/classes/kohana/controller/userguide.php
+#	modified:   modules/userguide/classes/kohana/kodoc.php
+#	modified:   modules/userguide/classes/kohana/kodoc/class.php
+#	modified:   modules/userguide/classes/kohana/kodoc/markdown.php
+#	modified:   modules/userguide/classes/kohana/kodoc/method.php
+#	modified:   modules/userguide/classes/kohana/kodoc/method/param.php
+#	modified:   modules/userguide/classes/kohana/kodoc/property.php
+#	modified:   modules/userguide/config/userguide.php
+#	modified:   modules/userguide/guide/userguide/adding.md
+#	modified:   modules/userguide/guide/userguide/config.md
+#	modified:   modules/userguide/guide/userguide/contributing.md
+#	modified:   modules/userguide/init.php
+#	new file:   modules/userguide/tests/KodocTest.php
+#	modified:   modules/userguide/views/userguide/api/class.php
+#	new file:   statics/bootstrap/.gitignore
+#	new file:   statics/bootstrap/.issue-guidelines.js
+#	new file:   statics/bootstrap/.travis.yml
+#	new file:   statics/bootstrap/LICENSE
+#	new file:   statics/bootstrap/Makefile
+#	new file:   statics/bootstrap/README.md
+#	new file:   statics/bootstrap/docs/assets/css/bootstrap-responsive.css
+#	new file:   statics/bootstrap/docs/assets/css/bootstrap.css
+#	new file:   statics/bootstrap/docs/assets/css/docs.css
+#	new file:   statics/bootstrap/docs/assets/ico/apple-touch-icon-114-precomposed.png
+#	new file:   statics/bootstrap/docs/assets/ico/apple-touch-icon-144-precomposed.png
+#	new file:   statics/bootstrap/docs/assets/ico/apple-touch-icon-57-precomposed.png
+#	new file:   statics/bootstrap/docs/assets/ico/apple-touch-icon-72-precomposed.png
+#	new file:   statics/bootstrap/docs/assets/ico/favicon.ico
+#	new file:   statics/bootstrap/docs/assets/img/bootstrap-mdo-sfmoma-01.jpg
+#	new file:   statics/bootstrap/docs/assets/img/bootstrap-mdo-sfmoma-02.jpg
+#	new file:   statics/bootstrap/docs/assets/img/bootstrap-mdo-sfmoma-03.jpg
+#	new file:   statics/bootstrap/docs/assets/img/bs-docs-bootstrap-features.png
+#	new file:   statics/bootstrap/docs/assets/img/bs-docs-masthead-pattern.png
+#	new file:   statics/bootstrap/docs/assets/img/bs-docs-responsive-illustrations.png
+#	new file:   statics/bootstrap/docs/assets/img/bs-docs-twitter-github.png
+#	new file:   statics/bootstrap/docs/assets/img/example-sites/fleetio.png
+#	new file:   statics/bootstrap/docs/assets/img/example-sites/jshint.png
+#	new file:   statics/bootstrap/docs/assets/img/example-sites/kippt.png
+#	new file:   statics/bootstrap/docs/assets/img/example-sites/soundready.png
+#	new file:   statics/bootstrap/docs/assets/img/examples/bootstrap-example-fluid.jpg
+#	new file:   statics/bootstrap/docs/assets/img/examples/bootstrap-example-hero.jpg
+#	new file:   statics/bootstrap/docs/assets/img/examples/bootstrap-example-starter.jpg
+#	new file:   statics/bootstrap/docs/assets/img/glyphicons-halflings-white.png
+#	new file:   statics/bootstrap/docs/assets/img/glyphicons-halflings.png
+#	new file:   statics/bootstrap/docs/assets/img/grid-baseline-20px.png
+#	new file:   statics/bootstrap/docs/assets/img/less-logo-large.png
+#	new file:   statics/bootstrap/docs/assets/img/responsive-illustrations.png
+#	new file:   statics/bootstrap/docs/assets/js/README.md
+#	new file:   statics/bootstrap/docs/assets/js/application.js
+#	new file:   statics/bootstrap/docs/assets/js/bootstrap-affix.js
+#	new file:   statics/bootstrap/docs/assets/js/bootstrap-alert.js
+#	new file:   statics/bootstrap/docs/assets/js/bootstrap-button.js
+#	new file:   statics/bootstrap/docs/assets/js/bootstrap-carousel.js
+#	new file:   statics/bootstrap/docs/assets/js/bootstrap-collapse.js
+#	new file:   statics/bootstrap/docs/assets/js/bootstrap-dropdown.js
+#	new file:   statics/bootstrap/docs/assets/js/bootstrap-modal.js
+#	new file:   statics/bootstrap/docs/assets/js/bootstrap-popover.js
+#	new file:   statics/bootstrap/docs/assets/js/bootstrap-scrollspy.js
+#	new file:   statics/bootstrap/docs/assets/js/bootstrap-tab.js
+#	new file:   statics/bootstrap/docs/assets/js/bootstrap-tooltip.js
+#	new file:   statics/bootstrap/docs/assets/js/bootstrap-transition.js
+#	new file:   statics/bootstrap/docs/assets/js/bootstrap-typeahead.js
+#	new file:   statics/bootstrap/docs/assets/js/bootstrap.js
+#	new file:   statics/bootstrap/docs/assets/js/bootstrap.min.js
+#	new file:   statics/bootstrap/docs/assets/js/google-code-prettify/prettify.css
+#	new file:   statics/bootstrap/docs/assets/js/google-code-prettify/prettify.js
+#	new file:   statics/bootstrap/docs/assets/js/jquery.js
+#	new file:   statics/bootstrap/docs/base-css.html
+#	new file:   statics/bootstrap/docs/components.html
+#	new file:   statics/bootstrap/docs/customize.html
+#	new file:   statics/bootstrap/docs/examples/fluid.html
+#	new file:   statics/bootstrap/docs/examples/hero.html
+#	new file:   statics/bootstrap/docs/examples/starter-template.html
+#	new file:   statics/bootstrap/docs/extend.html
+#	new file:   statics/bootstrap/docs/getting-started.html
+#	new file:   statics/bootstrap/docs/index.html
+#	new file:   statics/bootstrap/docs/javascript.html
+#	new file:   statics/bootstrap/docs/scaffolding.html
+#	new file:   statics/bootstrap/docs/templates/layout.mustache
+#	new file:   statics/bootstrap/docs/templates/pages/base-css.mustache
+#	new file:   statics/bootstrap/docs/templates/pages/components.mustache
+#	new file:   statics/bootstrap/docs/templates/pages/customize.mustache
+#	new file:   statics/bootstrap/docs/templates/pages/extend.mustache
+#	new file:   statics/bootstrap/docs/templates/pages/getting-started.mustache
+#	new file:   statics/bootstrap/docs/templates/pages/index.mustache
+#	new file:   statics/bootstrap/docs/templates/pages/javascript.mustache
+#	new file:   statics/bootstrap/docs/templates/pages/scaffolding.mustache
+#	new file:   statics/bootstrap/img/glyphicons-halflings-white.png
+#	new file:   statics/bootstrap/img/glyphicons-halflings.png
+#	new file:   statics/bootstrap/js/.jshintrc
+#	new file:   statics/bootstrap/js/bootstrap-affix.js
+#	new file:   statics/bootstrap/js/bootstrap-alert.js
+#	new file:   statics/bootstrap/js/bootstrap-button.js
+#	new file:   statics/bootstrap/js/bootstrap-carousel.js
+#	new file:   statics/bootstrap/js/bootstrap-collapse.js
+#	new file:   statics/bootstrap/js/bootstrap-dropdown.js
+#	new file:   statics/bootstrap/js/bootstrap-modal.js
+#	new file:   statics/bootstrap/js/bootstrap-popover.js
+#	new file:   statics/bootstrap/js/bootstrap-scrollspy.js
+#	new file:   statics/bootstrap/js/bootstrap-tab.js
+#	new file:   statics/bootstrap/js/bootstrap-tooltip.js
+#	new file:   statics/bootstrap/js/bootstrap-transition.js
+#	new file:   statics/bootstrap/js/bootstrap-typeahead.js
+#	new file:   statics/bootstrap/js/tests/index.html
+#	new file:   statics/bootstrap/js/tests/phantom.js
+#	new file:   statics/bootstrap/js/tests/server.js
+#	new file:   statics/bootstrap/js/tests/unit/bootstrap-affix.js
+#	new file:   statics/bootstrap/js/tests/unit/bootstrap-alert.js
+#	new file:   statics/bootstrap/js/tests/unit/bootstrap-button.js
+#	new file:   statics/bootstrap/js/tests/unit/bootstrap-carousel.js
+#	new file:   statics/bootstrap/js/tests/unit/bootstrap-collapse.js
+#	new file:   statics/bootstrap/js/tests/unit/bootstrap-dropdown.js
+#	new file:   statics/bootstrap/js/tests/unit/bootstrap-modal.js
+#	new file:   statics/bootstrap/js/tests/unit/bootstrap-phantom.js
+#	new file:   statics/bootstrap/js/tests/unit/bootstrap-popover.js
+#	new file:   statics/bootstrap/js/tests/unit/bootstrap-scrollspy.js
+#	new file:   statics/bootstrap/js/tests/unit/bootstrap-tab.js
+#	new file:   statics/bootstrap/js/tests/unit/bootstrap-tooltip.js
+#	new file:   statics/bootstrap/js/tests/unit/bootstrap-transition.js
+#	new file:   statics/bootstrap/js/tests/unit/bootstrap-typeahead.js
+#	new file:   statics/bootstrap/js/tests/vendor/jquery.js
+#	new file:   statics/bootstrap/js/tests/vendor/qunit.css
+#	new file:   statics/bootstrap/js/tests/vendor/qunit.js
+#	new file:   statics/bootstrap/less/accordion.less
+#	new file:   statics/bootstrap/less/alerts.less
+#	new file:   statics/bootstrap/less/bootstrap.less
+#	new file:   statics/bootstrap/less/breadcrumbs.less
+#	new file:   statics/bootstrap/less/button-groups.less
+#	new file:   statics/bootstrap/less/buttons.less
+#	new file:   statics/bootstrap/less/carousel.less
+#	new file:   statics/bootstrap/less/close.less
+#	new file:   statics/bootstrap/less/code.less
+#	new file:   statics/bootstrap/less/component-animations.less
+#	new file:   statics/bootstrap/less/dropdowns.less
+#	new file:   statics/bootstrap/less/forms.less
+#	new file:   statics/bootstrap/less/grid.less
+#	new file:   statics/bootstrap/less/hero-unit.less
+#	new file:   statics/bootstrap/less/labels-badges.less
+#	new file:   statics/bootstrap/less/layouts.less
+#	new file:   statics/bootstrap/less/mixins.less
+#	new file:   statics/bootstrap/less/modals.less
+#	new file:   statics/bootstrap/less/navbar.less
+#	new file:   statics/bootstrap/less/navs.less
+#	new file:   statics/bootstrap/less/pager.less
+#	new file:   statics/bootstrap/less/pagination.less
+#	new file:   statics/bootstrap/less/popovers.less
+#	new file:   statics/bootstrap/less/progress-bars.less
+#	new file:   statics/bootstrap/less/reset.less
+#	new file:   statics/bootstrap/less/responsive-1200px-min.less
+#	new file:   statics/bootstrap/less/responsive-767px-max.less
+#	new file:   statics/bootstrap/less/responsive-768px-979px.less
+#	new file:   statics/bootstrap/less/responsive-navbar.less
+#	new file:   statics/bootstrap/less/responsive-utilities.less
+#	new file:   statics/bootstrap/less/responsive.less
+#	new file:   statics/bootstrap/less/scaffolding.less
+#	new file:   statics/bootstrap/less/sprites.less
+#	new file:   statics/bootstrap/less/tables.less
+#	new file:   statics/bootstrap/less/tests/css-tests.css
+#	new file:   statics/bootstrap/less/tests/css-tests.html
+#	new file:   statics/bootstrap/less/tests/forms.html
+#	new file:   statics/bootstrap/less/tests/navbar.html
+#	new file:   statics/bootstrap/less/thumbnails.less
+#	new file:   statics/bootstrap/less/tooltip.less
+#	new file:   statics/bootstrap/less/type.less
+#	new file:   statics/bootstrap/less/utilities.less
+#	new file:   statics/bootstrap/less/variables.less
+#	new file:   statics/bootstrap/less/wells.less
+#	new file:   statics/bootstrap/package.json
+#	new file:   statics/css/BreadCrumb.css
+#	new file:   statics/css/bootstrap-responsive.min.css
+#	new file:   statics/css/bootstrap.css
+#	new file:   statics/css/chosen.css
+#	new file:   statics/css/custom-theme/images/ui-bg_flat_0_aaaaaa_40x100.png
+#	new file:   statics/css/custom-theme/images/ui-bg_flat_75_ffffff_40x100.png
+#	new file:   statics/css/custom-theme/images/ui-bg_glass_55_fbf9ee_1x400.png
+#	new file:   statics/css/custom-theme/images/ui-bg_glass_65_ffffff_1x400.png
+#	new file:   statics/css/custom-theme/images/ui-bg_glass_75_dadada_1x400.png
+#	new file:   statics/css/custom-theme/images/ui-bg_glass_75_e6e6e6_1x400.png
+#	new file:   statics/css/custom-theme/images/ui-bg_glass_95_fef1ec_1x400.png
+#	new file:   statics/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png
+#	new file:   statics/css/custom-theme/images/ui-icons_222222_256x240.png
+#	new file:   statics/css/custom-theme/images/ui-icons_2e83ff_256x240.png
+#	new file:   statics/css/custom-theme/images/ui-icons_454545_256x240.png
+#	new file:   statics/css/custom-theme/images/ui-icons_888888_256x240.png
+#	new file:   statics/css/custom-theme/images/ui-icons_cd0a0a_256x240.png
+#	new file:   statics/css/custom-theme/jquery-ui-1.8.13.custom.css
+#	new file:   statics/css/demo_table_jui.css
+#	new file:   statics/css/icon.css
+#	new file:   statics/css/jquery-ui-1.8.21.custom.css
+#	new file:   statics/css/jquery-ui-1.9.2.custom.css
+#	new file:   statics/css/jquery-ui-1.9.2.custom.min.css
+#	new file:   statics/css/jquery.cleditor.css
+#	new file:   statics/css/jquery.gritter.css
+#	new file:   statics/css/jquery.noty.css
+#	new file:   statics/css/noty_theme_default.css
+#	new file:   statics/css/skins/black.css
+#	new file:   statics/css/skins/blue.css
+#	new file:   statics/css/skins/gray.css
+#	new file:   statics/css/skins/green.css
+#	new file:   statics/css/skins/orange.css
+#	new file:   statics/css/skins/purple.css
+#	new file:   statics/css/skins/red.css
+#	new file:   statics/css/skins/yellow.css
+#	new file:   statics/css/style-responsive.css
+#	new file:   statics/css/style.css
+#	new file:   statics/css/uniform.default.css
+#	new file:   statics/css/uploadify.css
+#	new file:   statics/fonts/IcoMoon.eot
+#	new file:   statics/fonts/IcoMoon.svg
+#	new file:   statics/fonts/IcoMoon.ttf
+#	new file:   statics/fonts/IcoMoon.woff
+#	new file:   statics/fonts/icomoon-license.txt
+#	new file:   statics/fonts/index.html
+#	new file:   statics/img/ChevronOverlay.png
+#	new file:   statics/img/avatar.jpg
+#	new file:   statics/img/bg-light.jpg
+#	new file:   statics/img/favicon.ico
+#	new file:   statics/img/glyphicons-halflings-white.png
+#	new file:   statics/img/glyphicons-halflings.png
+#	new file:   statics/img/icons/arrow-move.png
+#	new file:   statics/img/icons/arrow_state_grey_expanded.png
+#	new file:   statics/img/icons/block.png
+#	new file:   statics/img/icons/bookmarks.png
+#	new file:   statics/img/icons/bullet_go.png
+#	new file:   statics/img/icons/bullet_yellow.png
+#	new file:   statics/img/icons/cross.png
+#	new file:   statics/img/icons/dummy.gif
+#	new file:   statics/img/icons/edit.png
+#	new file:   statics/img/icons/exclamation-red.png
+#	new file:   statics/img/icons/exclamation.png
+#	new file:   statics/img/icons/ico_add.png
+#	new file:   statics/img/icons/ico_delete.png
+#	new file:   statics/img/icons/ico_edit.png
+#	new file:   statics/img/icons/ico_export.png
+#	new file:   statics/img/icons/ico_list.png
+#	new file:   statics/img/icons/information-balloon.png
+#	new file:   statics/img/icons/information-octagon.png
+#	new file:   statics/img/icons/key.png
+#	new file:   statics/img/icons/mail.png
+#	new file:   statics/img/icons/splashyIcons/application_osx.png
+#	new file:   statics/img/icons/splashyIcons/applications_windows.png
+#	new file:   statics/img/icons/splashyIcons/calendar_month.png
+#	new file:   statics/img/icons/splashyIcons/comments.png
+#	new file:   statics/img/icons/splashyIcons/contact_blue_add.png
+#	new file:   statics/img/icons/splashyIcons/contact_blue_edit.png
+#	new file:   statics/img/icons/splashyIcons/contact_blue_remove.png
+#	new file:   statics/img/icons/splashyIcons/diamonds_4.png
+#	new file:   statics/img/icons/splashyIcons/document_a4_add.png
+#	new file:   statics/img/icons/splashyIcons/folder_classic.png
+#	new file:   statics/img/icons/splashyIcons/folder_modernist.png
+#	new file:   statics/img/icons/splashyIcons/gem_options.png
+#	new file:   statics/img/icons/splashyIcons/group_blue.png
+#	new file:   statics/img/icons/splashyIcons/group_blue_add.png
+#	new file:   statics/img/icons/splashyIcons/group_blue_edit.png
+#	new file:   statics/img/icons/splashyIcons/group_blue_remove.png
+#	new file:   statics/img/icons/splashyIcons/group_green.png
+#	new file:   statics/img/icons/splashyIcons/image_modernist.png
+#	new file:   statics/img/icons/splashyIcons/information.png
+#	new file:   statics/img/icons/splashyIcons/mail_light.png
+#	new file:   statics/img/icons/splashyIcons/menu.png
+#	new file:   statics/img/icons/splashyIcons/movie_play.png
+#	new file:   statics/img/icons/splashyIcons/okay.png
+#	new file:   statics/img/icons/splashyIcons/refresh.png
+#	new file:   statics/img/icons/splashyIcons/remove.png
+#	new file:   statics/img/icons/splashyIcons/shield.png
+#	new file:   statics/img/icons/splashyIcons/shield_chevrons.png
+#	new file:   statics/img/icons/splashyIcons/sprocket_dark.png
+#	new file:   statics/img/icons/splashyIcons/sprocket_light.png
+#	new file:   statics/img/icons/splashyIcons/tag.png
+#	new file:   statics/img/icons/splashyIcons/upload.png
+#	new file:   statics/img/icons/splashyIcons/view_list.png
+#	new file:   statics/img/icons/splashyIcons/warning_triangle.png
+#	new file:   statics/img/icons/splashyIcons/zoom.png
+#	new file:   statics/img/icons/tick.png
+#	new file:   statics/img/icons/ui-bg_highlight-soft_75_cccccc_1x100.png
+#	new file:   statics/img/icons/user-silhouette.png
+#	new file:   statics/img/logo.png
+#	new file:   statics/img/logo20.png
+#	new file:   statics/img/panel_bck.jpg
+#	new file:   statics/img/panel_logo@2x.png
+#	new file:   statics/img/search_icon_dark@2x.png
+#	new file:   statics/img/sliders@2x.png
+#	new file:   statics/js/4de8000739125c3f.jpg
+#	new file:   statics/js/bootstrap.js
+#	new file:   statics/js/custom.js
+#	new file:   statics/js/datatables/i18n/en.txt
+#	new file:   statics/js/datatables/i18n/zh.txt
+#	new file:   statics/js/excanvas.js
+#	new file:   statics/js/fullcalendar.min.js
+#	new file:   statics/js/joomla_template.js
+#	new file:   statics/js/jqGrid/.gitignore
+#	new file:   statics/js/jqGrid/Changes.txt
+#	new file:   statics/js/jqGrid/README.md
+#	new file:   statics/js/jqGrid/build.gradle
+#	new file:   statics/js/jqGrid/build.properties
+#	new file:   statics/js/jqGrid/build.xml
+#	new file:   statics/js/jqGrid/css/ellipsis-xbl.xml
+#	new file:   statics/js/jqGrid/css/ui.jqgrid.css
+#	new file:   statics/js/jqGrid/gradlew
+#	new file:   statics/js/jqGrid/gradlew.bat
+#	new file:   statics/js/jqGrid/i18n/grid.locale-ar.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-bg.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-bg1251.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-cat.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-cn.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-cs.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-da.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-de.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-dk.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-el.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-en.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-es.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-fa.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-fi.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-fr.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-gl.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-he.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-hr.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-hr1250.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-hu.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-id.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-is.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-it.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-ja.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-kr.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-lt.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-mne.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-nl.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-no.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-pl.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-pt-br.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-pt.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-ro.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-ru.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-sk.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-sr-latin.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-sr.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-sv.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-th.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-tr.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-tw.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-ua.js
+#	new file:   statics/js/jqGrid/i18n/grid.locale-vi.js
+#	new file:   statics/js/jqGrid/install.txt
+#	new file:   statics/js/jqGrid/jqGrid.jquery.json
+#	new file:   statics/js/jqGrid/jquery.jqGrid.js
+#	new file:   statics/js/jqGrid/jquery.jqGrid.min.js
+#	new file:   statics/js/jqGrid/jquery.js
+#	new file:   statics/js/jquery-1.7.2.min.js
+#	new file:   statics/js/jquery-ui-1.8.21.custom.min.js
+#	new file:   statics/js/jquery.chosen.min.js
+#	new file:   statics/js/jquery.cleditor.min.js
+#	new file:   statics/js/jquery.cookie.js
+#	new file:   statics/js/jquery.dataTables.min.js
+#	new file:   statics/js/jquery.elfinder.min.js
+#	new file:   statics/js/jquery.flot.min.js
+#	new file:   statics/js/jquery.flot.pie.min.js
+#	new file:   statics/js/jquery.flot.resize.min.js
+#	new file:   statics/js/jquery.flot.stack.js
+#	new file:   statics/js/jquery.gritter.min.js
+#	new file:   statics/js/jquery.imagesloaded.js
+#	new file:   statics/js/jquery.iphone.toggle.js
+#	new file:   statics/js/jquery.jBreadCrumb.1.1.min.js
+#	new file:   statics/js/jquery.masonry.min.js
+#	new file:   statics/js/jquery.noty.js
+#	new file:   statics/js/jquery.raty.min.js
+#	new file:   statics/js/jquery.ui.totop.min.js
+#	new file:   statics/js/jquery.uniform.min.js
+#	new file:   statics/js/jquery.uploadify-3.1.min.js
+#	new file:   statics/js/ueditor125/CHANGELOG.TXT
+#	new file:   statics/js/ueditor125/_examples/completeDemo.html
+#	new file:   statics/js/ueditor125/_examples/customPluginDemo.html
+#	new file:   statics/js/ueditor125/_examples/customToolbarDemo.html
+#	new file:   statics/js/ueditor125/_examples/editor_api.js
+#	new file:   statics/js/ueditor125/_examples/highlightDemo.html
+#	new file:   statics/js/ueditor125/_examples/index.html
+#	new file:   statics/js/ueditor125/_examples/ios5demo.html
+#	new file:   statics/js/ueditor125/_examples/jqueryCompleteDemo.html
+#	new file:   statics/js/ueditor125/_examples/jqueryValidation.html
+#	new file:   statics/js/ueditor125/_examples/multiDemo.html
+#	new file:   statics/js/ueditor125/_examples/renderInTable.html
+#	new file:   statics/js/ueditor125/_examples/resetDemo.html
+#	new file:   statics/js/ueditor125/_examples/simpleDemo.html
+#	new file:   statics/js/ueditor125/_examples/submitFormDemo.html
+#	new file:   statics/js/ueditor125/_examples/textareaDemo.html
+#	new file:   statics/js/ueditor125/_examples/uparsedemo.html
+#	new file:   statics/js/ueditor125/_src/commands.js
+#	new file:   statics/js/ueditor125/_src/core/Editor.js
+#	new file:   statics/js/ueditor125/_src/core/EventBase.js
+#	new file:   statics/js/ueditor125/_src/core/Range.js
+#	new file:   statics/js/ueditor125/_src/core/Selection.js
+#	new file:   statics/js/ueditor125/_src/core/ajax.js
+#	new file:   statics/js/ueditor125/_src/core/browser.js
+#	new file:   statics/js/ueditor125/_src/core/domUtils.js
+#	new file:   statics/js/ueditor125/_src/core/dtd.js
+#	new file:   statics/js/ueditor125/_src/core/filterword.js
+#	new file:   statics/js/ueditor125/_src/core/utils.js
+#	new file:   statics/js/ueditor125/_src/customEvent.js
+#	new file:   statics/js/ueditor125/_src/editor.js
+#	new file:   statics/js/ueditor125/_src/plugins/anchor.js
+#	new file:   statics/js/ueditor125/_src/plugins/autofloat.js
+#	new file:   statics/js/ueditor125/_src/plugins/autoheight.js
+#	new file:   statics/js/ueditor125/_src/plugins/autolink.js
+#	new file:   statics/js/ueditor125/_src/plugins/autosubmit.js
+#	new file:   statics/js/ueditor125/_src/plugins/autotypeset.js
+#	new file:   statics/js/ueditor125/_src/plugins/background.js
+#	new file:   statics/js/ueditor125/_src/plugins/basestyle.js
+#	new file:   statics/js/ueditor125/_src/plugins/blockquote.js
+#	new file:   statics/js/ueditor125/_src/plugins/catchremoteimage.js
+#	new file:   statics/js/ueditor125/_src/plugins/cleardoc.js
+#	new file:   statics/js/ueditor125/_src/plugins/contextmenu.js
+#	new file:   statics/js/ueditor125/_src/plugins/convertcase.js
+#	new file:   statics/js/ueditor125/_src/plugins/customstyle.js
+#	new file:   statics/js/ueditor125/_src/plugins/directionality.js
+#	new file:   statics/js/ueditor125/_src/plugins/elementpath.js
+#	new file:   statics/js/ueditor125/_src/plugins/enterkey.js
+#	new file:   statics/js/ueditor125/_src/plugins/fiximgclick.js
+#	new file:   statics/js/ueditor125/_src/plugins/font.js
+#	new file:   statics/js/ueditor125/_src/plugins/formatmatch.js
+#	new file:   statics/js/ueditor125/_src/plugins/highlightcode.js
+#	new file:   statics/js/ueditor125/_src/plugins/horizontal.js
+#	new file:   statics/js/ueditor125/_src/plugins/iframe.js
+#	new file:   statics/js/ueditor125/_src/plugins/image.js
+#	new file:   statics/js/ueditor125/_src/plugins/indent.js
+#	new file:   statics/js/ueditor125/_src/plugins/inserthtml.js
+#	new file:   statics/js/ueditor125/_src/plugins/insertparagraph.js
+#	new file:   statics/js/ueditor125/_src/plugins/justify.js
+#	new file:   statics/js/ueditor125/_src/plugins/keystrokes.js
+#	new file:   statics/js/ueditor125/_src/plugins/lineheight.js
+#	new file:   statics/js/ueditor125/_src/plugins/link.js
+#	new file:   statics/js/ueditor125/_src/plugins/list.js
+#	new file:   statics/js/ueditor125/_src/plugins/music.js
+#	new file:   statics/js/ueditor125/_src/plugins/pagebreak.js
+#	new file:   statics/js/ueditor125/_src/plugins/paragraph.js
+#	new file:   statics/js/ueditor125/_src/plugins/paste.js
+#	new file:   statics/js/ueditor125/_src/plugins/preview.js
+#	new file:   statics/js/ueditor125/_src/plugins/print.js
+#	new file:   statics/js/ueditor125/_src/plugins/removeformat.js
+#	new file:   statics/js/ueditor125/_src/plugins/rowspacing.js
+#	new file:   statics/js/ueditor125/_src/plugins/scrawl.js
+#	new file:   statics/js/ueditor125/_src/plugins/searchreplace.js
+#	new file:   statics/js/ueditor125/_src/plugins/selectall.js
+#	new file:   statics/js/ueditor125/_src/plugins/serialize.js
+#	new file:   statics/js/ueditor125/_src/plugins/snapscreen.js
+#	new file:   statics/js/ueditor125/_src/plugins/source.js
+#	new file:   statics/js/ueditor125/_src/plugins/table.js
+#	new file:   statics/js/ueditor125/_src/plugins/template.js
+#	new file:   statics/js/ueditor125/_src/plugins/time.js
+#	new file:   statics/js/ueditor125/_src/plugins/undo.js
+#	new file:   statics/js/ueditor125/_src/plugins/video.js
+#	new file:   statics/js/ueditor125/_src/plugins/webapp.js
+#	new file:   statics/js/ueditor125/_src/plugins/wordcount.js
+#	new file:   statics/js/ueditor125/_src/plugins/wordimage.js
+#	new file:   statics/js/ueditor125/_src/ui/autotypesetbutton.js
+#	new file:   statics/js/ueditor125/_src/ui/autotypesetpicker.js
+#	new file:   statics/js/ueditor125/_src/ui/button.js
+#	new file:   statics/js/ueditor125/_src/ui/cellalignpicker.js
+#	new file:   statics/js/ueditor125/_src/ui/colorbutton.js
+#	new file:   statics/js/ueditor125/_src/ui/colorpicker.js
+#	new file:   statics/js/ueditor125/_src/ui/combox.js
+#	new file:   statics/js/ueditor125/_src/ui/dialog.js
+#	new file:   statics/js/ueditor125/_src/ui/editor.js
+#	new file:   statics/js/ueditor125/_src/ui/editorui.js
+#	new file:   statics/js/ueditor125/_src/ui/mask.js
+#	new file:   statics/js/ueditor125/_src/ui/menu.js
+#	new file:   statics/js/ueditor125/_src/ui/menubutton.js
+#	new file:   statics/js/ueditor125/_src/ui/multiMenu.js
+#	new file:   statics/js/ueditor125/_src/ui/pastepicker.js
+#	new file:   statics/js/ueditor125/_src/ui/popup.js
+#	new file:   statics/js/ueditor125/_src/ui/separator.js
+#	new file:   statics/js/ueditor125/_src/ui/splitbutton.js
+#	new file:   statics/js/ueditor125/_src/ui/stateful.js
+#	new file:   statics/js/ueditor125/_src/ui/tablebutton.js
+#	new file:   statics/js/ueditor125/_src/ui/tablepicker.js
+#	new file:   statics/js/ueditor125/_src/ui/toolbar.js
+#	new file:   statics/js/ueditor125/_src/ui/ui.js
+#	new file:   statics/js/ueditor125/_src/ui/uibase.js
+#	new file:   statics/js/ueditor125/_src/ui/uiutils.js
+#	new file:   statics/js/ueditor125/dialogs/anchor/anchor.html
+#	new file:   statics/js/ueditor125/dialogs/attachment/attachment.css
+#	new file:   statics/js/ueditor125/dialogs/attachment/attachment.html
+#	new file:   statics/js/ueditor125/dialogs/attachment/callbacks.js
+#	new file:   statics/js/ueditor125/dialogs/attachment/fileTypeImages/icon_chm.gif
+#	new file:   statics/js/ueditor125/dialogs/attachment/fileTypeImages/icon_default.png
+#	new file:   statics/js/ueditor125/dialogs/attachment/fileTypeImages/icon_doc.gif
+#	new file:   statics/js/ueditor125/dialogs/attachment/fileTypeImages/icon_exe.gif
+#	new file:   statics/js/ueditor125/dialogs/attachment/fileTypeImages/icon_mp3.gif
+#	new file:   statics/js/ueditor125/dialogs/attachment/fileTypeImages/icon_mv.gif
+#	new file:   statics/js/ueditor125/dialogs/attachment/fileTypeImages/icon_pdf.gif
+#	new file:   statics/js/ueditor125/dialogs/attachment/fileTypeImages/icon_ppt.gif
+#	new file:   statics/js/ueditor125/dialogs/attachment/fileTypeImages/icon_psd.gif
+#	new file:   statics/js/ueditor125/dialogs/attachment/fileTypeImages/icon_rar.gif
+#	new file:   statics/js/ueditor125/dialogs/attachment/fileTypeImages/icon_txt.gif
+#	new file:   statics/js/ueditor125/dialogs/attachment/fileTypeImages/icon_xls.gif
+#	new file:   statics/js/ueditor125/dialogs/attachment/fileTypeMaps.js
+#	new file:   statics/js/ueditor125/dialogs/background/background.css
+#	new file:   statics/js/ueditor125/dialogs/background/background.html
+#	new file:   statics/js/ueditor125/dialogs/background/background.js
+#	new file:   statics/js/ueditor125/dialogs/emotion/emotion.css
+#	new file:   statics/js/ueditor125/dialogs/emotion/emotion.html
+#	new file:   statics/js/ueditor125/dialogs/emotion/emotion.js
+#	new file:   statics/js/ueditor125/dialogs/emotion/images/0.gif
+#	new file:   statics/js/ueditor125/dialogs/emotion/images/bface.gif
+#	new file:   statics/js/ueditor125/dialogs/emotion/images/cface.gif
+#	new file:   statics/js/ueditor125/dialogs/emotion/images/fface.gif
+#	new file:   statics/js/ueditor125/dialogs/emotion/images/jxface2.gif
+#	new file:   statics/js/ueditor125/dialogs/emotion/images/neweditor-tab-bg.png
+#	new file:   statics/js/ueditor125/dialogs/emotion/images/tface.gif
+#	new file:   statics/js/ueditor125/dialogs/emotion/images/wface.gif
+#	new file:   statics/js/ueditor125/dialogs/emotion/images/yface.gif
+#	new file:   statics/js/ueditor125/dialogs/gmap/gmap.html
+#	new file:   statics/js/ueditor125/dialogs/help/help.css
+#	new file:   statics/js/ueditor125/dialogs/help/help.html
+#	new file:   statics/js/ueditor125/dialogs/help/help.js
+#	new file:   statics/js/ueditor125/dialogs/highlightcode/highlightcode.html
+#	new file:   statics/js/ueditor125/dialogs/image/image.css
+#	new file:   statics/js/ueditor125/dialogs/image/image.html
+#	new file:   statics/js/ueditor125/dialogs/image/image.js
+#	new file:   statics/js/ueditor125/dialogs/image/imageUploader.swf
+#	new file:   statics/js/ueditor125/dialogs/image/images/center_focus.jpg
+#	new file:   statics/js/ueditor125/dialogs/image/images/left_focus.jpg
+#	new file:   statics/js/ueditor125/dialogs/image/images/none_focus.jpg
+#	new file:   statics/js/ueditor125/dialogs/image/images/right_focus.jpg
+#	new file:   statics/js/ueditor125/dialogs/insertframe/insertframe.html
+#	new file:   statics/js/ueditor125/dialogs/internal.js
+#	new file:   statics/js/ueditor125/dialogs/link/link.html
+#	new file:   statics/js/ueditor125/dialogs/map/map.html
+#	new file:   statics/js/ueditor125/dialogs/music/music.css
+#	new file:   statics/js/ueditor125/dialogs/music/music.html
+#	new file:   statics/js/ueditor125/dialogs/music/music.js
+#	new file:   statics/js/ueditor125/dialogs/scrawl/images/addimg.png
+#	new file:   statics/js/ueditor125/dialogs/scrawl/images/brush.png
+#	new file:   statics/js/ueditor125/dialogs/scrawl/images/delimg.png
+#	new file:   statics/js/ueditor125/dialogs/scrawl/images/delimgH.png
+#	new file:   statics/js/ueditor125/dialogs/scrawl/images/empty.png
+#	new file:   statics/js/ueditor125/dialogs/scrawl/images/emptyH.png
+#	new file:   statics/js/ueditor125/dialogs/scrawl/images/eraser.png
+#	new file:   statics/js/ueditor125/dialogs/scrawl/images/redo.png
+#	new file:   statics/js/ueditor125/dialogs/scrawl/images/redoH.png
+#	new file:   statics/js/ueditor125/dialogs/scrawl/images/scale.png
+#	new file:   statics/js/ueditor125/dialogs/scrawl/images/scaleH.png
+#	new file:   statics/js/ueditor125/dialogs/scrawl/images/size.png
+#	new file:   statics/js/ueditor125/dialogs/scrawl/images/undo.png
+#	new file:   statics/js/ueditor125/dialogs/scrawl/images/undoH.png
+#	new file:   statics/js/ueditor125/dialogs/scrawl/scrawl.css
+#	new file:   statics/js/ueditor125/dialogs/scrawl/scrawl.html
+#	new file:   statics/js/ueditor125/dialogs/scrawl/scrawl.js
+#	new file:   statics/js/ueditor125/dialogs/searchreplace/searchreplace.html
+#	new file:   statics/js/ueditor125/dialogs/searchreplace/searchreplace.js
+#	new file:   statics/js/ueditor125/dialogs/snapscreen/snapscreen.html
+#	new file:   statics/js/ueditor125/dialogs/spechars/spechars.html
+#	new file:   statics/js/ueditor125/dialogs/spechars/spechars.js
+#	new file:   statics/js/ueditor125/dialogs/table/dragicon.png
+#	new file:   statics/js/ueditor125/dialogs/table/edittable.css
+#	new file:   statics/js/ueditor125/dialogs/table/edittable.html
+#	new file:   statics/js/ueditor125/dialogs/table/edittable.js
+#	new file:   statics/js/ueditor125/dialogs/table/edittd.html
+#	new file:   statics/js/ueditor125/dialogs/table/edittip.html
+#	new file:   statics/js/ueditor125/dialogs/tangram.js
+#	new file:   statics/js/ueditor125/dialogs/template/config.js
+#	new file:   statics/js/ueditor125/dialogs/template/images/bg.gif
+#	new file:   statics/js/ueditor125/dialogs/template/images/pre0.png
+#	new file:   statics/js/ueditor125/dialogs/template/images/pre1.png
+#	new file:   statics/js/ueditor125/dialogs/template/images/pre2.png
+#	new file:   statics/js/ueditor125/dialogs/template/images/pre3.png
+#	new file:   statics/js/ueditor125/dialogs/template/images/pre4.png
+#	new file:   statics/js/ueditor125/dialogs/template/template.css
+#	new file:   statics/js/ueditor125/dialogs/template/template.html
+#	new file:   statics/js/ueditor125/dialogs/template/template.js
+#	new file:   statics/js/ueditor125/dialogs/video/images/center_focus.jpg
+#	new file:   statics/js/ueditor125/dialogs/video/images/left_focus.jpg
+#	new file:   statics/js/ueditor125/dialogs/video/images/none_focus.jpg
+#	new file:   statics/js/ueditor125/dialogs/video/images/right_focus.jpg
+#	new file:   statics/js/ueditor125/dialogs/video/video.css
+#	new file:   statics/js/ueditor125/dialogs/video/video.html
+#	new file:   statics/js/ueditor125/dialogs/video/video.js
+#	new file:   statics/js/ueditor125/dialogs/webapp/webapp.html
+#	new file:   statics/js/ueditor125/dialogs/wordimage/fClipboard_ueditor.swf
+#	new file:   statics/js/ueditor125/dialogs/wordimage/imageUploader.swf
+#	new file:   statics/js/ueditor125/dialogs/wordimage/wordimage.html
+#	new file:   statics/js/ueditor125/dialogs/wordimage/wordimage.js
+#	new file:   statics/js/ueditor125/editor_all.js
+#	new file:   statics/js/ueditor125/editor_all_min.js
+#	new file:   statics/js/ueditor125/editor_config.js
+#	new file:   statics/js/ueditor125/lang/en/en.js
+#	new file:   statics/js/ueditor125/lang/en/images/addimage.png
+#	new file:   statics/js/ueditor125/lang/en/images/alldeletebtnhoverskin.png
+#	new file:   statics/js/ueditor125/lang/en/images/alldeletebtnupskin.png
+#	new file:   statics/js/ueditor125/lang/en/images/background.png
+#	new file:   statics/js/ueditor125/lang/en/images/button.png
+#	new file:   statics/js/ueditor125/lang/en/images/copy.png
+#	new file:   statics/js/ueditor125/lang/en/images/deletedisable.png
+#	new file:   statics/js/ueditor125/lang/en/images/deleteenable.png
+#	new file:   statics/js/ueditor125/lang/en/images/imglabel.png
+#	new file:   statics/js/ueditor125/lang/en/images/listbackground.png
+#	new file:   statics/js/ueditor125/lang/en/images/localimage.png
+#	new file:   statics/js/ueditor125/lang/en/images/music.png
+#	new file:   statics/js/ueditor125/lang/en/images/rotateleftdisable.png
+#	new file:   statics/js/ueditor125/lang/en/images/rotateleftenable.png
+#	new file:   statics/js/ueditor125/lang/en/images/rotaterightdisable.png
+#	new file:   statics/js/ueditor125/lang/en/images/rotaterightenable.png
+#	new file:   statics/js/ueditor125/lang/en/images/upload.png
+#	new file:   statics/js/ueditor125/lang/zh-cn/images/copy.png
+#	new file:   statics/js/ueditor125/lang/zh-cn/images/imglabel.png
+#	new file:   statics/js/ueditor125/lang/zh-cn/images/localimage.png
+#	new file:   statics/js/ueditor125/lang/zh-cn/images/music.png
+#	new file:   statics/js/ueditor125/lang/zh-cn/images/upload.png
+#	new file:   statics/js/ueditor125/lang/zh-cn/zh-cn.js
+#	new file:   statics/js/ueditor125/php/Uploader.class.php
+#	new file:   statics/js/ueditor125/php/fileUp.php
+#	new file:   statics/js/ueditor125/php/getContent.php
+#	new file:   statics/js/ueditor125/php/getMovie.php
+#	new file:   statics/js/ueditor125/php/getRemoteImage.php
+#	new file:   statics/js/ueditor125/php/imageManager.php
+#	new file:   statics/js/ueditor125/php/imageUp.php
+#	new file:   statics/js/ueditor125/php/scrawlUp.php
+#	new file:   statics/js/ueditor125/php/upload1/20130130/1359533352335.jpg
+#	new file:   statics/js/ueditor125/php/upload1/20130130/13595333712848.jpg
+#	new file:   statics/js/ueditor125/php/upload1/20130130/13595340211064.jpg
+#	new file:   statics/js/ueditor125/php/upload1/20130130/13595340386412.jpg
+#	new file:   statics/js/ueditor125/php/upload1/20130130/13595340422335.jpg
+#	new file:   statics/js/ueditor125/php/upload1/20130130/13595340471553.jpg
+#	new file:   statics/js/ueditor125/php/upload1/20130130/13595340798016.jpg
+#	new file:   statics/js/ueditor125/themes/default/css/ueditor.css
+#	new file:   statics/js/ueditor125/themes/default/dialogbase.css
+#	new file:   statics/js/ueditor125/themes/default/images/anchor.gif
+#	new file:   statics/js/ueditor125/themes/default/images/arrow.png
+#	new file:   statics/js/ueditor125/themes/default/images/button-bg.gif
+#	new file:   statics/js/ueditor125/themes/default/images/cancelbutton.gif
+#	new file:   statics/js/ueditor125/themes/default/images/cursor_h.gif
+#	new file:   statics/js/ueditor125/themes/default/images/cursor_h.png
+#	new file:   statics/js/ueditor125/themes/default/images/cursor_v.gif
+#	new file:   statics/js/ueditor125/themes/default/images/cursor_v.png
+#	new file:   statics/js/ueditor125/themes/default/images/dialog-title-bg.png
+#	new file:   statics/js/ueditor125/themes/default/images/filescan.png
+#	new file:   statics/js/ueditor125/themes/default/images/highlighted.gif
+#	new file:   statics/js/ueditor125/themes/default/images/icons-all.gif
+#	new file:   statics/js/ueditor125/themes/default/images/icons.gif
+#	new file:   statics/js/ueditor125/themes/default/images/icons.png
+#	new file:   statics/js/ueditor125/themes/default/images/lock.gif
+#	new file:   statics/js/ueditor125/themes/default/images/neweditor-tab-bg.png
+#	new file:   statics/js/ueditor125/themes/default/images/pagebreak.gif
+#	new file:   statics/js/ueditor125/themes/default/images/scale.png
+#	new file:   statics/js/ueditor125/themes/default/images/spacer.gif
+#	new file:   statics/js/ueditor125/themes/default/images/sparator_v.png
+#	new file:   statics/js/ueditor125/themes/default/images/toolbar_bg.png
+#	new file:   statics/js/ueditor125/themes/default/images/unhighlighted.gif
+#	new file:   statics/js/ueditor125/themes/default/images/upload.png
+#	new file:   statics/js/ueditor125/themes/default/images/videologo.gif
+#	new file:   statics/js/ueditor125/themes/default/images/word.gif
+#	new file:   statics/js/ueditor125/themes/default/images/wordpaste.png
+#	new file:   statics/js/ueditor125/themes/iframe.css
+#	new file:   statics/js/ueditor125/third-party/SyntaxHighlighter/shCore.js
+#	new file:   statics/js/ueditor125/third-party/SyntaxHighlighter/shCoreDefault.css
+#	new file:   statics/js/ueditor125/third-party/codemirror/codemirror.css
+#	new file:   statics/js/ueditor125/third-party/codemirror/codemirror.js
+#	new file:   statics/js/ueditor125/third-party/snapscreen/UEditorSnapscreen.exe
+#	new file:   statics/js/ueditor125/third-party/swfupload/fileprogress.js
+#	new file:   statics/js/ueditor125/third-party/swfupload/swfupload.cookies.js
+#	new file:   statics/js/ueditor125/third-party/swfupload/swfupload.js
+#	new file:   statics/js/ueditor125/third-party/swfupload/swfupload.proxy.js
+#	new file:   statics/js/ueditor125/third-party/swfupload/swfupload.queue.js
+#	new file:   statics/js/ueditor125/third-party/swfupload/swfupload.speed.js
+#	new file:   statics/js/ueditor125/third-party/swfupload/swfupload.swf
+#	new file:   statics/js/ueditor125/third-party/swfupload/swfupload_fp9.swf
+#	new file:   statics/js/ueditor125/uparse.js
+#	modified:   system/classes/arr.php
+#	modified:   system/classes/config.php
+#	modified:   system/classes/config/file.php
+#	modified:   system/classes/config/group.php
+#	modified:   system/classes/controller.php
+#	modified:   system/classes/controller/template.php
+#	modified:   system/classes/cookie.php
+#	modified:   system/classes/date.php
+#	modified:   system/classes/debug.php
+#	modified:   system/classes/encrypt.php
+#	modified:   system/classes/feed.php
+#	modified:   system/classes/file.php
+#	modified:   system/classes/form.php
+#	modified:   system/classes/fragment.php
+#	modified:   system/classes/html.php
+#	modified:   system/classes/http.php
+#	modified:   system/classes/http/exception.php
+#	new file:   system/classes/http/exception/300.php
+#	new file:   system/classes/http/exception/301.php
+#	new file:   system/classes/http/exception/302.php
+#	new file:   system/classes/http/exception/303.php
+#	new file:   system/classes/http/exception/304.php
+#	new file:   system/classes/http/exception/305.php
+#	new file:   system/classes/http/exception/307.php
+#	modified:   system/classes/http/exception/400.php
+#	modified:   system/classes/http/exception/401.php
+#	modified:   system/classes/http/exception/402.php
+#	modified:   system/classes/http/exception/403.php
+#	modified:   system/classes/http/exception/404.php
+#	modified:   system/classes/http/exception/405.php
+#	modified:   system/classes/http/exception/406.php
+#	modified:   system/classes/http/exception/407.php
+#	modified:   system/classes/http/exception/408.php
+#	modified:   system/classes/http/exception/409.php
+#	modified:   system/classes/http/exception/410.php
+#	modified:   system/classes/http/exception/411.php
+#	modified:   system/classes/http/exception/412.php
+#	modified:   system/classes/http/exception/413.php
+#	modified:   system/classes/http/exception/414.php
+#	modified:   system/classes/http/exception/415.php
+#	modified:   system/classes/http/exception/416.php
+#	modified:   system/classes/http/exception/417.php
+#	modified:   system/classes/http/exception/500.php
+#	modified:   system/classes/http/exception/501.php
+#	modified:   system/classes/http/exception/502.php
+#	modified:   system/classes/http/exception/503.php
+#	modified:   system/classes/http/exception/504.php
+#	modified:   system/classes/http/exception/505.php
+#	new file:   system/classes/http/exception/Expected.php
+#	new file:   system/classes/http/exception/Redirect.php
+#	modified:   system/classes/http/header.php
+#	modified:   system/classes/http/message.php
+#	modified:   system/classes/http/request.php
+#	modified:   system/classes/http/response.php
+#	modified:   system/classes/i18n.php
+#	modified:   system/classes/inflector.php
+#	modified:   system/classes/kohana.php
+#	modified:   system/classes/kohana/arr.php
+#	modified:   system/classes/kohana/config.php
+#	modified:   system/classes/kohana/config/file.php
+#	modified:   system/classes/kohana/config/group.php
+#	modified:   system/classes/kohana/config/reader.php
+#	modified:   system/classes/kohana/config/source.php
+#	modified:   system/classes/kohana/config/writer.php
+#	modified:   system/classes/kohana/controller.php
+#	modified:   system/classes/kohana/controller/template.php
+#	modified:   system/classes/kohana/cookie.php
+#	modified:   system/classes/kohana/core.php
+#	modified:   system/classes/kohana/date.php
+#	modified:   system/classes/kohana/debug.php
+#	modified:   system/classes/kohana/encrypt.php
+#	modified:   system/classes/kohana/exception.php
+#	modified:   system/classes/kohana/feed.php
+#	modified:   system/classes/kohana/file.php
+#	modified:   system/classes/kohana/form.php
+#	modified:   system/classes/kohana/fragment.php
+#	modified:   system/classes/kohana/html.php
+#	modified:   system/classes/kohana/http.php
+#	modified:   system/classes/kohana/http/exception.php
+#	new file:   system/classes/kohana/http/exception/300.php
+#	new file:   system/classes/kohana/http/exception/301.php
+#	new file:   system/classes/kohana/http/exception/302.php
+#	new file:   system/classes/kohana/http/exception/303.php
+#	new file:   system/classes/kohana/http/exception/304.php
+#	new file:   system/classes/kohana/http/exception/305.php
+#	new file:   system/classes/kohana/http/exception/307.php
+#	modified:   system/classes/kohana/http/exception/400.php
+#	modified:   system/classes/kohana/http/exception/401.php
+#	modified:   system/classes/kohana/http/exception/402.php
+#	modified:   system/classes/kohana/http/exception/403.php
+#	modified:   system/classes/kohana/http/exception/404.php
+#	modified:   system/classes/kohana/http/exception/405.php
+#	modified:   system/classes/kohana/http/exception/406.php
+#	modified:   system/classes/kohana/http/exception/407.php
+#	modified:   system/classes/kohana/http/exception/408.php
+#	modified:   system/classes/kohana/http/exception/409.php
+#	modified:   system/classes/kohana/http/exception/410.php
+#	modified:   system/classes/kohana/http/exception/411.php
+#	modified:   system/classes/kohana/http/exception/412.php
+#	modified:   system/classes/kohana/http/exception/413.php
+#	modified:   system/classes/kohana/http/exception/414.php
+#	modified:   system/classes/kohana/http/exception/415.php
+#	modified:   system/classes/kohana/http/exception/416.php
+#	modified:   system/classes/kohana/http/exception/417.php
+#	modified:   system/classes/kohana/http/exception/500.php
+#	modified:   system/classes/kohana/http/exception/501.php
+#	modified:   system/classes/kohana/http/exception/502.php
+#	modified:   system/classes/kohana/http/exception/503.php
+#	modified:   system/classes/kohana/http/exception/504.php
+#	modified:   system/classes/kohana/http/exception/505.php
+#	new file:   system/classes/kohana/http/exception/Expected.php
+#	new file:   system/classes/kohana/http/exception/Redirect.php
+#	modified:   system/classes/kohana/http/header.php
+#	modified:   system/classes/kohana/http/message.php
+#	modified:   system/classes/kohana/http/request.php
+#	modified:   system/classes/kohana/http/response.php
+#	modified:   system/classes/kohana/i18n.php
+#	modified:   system/classes/kohana/inflector.php
+#	modified:   system/classes/kohana/kohana/exception.php
+#	modified:   system/classes/kohana/log.php
+#	modified:   system/classes/kohana/log/file.php
+#	modified:   system/classes/kohana/log/stderr.php
+#	modified:   system/classes/kohana/log/stdout.php
+#	modified:   system/classes/kohana/log/syslog.php
+#	modified:   system/classes/kohana/log/writer.php
+#	modified:   system/classes/kohana/model.php
+#	modified:   system/classes/kohana/num.php
+#	modified:   system/classes/kohana/profiler.php
+#	modified:   system/classes/kohana/request.php
+#	modified:   system/classes/kohana/request/client.php
+#	new file:   system/classes/kohana/request/client/Recursion/Exception.php
+#	modified:   system/classes/kohana/request/client/curl.php
+#	modified:   system/classes/kohana/request/client/external.php
+#	modified:   system/classes/kohana/request/client/http.php
+#	modified:   system/classes/kohana/request/client/internal.php
+#	modified:   system/classes/kohana/request/client/stream.php
+#	modified:   system/classes/kohana/request/exception.php
+#	modified:   system/classes/kohana/response.php
+#	modified:   system/classes/kohana/route.php
+#	modified:   system/classes/kohana/security.php
+#	modified:   system/classes/kohana/session.php
+#	modified:   system/classes/kohana/session/cookie.php
+#	modified:   system/classes/kohana/session/exception.php
+#	modified:   system/classes/kohana/session/native.php
+#	modified:   system/classes/kohana/text.php
+#	modified:   system/classes/kohana/upload.php
+#	modified:   system/classes/kohana/url.php
+#	modified:   system/classes/kohana/utf8.php
+#	modified:   system/classes/kohana/utf8/exception.php
+#	modified:   system/classes/kohana/valid.php
+#	modified:   system/classes/kohana/validation.php
+#	modified:   system/classes/kohana/validation/exception.php
+#	modified:   system/classes/kohana/view.php
+#	modified:   system/classes/kohana/view/exception.php
+#	modified:   system/classes/log.php
+#	modified:   system/classes/log/file.php
+#	modified:   system/classes/log/stderr.php
+#	modified:   system/classes/log/stdout.php
+#	modified:   system/classes/log/syslog.php
+#	modified:   system/classes/log/writer.php
+#	modified:   system/classes/model.php
+#	modified:   system/classes/num.php
+#	modified:   system/classes/profiler.php
+#	modified:   system/classes/request.php
+#	modified:   system/classes/request/client.php
+#	new file:   system/classes/request/client/Recursion/Exception.php
+#	modified:   system/classes/request/client/curl.php
+#	modified:   system/classes/request/client/external.php
+#	modified:   system/classes/request/client/http.php
+#	modified:   system/classes/request/client/internal.php
+#	modified:   system/classes/request/client/stream.php
+#	modified:   system/classes/request/exception.php
+#	modified:   system/classes/response.php
+#	modified:   system/classes/route.php
+#	modified:   system/classes/security.php
+#	modified:   system/classes/session.php
+#	modified:   system/classes/session/cookie.php
+#	modified:   system/classes/session/exception.php
+#	modified:   system/classes/session/native.php
+#	modified:   system/classes/text.php
+#	modified:   system/classes/upload.php
+#	modified:   system/classes/url.php
+#	modified:   system/classes/utf8.php
+#	modified:   system/classes/utf8/exception.php
+#	modified:   system/classes/valid.php
+#	modified:   system/classes/validation.php
+#	modified:   system/classes/validation/exception.php
+#	modified:   system/classes/view/exception.php
+#	modified:   system/config/credit_cards.php
+#	modified:   system/config/curl.php
+#	modified:   system/config/encrypt.php
+#	modified:   system/config/inflector.php
+#	modified:   system/config/mimes.php
+#	modified:   system/config/session.php
+#	modified:   system/config/user_agents.php
+#	modified:   system/config/userguide.php
+#	modified:   system/guide/kohana/autoloading.md
+#	modified:   system/guide/kohana/bootstrap.md
+#	modified:   system/guide/kohana/config.md
+#	modified:   system/guide/kohana/conventions.md
+#	modified:   system/guide/kohana/errors.md
+#	modified:   system/guide/kohana/extension.md
+#	modified:   system/guide/kohana/files.md
+#	modified:   system/guide/kohana/files/classes.md
+#	modified:   system/guide/kohana/files/config.md
+#	modified:   system/guide/kohana/index.md
+#	modified:   system/guide/kohana/install.md
+#	modified:   system/guide/kohana/menu.md
+#	modified:   system/guide/kohana/mvc/controllers.md
+#	modified:   system/guide/kohana/requests.md
+#	modified:   system/guide/kohana/routing.md
+#	modified:   system/guide/kohana/security/encryption.md
+#	modified:   system/guide/kohana/security/validation.md
+#	modified:   system/guide/kohana/tips.md
+#	modified:   system/guide/kohana/tutorials/error-pages.md
+#	modified:   system/guide/kohana/tutorials/git.md
+#	modified:   system/guide/kohana/tutorials/hello-world.md
+#	modified:   system/guide/kohana/tutorials/sharing-kohana.md
+#	modified:   system/guide/kohana/upgrading.md
+#	modified:   system/i18n/en.php
+#	modified:   system/i18n/es.php
+#	modified:   system/i18n/fr.php
+#	modified:   system/messages/validation.php
+#	modified:   system/tests/kohana/ArrTest.php
+#	modified:   system/tests/kohana/Config/GroupTest.php
+#	modified:   system/tests/kohana/ConfigTest.php
+#	modified:   system/tests/kohana/CookieTest.php
+#	modified:   system/tests/kohana/CoreTest.php
+#	modified:   system/tests/kohana/DateTest.php
+#	modified:   system/tests/kohana/DebugTest.php
+#	modified:   system/tests/kohana/FeedTest.php
+#	modified:   system/tests/kohana/FileTest.php
+#	modified:   system/tests/kohana/FormTest.php
+#	modified:   system/tests/kohana/HTMLTest.php
+#	new file:   system/tests/kohana/HTTPTest.php
+#	modified:   system/tests/kohana/Http/HeaderTest.php
+#	modified:   system/tests/kohana/I18nTest.php
+#	modified:   system/tests/kohana/InflectorTest.php
+#	modified:   system/tests/kohana/NumTest.php
+#	modified:   system/tests/kohana/RequestTest.php
+#	modified:   system/tests/kohana/ResponseTest.php
+#	modified:   system/tests/kohana/RouteTest.php
+#	modified:   system/tests/kohana/SecurityTest.php
+#	modified:   system/tests/kohana/SessionTest.php
+#	modified:   system/tests/kohana/TextTest.php
+#	modified:   system/tests/kohana/URLTest.php
+#	modified:   system/tests/kohana/UploadTest.php
+#	modified:   system/tests/kohana/ValidTest.php
+#	modified:   system/tests/kohana/ValidationTest.php
+#	modified:   system/tests/kohana/ViewTest.php
+#	new file:   system/tests/kohana/request/ClientTest.php
+#	modified:   system/tests/kohana/request/client/ExternalTest.php
+#	modified:   system/tests/kohana/request/client/InternalTest.php
+#	modified:   system/tests/test_data/callback_routes.php
+#	modified:   system/utf8/from_unicode.php
+#	modified:   system/utf8/ltrim.php
+#	modified:   system/utf8/ord.php
+#	modified:   system/utf8/rtrim.php
+#	modified:   system/utf8/str_ireplace.php
+#	modified:   system/utf8/str_pad.php
+#	modified:   system/utf8/str_split.php
+#	modified:   system/utf8/strcasecmp.php
+#	modified:   system/utf8/strcspn.php
+#	modified:   system/utf8/stristr.php
+#	modified:   system/utf8/strlen.php
+#	modified:   system/utf8/strpos.php
+#	modified:   system/utf8/strrev.php
+#	modified:   system/utf8/strrpos.php
+#	modified:   system/utf8/strspn.php
+#	modified:   system/utf8/strtolower.php
+#	modified:   system/utf8/strtoupper.php
+#	modified:   system/utf8/substr.php
+#	modified:   system/utf8/substr_replace.php
+#	modified:   system/utf8/to_unicode.php
+#	modified:   system/utf8/transliterate_to_ascii.php
+#	modified:   system/utf8/trim.php
+#	modified:   system/utf8/ucfirst.php
+#	modified:   system/utf8/ucwords.php
+#	modified:   system/views/kohana/error.php
+#	modified:   system/views/profiler/stats.php
+#
+# Changes not staged for commit:
+#   (use "git add/rm <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	deleted:    admin/index.php
+#	deleted:    kodicms-master.zip
+#	deleted:    modules/kohana3-orm_mptt-develop.zip
+#
+
