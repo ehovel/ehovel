@@ -64,7 +64,10 @@ h6 {
 	font-size: 12px;
 	line-height: 12px;
 }
-
+ul, ol {
+	margin-left:0;
+	list-style:none;
+}
 .well {
 	border: 1px solid #ddd;
 	background-color: #f6f6f6;
@@ -1637,4 +1640,11 @@ footer .alignright {
 	height:700px;
 	background:transparenturl('../img/tempimg.png')no-repeat;
 	background-position:00;
+}
+
+
+/*tables*/
+.ui-widget-content{
+	border:none;
+	border-color:#fff;
 }

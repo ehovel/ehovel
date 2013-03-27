@@ -1,17 +1,17 @@
 <?php defined('SYSPATH') or die('No direct script access.'); ?>
 <script type="text/javascript" src="/statics/js/jqGrid/i18n/grid.locale-cn.js"></script>
 <script type="text/javascript" src="/statics/js/jqGrid/jquery.jqGrid.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/statics/css/font-awesome.css" />
 <link rel="stylesheet" type="text/css" href="/statics/js/jqGrid/css/ui.jqgrid.css" />
-<link rel="stylesheet" type="text/css" href="/statics/css/custom-theme/jquery-ui-1.8.13.custom.css" />
 
 <script type="text/javascript">
         function iconState_content(product_id, active) {
             if (active === true || active == 1) {
-                return '<a href="javascript:void(0);" class="btn btn-micro " rel="id='+product_id+'&on_sale=N" title="published"><i class="icon-publish"></i></a>';
+                return '<a href="javascript:void(0);" rel="id='+product_id+'&on_sale=N" title="published"><i style="color:#51A351;" class="icon-ok"></i></a>';
             } else if(active==0) {
-                return '<a href="javascript:void(0);" class="btn btn-micro " rel="id='+product_id+'&on_sale=Y" title="unpublished"><i class="icon-archive"></i></a>';
+                return '<a href="javascript:void(0);" rel="id='+product_id+'&on_sale=Y" title="unpublished"><i style="color:#bd362f;" class="icon-remove"></i></a>';
             } else if(active==-1){
-                return '<a href="javascript:void(0);" class="btn btn-micro " rel="id='+product_id+'&on_sale=Y" title="deleted"><i class="icon-trash"></i></a>';
+                return '<a href="javascript:void(0);" rel="id='+product_id+'&on_sale=Y" title="deleted"><i class="icon-trash"></i></a>';
             }
         }
     $('.on_sale').live('click', function(){
@@ -85,14 +85,16 @@
 <section class="container_12 clearfix">
     <section id="main">
         <?php Message::render(); ?>
-        <article>
-            <h2><?php echo __('Product List');?></h2>
             <div class="tabcontent">
                 <div id="tabs-1">
+				
+					<fieldset id="productSearch">
+						<legend><?php echo __('Product List');?></legend>
+					</fieldset>
                     <div class="tableheader clearfix">
                         <div class="actions">
                             <ul class="tabletoolbar">
-                                <li><a id="add" class="add" href="<?php //echo Route::url('product/add'); ?>"><?php echo __('Add New');?></a></li>
+                                <li><a id="add" class="add btn btn-success" href="<?php //echo Route::url('product/add'); ?>"><i class="icon-plus"></i><?php echo __('Add New');?></a></li>
                                 <!--<li><a href="javascript:void(0)" class="export" id="do_export"><?php echo __('Export');?></a></li>-->
                             </ul>
                         </div>
@@ -103,7 +105,6 @@
                     </form>
                 </div>
             </div>
-        </article>
     </section>
 </section>
 <div id="dialog_attributeset_selector" title="<?php echo __('Select Category And Type'); ?>" style="display:none;">
