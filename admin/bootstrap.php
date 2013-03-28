@@ -114,8 +114,9 @@ Kohana::modules(array(
 	'cms'        	=> MODPATH.'cms',        // Object Relationship Mapping
 	'pagination' 	=> MODPATH.'pagination',        // Object Relationship Mapping
 	// 'unittest'   => MODPATH.'unittest',   // Unit testing
-	'userguide'  => MODPATH.'userguide',  // User guide and API documentation
-	'ehovel'  => MODPATH.'ehovel',  // User guide and API documentation
+	'userguide'  	=> MODPATH.'userguide',  // User guide and API documentation
+	'ehovel'  		=> MODPATH.'ehovel',  // User guide and API documentation
+	'resource'  	=> MODPATH.'resource',  // User guide and API documentation
 	//'profilertoolbar'  => MODPATH.'profilertoolbar',  // User guide and API documentation
 	));
 

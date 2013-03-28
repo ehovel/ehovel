@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="/statics/css/skins/blue.css" title="blue">
     <link rel="stylesheet" type="text/css" href="/statics/css/icon.css" title="blue">
     <link rel="stylesheet" type="text/css" href="/statics/css/BreadCrumb.css" title="blue">
+	<link rel="stylesheet" type="text/css" href="/statics/css/font-awesome.css" />
     <script type="text/javascript" src="/statics/js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript">
         $.ajaxSetup ({

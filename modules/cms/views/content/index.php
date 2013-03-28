@@ -1,7 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.'); ?>
 <script type="text/javascript" src="/statics/js/jqGrid/i18n/grid.locale-cn.js"></script>
 <script type="text/javascript" src="/statics/js/jqGrid/jquery.jqGrid.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/statics/css/font-awesome.css" />
 <link rel="stylesheet" type="text/css" href="/statics/js/jqGrid/css/ui.jqgrid.css" />
 
 <script type="text/javascript">
