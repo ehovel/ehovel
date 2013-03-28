@@ -9,11 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/statics/css/bootstrap.css" title="blue">
 	<link rel="stylesheet" type="text/css" href="/statics/css/custom-theme/jquery-ui-1.8.13.custom.css" />
-    <link rel="stylesheet" type="text/css" href="/statics/css/style.css" title="blue">
     <link rel="stylesheet" type="text/css" href="/statics/css/skins/blue.css" title="blue">
-    <link rel="stylesheet" type="text/css" href="/statics/css/icon.css" title="blue">
     <link rel="stylesheet" type="text/css" href="/statics/css/BreadCrumb.css" title="blue">
+    <link rel="stylesheet" type="text/css" href="/statics/css/icon.css" title="blue">
 	<link rel="stylesheet" type="text/css" href="/statics/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="/statics/css/style.css" title="blue">
     <script type="text/javascript" src="/statics/js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript">
         $.ajaxSetup ({

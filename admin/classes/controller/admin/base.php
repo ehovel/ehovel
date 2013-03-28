@@ -38,6 +38,7 @@ class Controller_Admin_Base extends Controller {
     public $_redirect = '';
     
     public $toolBar = '';
+    public $profileShow = true;
     
     /**
      * 当期控制器所属APP对象
@@ -78,7 +79,9 @@ class Controller_Admin_Base extends Controller {
     			}
     		}
     		echo $this->template;
-			echo View::factory('profiler/stats')->render(null,false);
+    		if ($this->profileShow) {
+				echo View::factory('profiler/stats')->render(null,false);
+    		}
     	}
         parent::after();
     }

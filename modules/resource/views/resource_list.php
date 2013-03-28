@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
 <link rel="stylesheet" type="text/css" href="/statics/css/fancybox/jquery.fancybox-1.3.4.css" />
 <section id="main">
-	<fieldset id="productSearch">
+	<fieldset>
 		<legend><?php echo __('资源列表');?></legend>
 		<!--操作模块-->
 		<div class="operate_mod clearfix">
@@ -57,18 +57,18 @@
                                 <tr>
                                     <td><input class="input_c sel" type="checkbox" name="resource" value="<?php echo $resource['id']; ?>"/></td>
                                     <td>
-                                        <a href="<?php echo url::base(); ?>resource/edit?id=<?php echo $resource['id']; ?>" class="edit_item">
+                                        <a href="<?php echo EHOVEL::admin_base_url(); ?>resource/edit/<?php echo $resource['id']; ?>" class="edit_item">
                                         	<i class="icon-edit"></i>编辑</a>
                                     </td>
                                     <td>
-                                    	<span class="file_name"><?php echo $resource['name']; ?></span>
+                                    	<span class="file_name"><?php echo $resource['title'] ? $resource['title'] : $resource['name']; ?></span>
                                     </td>
                                     <td>
                                         <span class="file_pic">
                                             <img style="max-height:120px; max-width:120px" src="<?php echo Helper_Resource::get_img($resource['attach_id']); ?>" alt="<?php echo $resource['name']; ?>" />
                                         </span> 
                                     </td>
-                                    <td class="td_center"><?php echo $resource['date_upd'] ?></td>
+                                    <td class="td_center"><?php echo $resource['modified'] ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php } ?>
@@ -97,16 +97,17 @@
 </div>
 <script type="text/javascript" src="/statics/js/jquery.fancybox-1.3.4.pack.js"></script>
 <script type="text/javascript">
+    function facyboxclose() {
+    	$.fancybox.close();
+    }
     $(document).ready(function(){
     	$(".edit_item").fancybox({
-    		'width' : '60%',
-    		'height' : '60%',
+        	'padding':'30',
     		'autoScale' : false,
-    		'transitionIn' : 'elastic',
-    		'transitionOut' : 'elastic',
-    		'type' : 'iframe'
+	   		 'transitionIn' : 'elastic',
+			 'transitionOut' : 'elastic',
     		});
-
+		
         $('#check_all').click(function(){
             if($(this).attr('checked')){
                 $('.sel').each(function(){

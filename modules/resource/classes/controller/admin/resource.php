@@ -29,7 +29,8 @@ class Controller_Admin_Resource extends Controller_Admin_Base
 				'view' => 'pagination/floating',
 			)
 		);
-		$page = 1;
+		$page = $this->request->query('page');
+		$page = $page?$page:1;
 		$resourceObject->offset(($page - 1) * 12);
 		$resourceObject->limit(12);
 		$resources = $resourceObject->find_all()->as_array();
@@ -41,14 +42,7 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     }
 
     /**
-     * 添加一个资源
-     *
-     * @access public
-     * @param null
-     * @return void
-     * @throws MyRuntimeException
-     * @exception MyRuntimeException
-     * @author 张白
+     * 添加一个资源.添加到资源表
      */
     public function upload()
     {
@@ -112,14 +106,7 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     }
 
     /**
-     * 执行添加操作
-     *
-     * @access public
-     * @param null
-     * @return void
-     * @throws MyRuntimeException
-     * @exception MyRuntimeException
-     * @author 张白
+     * 执行添加操作，添加到文件系统，添加到kv表
      */
     public function upload_put()
     {
@@ -216,98 +203,28 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     }
 
     /**
-     * 编辑一个资源标签
-     *
-     * @access public
-     * @param null
-     * @return void
-     * @throws MyRuntimeException
-     * @exception MyRuntimeException
-     * @author 张白
+     * 编辑一个资源
      */
-    public function edit()
+    public function action_edit()
     {
-        try {
-            /* 验证是否进入公司 */
-            if ($this->site_id < 1) {
-                remind::set(Kohana::lang('o_global.select_site'), 'manage/site', 'error');
-            }
-            $return_struct = array(
-                'status' => 0,
-                'code' => 501,
-                'msg' => 'Not Implemented',
-                'content' => array()
-            );
-            //初始化数据
-            $return_data = array();
-            $request_data = $this->input->get();
-            $query_struct = array(
-                'where' => array(
-                    'site_id' => $this->site_id
-                ),
-                'orderby' => array(
-                    'date_upd' => 'DESC'
-                )
-            );
-            //权限验证
-            if ($this->site_id == 0) {
-                throw new MyRuntimeException(Kohana::lang('o_global.select_site'), 400);
-            }
-            if (empty($request_data['id'])) {
-                throw new MyRuntimeException(Kohana::lang('o_global.bad_request'), 400);
-            }
-
-            /* 执行业务逻辑*/
-            //获取站点所有标签列表
-            $return_data = bm('resource')->get($request_data['id']);
-            if (!empty($return_data)) {
-                //得到管理员名字
-                $return_data['manager_name'] = Mymanager::instance($return_data['manager_id'])->get('username');
-                //将字节数转化为KB
-                $return_data['byte'] = number_format(($return_data['byte'] / 1024), 2) . 'KB';
-                //获得公司资源目录
-                $cata_list = bm('resource_catalog')->index($query_struct);
-                if (isset($cata_list) && !empty($cata_list) && count($cata_list)) {
-                    foreach ($cata_list as $key => $value)
-                    {
-                        $cata_list[$key]['pid'] = $value['parent_id'];
-                    }
-                    $return_data['catalog_list'] = tree::get_tree($cata_list, '<option value={$id} {$selected}>{$spacer}{$name}</option>', 0, $return_data['catalog_id']);
-                }
-                //获得该资源已被打上的标签
-                $return_data['relation_tags'] = '';
-                $query = array(
-                    'where' => array(
-                        'site_id' => $this->site_id,
-                        'resource_id' => $request_data['id']
-                    ),
-                );
-                $relation_tags = bm('resource_tag_relation')->index($query);
-                if (!empty($relation_tags)) {
-                    foreach ($relation_tags as $value)
-                    {
-                        $tag_data = bm('resource_tag')->get($value['tag_id']);
-                        if (!empty($tag_data)) {
-                            $return_data['relation_tags'] .= $tag_data['name'] . ',';
-                        }
-                    }
-                }
-            }
-            $return_data['tags'] = bm('resource_tag')->index($query_struct);
-            //补充&修改返回结构体
-            $return_struct['status'] = 1;
-            $return_struct['code'] = 200;
-            $return_struct['msg'] = '';
-            $return_struct['content'] = $return_data;
-            if ($this->is_ajax_request()) {
-                $this->template->content = $return_struct;
-            } else {
-                $this->template->content = new View('resource_edit');
-                $this->template->content->return_struct = $return_struct;
-            }
-        } catch (MyRuntimeException $ex) {
-            remind::set($ex->getMessage(), 'resource/edit', 'error');
-        }
+    	$this->profileShow = false;
+    	$resource = EHOVEL::model('resource', intval($this->request->param('id')));
+    	if ($resource->loaded())
+    	{
+	    	if (!empty($_POST))
+	    	{
+	    		$this->_prepareData($resource);
+	    		$resource->save();
+	    		if ($resource->saved()) {
+	    			echo 'ddd';exit;
+	    		} else {
+	    			Message::set(Message::ERROR, $content->validation()->errors());
+	    		}
+	    	}
+    	}
+    	echo View::factory('resource_form')
+    		->set('resource',$resource->as_array())
+    		->render(null,false);
     }
 
     /**
