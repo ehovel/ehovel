@@ -104,7 +104,7 @@ class Helper_Toolbar{
     	$class = $this->fetchIconClass($name);
     	$doTask = $this->_getCommand($task, $list);
     
-    	if ($name == "apply" || $name == "new")
+    	if ($name == "apply" || $name == "new" || $name=="edit")
     	{
     		$btnClass = "btn btn-small btn-success";
     		$iconWhite = "icon-white";

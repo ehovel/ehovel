@@ -547,7 +547,6 @@
 						</div>
 	
 						<div class="tab-pane" id="metadata">
-							<fieldset>
 								<div class="control-group">
 									<label id="eform_metadesc-lbl" for="eform_metadesc"
 										class="hasTip control-label"
@@ -609,7 +608,6 @@
 											size="20" />
 									</div>
 								</div>
-							</fieldset>
 						</div>
 	
 						<div class="tab-pane" id="permissions">

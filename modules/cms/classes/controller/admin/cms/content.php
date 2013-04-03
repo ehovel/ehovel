@@ -83,11 +83,11 @@ class Controller_Admin_Cms_Content extends Controller_Admin_Base {
                     $this->go();
                 } else {
                 	$toolBarhelper = Helper_Toolbar::getInstance();
-                	$toolBarhelper->appendButton('apply','保存','content.apply');
-                	$toolBarhelper->appendButton('save','保存并关闭','content.save');
-                	$toolBarhelper->appendButton('save-new','保存并新建','content.save2new');
-                	$toolBarhelper->appendButton('save-copy','保存为副本','content.save2copy');
-                	$toolBarhelper->appendButton('cancel','取消','content.cancel');
+                	$toolBarhelper->appendButton('edit','保存','content.edit');
+                	$toolBarhelper->appendButton('ok','保存并关闭','content.save');
+                	$toolBarhelper->appendButton('plus','保存并新建','content.save2new');
+                	$toolBarhelper->appendButton('copy','保存为副本','content.save2copy');
+                	$toolBarhelper->appendButton('undo','取消','content.cancel');
                 	$this->toolBar =  $toolBarhelper->render();
                     $this->template = EHOVEL::view('content/editform', array(
                         'content'       => $content

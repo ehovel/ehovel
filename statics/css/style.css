@@ -32,7 +32,10 @@ hr {
   	border-top: 1px solid #e0dfdf;
   	border-bottom: 1px solid #fefefe;
 }
-
+a:focus {
+	outline:none;
+	-moz-outline:none;
+}
 
 
 h1 {

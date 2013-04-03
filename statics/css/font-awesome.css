@@ -1071,7 +1071,7 @@ fieldset div.area .no-border { margin-left:-2px;border-radius: 0px 4px 4px 0px; 
 fieldset div.area span:not(:first-child){margin-left:10px;}
 input, textarea, select, .uneditable-input { margin-bottom: 0px; }
 
-.btn i {font-size:16px;margin-right:5px;}
+.btn i {margin-right:5px;}
 
 label { display: inline; }
 
