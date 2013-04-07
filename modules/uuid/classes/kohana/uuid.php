@@ -224,5 +224,7 @@ class Kohana_UUID {
 			substr($hash, 20, 12)
 		);
 	}
+	
+	
 
 } // End UUID

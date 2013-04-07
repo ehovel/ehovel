@@ -44,64 +44,40 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     /**
      * 添加一个资源.添加到资源表
      */
-    public function upload()
-    {
-        try {
-            $return_struct = array(
-                'status' => 0,
-                'code' => 501,
-                'msg' => 'Not Implemented',
-                'content' => array()
-            );
-            //初始化返回数据
-            $return_data = array();
-            //权限验证
-            if ($this->site_id == 0) {
-                throw new MyRuntimeException(Kohana::lang('o_global.select_site'), 400);
-            }
-            // 执行业务逻辑
-            $query_struct = array(
-                'where' => array(
-                    'site_id' => $this->site_id
-                ),
-                'orderby' => array(
-                    'date_upd' => 'DESC'
-                ),
-            );
-            $cata_list = bm('resource_catalog')->index($query_struct);
-            if (isset($cata_list) && !empty($cata_list) && count($cata_list)) {
-                foreach ($cata_list as $key => $value)
-                {
-                    $cata_list[$key]['pid'] = $value['parent_id'];
-                }
-                $return_data['catalog_list'] = tree::get_tree($cata_list, '<option value={$id} {$selected}>{$spacer}{$name}</option>');
-            } else {
-                throw new MyRuntimeException(Kohana::lang('o_resource.add_resource_default_catelog'), 400);
-            }
-            $file_configure = Kohana::config('resource.resourceAttach');
-            $file_type = '';
-            if (!empty($file_configure['file_type'])) {
-                foreach ($file_configure['file_type'] as $type)
-                {
-                    $file_type .= '*.' . $type . ';';
-                }
-            }
-            $return_data['file_type'] = $file_type;
-            //补充&修改返回结构体
-            $return_struct['status'] = 1;
-            $return_struct['code'] = 200;
-            $return_struct['msg'] = '';
-            $return_struct['content'] = $return_data;
-            //请求类型
-            if ($this->is_ajax_request()) {
-                $this->template->content = $return_struct;
-            } else {
-                $this->template = new View('layout/commonfix_html');
-                $this->template->content = new View('resource_upload');
-                $this->template->content->return_struct = $return_struct;
-            }
-        } catch (MyRuntimeException $ex) {
-            remind::set($ex->getMessage(), request::referrer(), 'error');
+    public function action_upload()
+    {	
+    	Helper_Oss::generateThumb('img_pro_01.jpg',120,120);exit;
+//     	$temp = tmpfile();
+        $oss_sdk_service = new ALIOSS();
+    	$file = $oss_sdk_service->get_object('ehovel', '汗.gif');
+    	//header('content-type:'.$file->header['content-type']);
+    	
+    	$a = file($temp);
+    	print_r($a);exit;
+    	echo $file->body;
+		exit;
+        if ($_POST || $_FILES) {
+        	$bucket = 'publicattach';
+        	$file_name = $_FILES['test']["name"];
+        	$object = $file_name;
+        	$content = '';
+        	$length = 0;
+        	$fp = fopen($_FILES['test']["tmp_name"],'r');
+        	if($fp)
+        	{
+        		$f = fstat($fp);
+        		$length = $f['size'];
+        		while(!feof($fp))
+        		{
+        			$content .= fgets($fp);
+        		}
+        	}
+        	$upload_file_options = array('content' => $content, 'length' => $length);
+        	$upload_file_by_content = $oss_sdk_service->upload_file_by_content($bucket,$object, $upload_file_options);
+        	print_r($upload_file_by_content);exit;
+        }else {
+        	echo '<form action="/admin/resource/upload" enctype="multipart/form-data" method="post"><input type="file" name="test"/><input type="submit" value="上传"></form>';
+        	exit;
         }
     }
 

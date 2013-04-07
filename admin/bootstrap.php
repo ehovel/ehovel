@@ -117,6 +117,7 @@ Kohana::modules(array(
 	'userguide'  	=> MODPATH.'userguide',  // User guide and API documentation
 	'ehovel'  		=> MODPATH.'ehovel',  // User guide and API documentation
 	'resource'  	=> MODPATH.'resource',  // User guide and API documentation
+	'alioss'  	=> MODPATH.'alioss',  // User guide and API documentation
 	//'profilertoolbar'  => MODPATH.'profilertoolbar',  // User guide and API documentation
 	));
 
