@@ -106,8 +106,11 @@ Kohana::modules(array(
 		'database'   => MODPATH.'database',   // Database access
 		'image'      => MODPATH.'image',      // Image manipulation
 		'orm'        => MODPATH.'orm',        // Object Relationship Mapping
+		'resource'  	=> MODPATH.'resource',  // User guide and API documentation
 	// 'unittest'   => MODPATH.'unittest',   // Unit testing
 		'userguide'  => MODPATH.'userguide',  // User guide and API documentation
+		'alioss'  	=> MODPATH.'alioss',  // User guide and API documentation
+		'uuid'  	=> MODPATH.'uuid',  // User guide and API documentation
 	));
 
 /**

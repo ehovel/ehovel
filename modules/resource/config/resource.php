@@ -34,6 +34,8 @@ $config['resourceAttach']['thumbPresets'] = array(
 	's'   => '160x160', // 小图
 	'm'   => '180x180', // 中图
     'l'   => '300x300', // 大图
+	'lx'  => '600x600', // 大图
 );
 $config['resourceAttach']['fileCountLimit'] = 10; // 10 attachement file
 $config['resourceAttach']['fileSizePreLimit'] = 2097152; // 1048576*2 (2M)
+return array('resourceConfig'=>$config);

@@ -1,6 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
  * 资源控制器
+ * 图片可以加入资源，也可以不加入，加入资源的图片可以增加描述信息等内容
  */
 class Controller_Admin_Resource extends Controller_Admin_Base
 {
@@ -44,41 +45,47 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     /**
      * 添加一个资源.添加到资源表
      */
-    public function action_upload()
+    public function action_ueupload()
     {	
-    	Helper_Oss::generateThumb('img_pro_01.jpg',120,120);exit;
-//     	$temp = tmpfile();
-        $oss_sdk_service = new ALIOSS();
-    	$file = $oss_sdk_service->get_object('ehovel', '汗.gif');
-    	//header('content-type:'.$file->header['content-type']);
+    	header("Content-Type: text/html; charset=utf-8");
+    	error_reporting(E_ERROR | E_WARNING);
+    	//上传图片框中的描述表单名称，
+    	$title = htmlspecialchars($_POST['pictitle'], ENT_QUOTES);
+    	//分类目录
+    	$path = htmlspecialchars($_POST['dir'], ENT_QUOTES);
+    	//上传配置
+    	$config = array(
+    			"savePath" => ($path == "1" ? "upload/" : "upload1/"),
+    			"maxSize" => 1000, //单位KB
+    			"allowFiles" => array(".gif", ".png", ".jpg", ".jpeg", ".bmp")
+    	);
+    	$up = Uploader::factory("upfile", $config);
     	
-    	$a = file($temp);
-    	print_r($a);exit;
-    	echo $file->body;
-		exit;
-        if ($_POST || $_FILES) {
-        	$bucket = 'publicattach';
-        	$file_name = $_FILES['test']["name"];
-        	$object = $file_name;
-        	$content = '';
-        	$length = 0;
-        	$fp = fopen($_FILES['test']["tmp_name"],'r');
-        	if($fp)
-        	{
-        		$f = fstat($fp);
-        		$length = $f['size'];
-        		while(!feof($fp))
-        		{
-        			$content .= fgets($fp);
-        		}
-        	}
-        	$upload_file_options = array('content' => $content, 'length' => $length);
-        	$upload_file_by_content = $oss_sdk_service->upload_file_by_content($bucket,$object, $upload_file_options);
-        	print_r($upload_file_by_content);exit;
-        }else {
-        	echo '<form action="/admin/resource/upload" enctype="multipart/form-data" method="post"><input type="file" name="test"/><input type="submit" value="上传"></form>';
-        	exit;
-        }
+    	 /**
+	     * 得到上传文件所对应的各个参数,数组结构
+	     * array(
+	     *     "originalName" => "",   //原始文件名
+	     *     "name" => "",           //新文件名
+	     *     "url" => "",            //返回的地址
+	     *     "size" => "",           //文件大小
+	     *     "type" => "" ,          //文件类型
+	     *     "state" => ""           //上传状态，上传成功时必须返回"SUCCESS"
+	     * )
+	     */
+	    $info = $up->getFileInfo();
+	
+	    /**
+	     * 向浏览器返回数据json数据
+	     * {
+	     *   'url'      :'a.jpg',   //保存后的文件路径
+	     *   'title'    :'hello',   //文件描述，对图片来说在前端会添加到title属性上
+	     *   'original' :'b.jpg',   //原始文件名
+	     *   'state'    :'SUCCESS'  //上传状态，成功时返回SUCCESS,其他任何值将原样返回至图片上传框中
+	     * }
+	     */
+	    echo "{'url':'" . $info["url"] . "','title':'" . $title . "','original':'" . $info["originalName"] . "','state':'" . $info["state"] . "'}";
+
+	    exit;
     }
 
     /**
@@ -192,15 +199,17 @@ class Controller_Admin_Resource extends Controller_Admin_Base
 	    		$this->_prepareData($resource);
 	    		$resource->save();
 	    		if ($resource->saved()) {
-	    			echo 'ddd';exit;
+	    			Message::set(Message::SUCCESS, __('Save successed'));
 	    		} else {
-	    			Message::set(Message::ERROR, $content->validation()->errors());
+	    			Message::set(Message::ERROR, $resource->validation()->errors());
 	    		}
 	    	}
+    		echo View::factory('resource_form')
+    			->set('resource',$resource->as_array())
+    			->render(null,false);
     	}
-    	echo View::factory('resource_form')
-    		->set('resource',$resource->as_array())
-    		->render(null,false);
+    	echo 'Load failed';
+    	exit;
     }
 
     /**

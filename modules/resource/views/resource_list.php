@@ -65,7 +65,9 @@
                                     </td>
                                     <td>
                                         <span class="file_pic">
-                                            <img style="max-height:120px; max-width:120px" src="<?php echo Helper_Resource::get_img($resource['attach_id']); ?>" alt="<?php echo $resource['name']; ?>" />
+                                        	<a class="ori_img" href="<?php echo $resource['is_storage']?Helper_Resource::get_img(array($resource['attach_id'],$resource['postfix']),'lx'):$resource['link']; ?>">
+                                            	<img style="max-height:120px; max-width:120px" src="<?php echo $resource['is_storage']?Helper_Resource::get_img(array($resource['attach_id'],$resource['postfix'])):$resource['link']; ?>" alt="<?php echo $resource['name']; ?>" />
+                                            </a>
                                         </span> 
                                     </td>
                                     <td class="td_center"><?php echo $resource['modified'] ?></td>
@@ -107,7 +109,7 @@
 	   		 'transitionIn' : 'elastic',
 			 'transitionOut' : 'elastic',
     		});
-		
+    	$("a.ori_img").fancybox();
         $('#check_all').click(function(){
             if($(this).attr('checked')){
                 $('.sel').each(function(){

@@ -225,6 +225,27 @@ class Kohana_UUID {
 		);
 	}
 	
+	/**
+	 * 获取12位日期规则id
+	 */
+	public static function getAttachid() {
+		$uuid_sn = substr(date('Y'),2).//2
+		date('md').//4
+		substr(time(),-2).//2
+		substr(microtime(),2,2).//2
+		sprintf('%02d',rand(0,99));//2
+		return $uuid_sn;
+	}
 	
+	/**
+	 * 获取10位日期规则id 未用到
+	 */
+	public function getUid() {
+		$uuid_sn = substr(date('Y'),2).//2
+		date('m').//2
+		substr(time(),-2).//2
+		substr(microtime(),2,4);//4
+		return $uuid_sn;
+	}
 
 } // End UUID
