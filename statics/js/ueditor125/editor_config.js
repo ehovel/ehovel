@@ -36,7 +36,7 @@
         UEDITOR_HOME_URL : URL
 
         //图片上传配置区
-        ,imageUrl:URL+"php/imageUp.php"             //图片上传提交地址
+        //,imageUrl:URL+"php/imageUp.php"             //图片上传提交地址
         ,imageUrl:"/admin/resource/ueupload"             //图片上传提交地址
         ,imagePath:"/attach/"                     	//图片修正地址，引用了fixedImagePath,如有特殊需求，可自行配置
        //,imageFieldName:"upfile"                   //图片数据的key,若此处修改，需要在后台对应文件修改对应参数
@@ -61,8 +61,8 @@
         //,localDomain:[]                            //本地顶级域名，当开启远程图片抓取时，除此之外的所有其它域名下的图片都将被抓取到本地,默认不抓取127.0.0.1和localhost
 
         //图片在线管理配置区
-        ,imageManagerUrl:URL + "php/imageManager.php"       //图片在线管理的处理地址
-        ,imageManagerPath:URL + "php/"                                    //图片修正地址，同imagePath
+        ,imageManagerUrl:"/admin/resource/ueimagemanage"       //图片在线管理的处理地址
+        ,imageManagerPath:"/attach/"                                    //图片修正地址，同imagePath
 
         //屏幕截图配置区
         ,snapscreenHost: '127.0.0.1'                                  //屏幕截图的server端文件所在的网站地址或者ip，请不要加http://

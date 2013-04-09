@@ -44,9 +44,7 @@ class Helper_Oss
      */
     public static function get_tmp_img_from_string($object)
     {
-    	$bucket = 'publicattach';
-    	$oss_sdk_service = new ALIOSS();
-    	$file = $oss_sdk_service->get_object($bucket, $object);
+    	$file = self::getFileFromOss($object);
     	if (substr($file->header['content-type'],0,5)!='image'){
     		throw new OSSException('not a image!');
     		die;
@@ -58,7 +56,16 @@ class Helper_Oss
     		return $tmp;
     	}
     }
-    
+    /**
+     * 直接获取文件流
+     * @param unknown_type $object
+     */
+    public static function getFileFromOss($object) {
+    	$bucket = 'publicattach';
+    	$oss_sdk_service = new ALIOSS();
+    	$file = $oss_sdk_service->get_object($bucket, $object);
+    	return $file;
+    }
     /**
      * xxx一般为纯数字
      * xxx.jpg to xxx-100x100.jpg
@@ -67,14 +74,21 @@ class Helper_Oss
      * @param unknown_type $height
      */
     public static function generateThumb($object,$width,$height) {
-    	$tmp = self::get_tmp_img($object);
-    	$img = Image::factory($tmp);
-    	$newFileName = substr($object,0,strrpos($object,'.')).'-'.$width.'x'.$height.substr($object,strrpos($object,'.'));
-    	$fileName = DOCROOT.'attach'.DIRECTORY_SEPARATOR.$newFileName;
-    	//以中点裁剪
-    	$saved = $img->crop($width, $height)
+    	if ($width && $height) {
+    		$tmp = self::get_tmp_img($object);
+    		$img = Image::factory($tmp);
+    		$newFileName = substr($object,0,strrpos($object,'.')).'-'.$width.'x'.$height.substr($object,strrpos($object,'.'));
+    		$fileName = DOCROOT.'attach'.DIRECTORY_SEPARATOR.$newFileName;
+    		$saved = $img->crop($width, $height)
     		->save($fileName);
-	    unlink($tmp);
+	    	unlink($tmp);
+    	} else {
+    		$fileName = DOCROOT.'attach'.DIRECTORY_SEPARATOR.$object;
+    		$file = self::getFileFromOss($object);
+    		$fp = fopen($fileName, 'w+');
+    		fwrite($fp, $file->body);
+    		return $file->body;
+    	}
 	    return $saved;
     }
     

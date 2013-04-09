@@ -43,6 +43,7 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     }
 
     /**
+     * ueditor 上传资源
      * 添加一个资源.添加到资源表
      */
     public function action_ueupload()
@@ -87,7 +88,33 @@ class Controller_Admin_Resource extends Controller_Admin_Base
 
 	    exit;
     }
-
+    
+    /**
+     * ueditor 上传资源
+     * 添加一个资源.添加到资源表
+     */
+    public function action_ueimagemanage() {
+    	$query = DB::select('attach_id','postfix')->from('resources')->where('site_id','=','62');
+//     	$query = DB::select('attach_id','postfix')->from('resources');
+    	$pagination_query = clone $query;
+    	$count = $pagination_query->select(DB::expr('COUNT(1) AS mycount'))->execute()->get('mycount');
+    	$pagination = Pagination::factory(array(
+    			'total_items' => $count,
+    			'current_page'   => array('source' => 'route', 'key' => 'page'),
+    			'items_per_page' => 200,
+    			'view'           => 'pagination/pretty',
+    			'auto_hide'      => TRUE,
+    	));
+    	$query->order_by('date_add', 'desc')
+    	->limit($pagination->items_per_page)
+    	->offset($pagination->offset);
+    	$results = $query->execute()->as_array('attach_id');
+		$files = array();$str = "";
+		foreach ( $results as $value ) {
+			$str .= $value['attach_id'].'-120x120.'.$value['postfix'] . "ue_separate_ue";
+		}
+		print_r($str);exit;
+    }
     /**
      * 执行添加操作，添加到文件系统，添加到kv表
      */
