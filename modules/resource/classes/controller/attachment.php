@@ -23,13 +23,15 @@ class Controller_Attachment extends Controller_Base
     	if ($pos) {
     		$wh = substr($name, $pos+1);
     		list($width,$height) = explode('x', $wh);
-    		$object = substr($name,0, $pos).'.'.$postfix;
+    		$ossname = substr($name,0, $pos);
+    		$object = $ossname.'.'.$postfix;
     	} elseif (is_numeric($name)) {
+    		$ossname = $name;
     		$object = $name.'.'.$postfix;
     	}
     	//if exist
    		$query = DB::query(Database::SELECT, 'SELECT count(1) as num FROM attachments WHERE attachid = :attachid AND del_flag = 0');
-		$query->param(':attachid', $name);
+		$query->param(':attachid', $ossname);
 		$result = $query->execute()->get('num');
 		if (!$result) {
 			header('content-type:image/png');
@@ -42,6 +44,12 @@ class Controller_Attachment extends Controller_Base
     		header('date:'.$objectInfo->header['date']);
     		header('etag:'.$objectInfo->header['etag']);
     		header('last-modified:'.$objectInfo->header['last-modified']);
+    		if ((isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) >= $objectInfo->header['last-modified']) ||
+    				(isset($_SERVER['HTTP_IF_UNMODIFIED_SINCE']) && strtotime($_SERVER['HTTP_IF_UNMODIFIED_SINCE']) < $objectInfo->header['last-modified'])
+    		) {
+    			header('HTTP/1.0 304 Not Modified');
+    			exit;
+    		}
     		if($objectInfo && ($thumbResult = Helper_Oss::generateThumb($object, $width, $height))) {
     			if (!is_bool($thumbResult)) {//返回数据流直接输出
     				echo $thumbResult;exit;

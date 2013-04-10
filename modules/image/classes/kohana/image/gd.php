@@ -102,6 +102,12 @@ class Kohana_Image_GD extends Image {
 			case IMAGETYPE_PNG:
 				$create = 'imagecreatefrompng';
 			break;
+			case 'STRING':
+				$this->file = imagecreatefromstring($file);
+				$this->width = imagesx($this->file);
+				$this->height = imagesy($this->file);
+				$create = 'imagecreatefromstring';
+			break;
 		}
 
 		if ( ! isset($create) OR ! function_exists($create))
@@ -149,6 +155,8 @@ class Kohana_Image_GD extends Image {
 			// Preserve transparency when saving
 			imagesavealpha($this->_image, TRUE);
 		}
+		$this->width = imagesx($this->_image);
+		$this->height = imagesy($this->_image);
 	}
 
 	/**

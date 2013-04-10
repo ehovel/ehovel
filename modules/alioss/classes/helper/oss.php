@@ -75,13 +75,12 @@ class Helper_Oss
      */
     public static function generateThumb($object,$width,$height) {
     	if ($width && $height) {
-    		$tmp = self::get_tmp_img($object);
-    		$img = Image::factory($tmp);
+    		$tmp = self::getFileFromOss($object);
+    		$img = Image::factory($tmp->body,NULL,true);
     		$newFileName = substr($object,0,strrpos($object,'.')).'-'.$width.'x'.$height.substr($object,strrpos($object,'.'));
     		$fileName = DOCROOT.'attach'.DIRECTORY_SEPARATOR.$newFileName;
     		$saved = $img->crop($width, $height)
     		->save($fileName);
-	    	unlink($tmp);
     	} else {
     		$fileName = DOCROOT.'attach'.DIRECTORY_SEPARATOR.$object;
     		$file = self::getFileFromOss($object);

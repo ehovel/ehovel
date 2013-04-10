@@ -28,6 +28,7 @@
 						<!-- Begin Tabs -->
 						<div class="tab-pane active" id="general">
 							<fieldset class="adminform">
+								<div class="control-group form-inline"></div>
 								<div class="control-group form-inline">
 									<label id="eform_title-lbl" for="eform_title" class="hasTip required" title="标题::标题">标题<span class="star">&#160;*</span></label>
 									<input type="text" name="eform[title]" id="eform_title" value="<?php echo $content->title;?>" class="input-xlarge required" size="30" /> 
@@ -41,38 +42,6 @@
 								<script name="eform[introtext]" type="text/plain" id="introtext">
 									<?php echo $content->introtext;?>
 								</script>
-	
-								<div id="editor-xtd-buttons" class="btn-toolbar pull-left">
-	
-									<div class="btn-toolbar">
-										<a class="modal-button btn" title="文章" class="btn"
-											href="http://www.joomla-local-1.com/administrator/index.php?option=com_content&amp;view=articles&amp;layout=modal&amp;tmpl=component&amp;4792734d839562526027b22222001655=1"
-											onclick="IeCursorFix(); return false;"
-											rel="{handler: 'iframe', size: {x: 800, y: 500}}"><i
-											class="icon-file-add"></i> 文章</a> <a class="modal-button btn"
-											title="图片" class="btn"
-											href="http://www.joomla-local-1.com/administrator/index.php?option=com_media&amp;view=images&amp;tmpl=component&amp;e_name=eform_articletext&amp;asset=35&amp;author=478"
-											onclick="IeCursorFix(); return false;"
-											rel="{handler: 'iframe', size: {x: 800, y: 500}}"><i
-											class="icon-picture"></i> 图片</a> <a class="modal-button btn"
-											title="分页符" class="btn"
-											href="http://www.joomla-local-1.com/administrator/index.php?option=com_content&amp;view=article&amp;layout=pagebreak&amp;tmpl=component&amp;e_name=eform_articletext"
-											onclick="IeCursorFix(); return false;"
-											rel="{handler: 'iframe', size: {x: 500, y: 300}}"><i
-											class="icon-copy"></i> 分页符</a> <a title="阅读更多" class="btn"
-											href="http://www.joomla-local-1.com/administrator/#"
-											onclick="insertReadmore('eform_articletext');return false;"
-											rel=""><i class="icon-arrow-down"></i> 阅读更多</a>
-									</div>
-								</div>
-	
-								<div class="toggle-editor btn-toolbar pull-right">
-									<div class="btn-group">
-										<a class="btn" href="#"
-											onclick="tinyMCE.execCommand('mceToggleEditor', false, 'eform_articletext');return false;"
-											title="切换编辑器"><i class="icon-eye"></i> 切换编辑器</a>
-									</div>
-								</div>
 								<div class="clearfix"></div>
 							</fieldset>
 							<div class="row-fluid">

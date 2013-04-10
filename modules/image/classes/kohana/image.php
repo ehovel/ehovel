@@ -29,6 +29,12 @@ abstract class Kohana_Image {
 
 	// Status of the driver check
 	protected static $_checked = FALSE;
+	
+	//是否是图片数据流
+	protected static $isDataStream = FALSE;
+	//阿里云oss针对的图片头信息
+	protected static $metaInfo;
+	
 
 	/**
 	 * Loads an image and prepares it for manipulation.
@@ -40,14 +46,18 @@ abstract class Kohana_Image {
 	 * @return  Image
 	 * @uses    Image::$default_driver
 	 */
-	public static function factory($file, $driver = NULL)
+	public static function factory($file, $driver = NULL,$isDataStream = FALSE,$metaInfo = NULL)
 	{
 		if ($driver === NULL)
 		{
 			// Use the default driver
 			$driver = Image::$default_driver;
 		}
-
+		//是否是数据流
+		self::$isDataStream = $isDataStream;
+		//直接传过来的meta信息
+		self::$metaInfo = $metaInfo;
+		
 		// Set the class name
 		$class = 'Image_'.$driver;
 
@@ -82,7 +92,7 @@ abstract class Kohana_Image {
 	/**
 	 * Loads information about the image. Will throw an exception if the image
 	 * does not exist or is not an image.
-	 *
+	 * DPX 增加从数据流读取文件
 	 * @param   string  $file  image file path
 	 * @return  void
 	 * @throws  Kohana_Exception
@@ -91,11 +101,23 @@ abstract class Kohana_Image {
 	{
 		try
 		{
-			// Get the real path to the file
-			$file = realpath($file);
-
-			// Get the image information
-			$info = getimagesize($file);
+			if (self::$isDataStream) {
+				$this->type = 'STRING';
+				if (self::$metaInfo) {
+					$this->mime = $this::$metaInfo->header['content-type'];
+				} else {
+					$this->mime = 'image/png';
+				}
+				$type = 'STRING';
+				$info = Array (0,0,$type);
+			} else {
+				// Get the real path to the file
+				$file = realpath($file);
+	
+				// Get the image information
+				$info = getimagesize($file);
+			}
+			
 		}
 		catch (Exception $e)
 		{
@@ -113,7 +135,9 @@ abstract class Kohana_Image {
 		$this->width  = $info[0];
 		$this->height = $info[1];
 		$this->type   = $info[2];
-		$this->mime   = image_type_to_mime_type($this->type);
+		if (!$this->mime) {
+			$this->mime   = image_type_to_mime_type($this->type);
+		}
 	}
 
 	/**
