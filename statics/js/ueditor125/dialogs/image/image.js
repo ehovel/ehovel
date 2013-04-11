@@ -590,9 +590,11 @@ var imageUploader = {},
                     list.style.display = "";
                     //已经初始化过时不再重复提交请求
                     if (!list.children.length) {
+                    	var pars = 'page=' + '1' + '&keyword=' + 'aaa'+'&cat='+'1';
                         ajax.request(editor.options.imageManagerUrl, {
                             timeout:100000,
                             action:"get",
+                            parameters:pars,
                             onsuccess:function (xhr) {
                                 //去除空格
                                 var tmp = utils.trim(xhr.responseText),

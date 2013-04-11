@@ -47,7 +47,7 @@ class Controller_Admin_Resource extends Controller_Admin_Base
      * 添加一个资源.添加到资源表
      */
     public function action_ueupload()
-    {	
+    {
     	header("Content-Type: text/html; charset=utf-8");
     	error_reporting(E_ERROR | E_WARNING);
     	//上传图片框中的描述表单名称，
@@ -115,101 +115,51 @@ class Controller_Admin_Resource extends Controller_Admin_Base
 		}
 		print_r($str);exit;
     }
+    
+    public function action_uploaddialog() {
+    	if ($_POST) {
+    		$verifyToken = md5('unique_salt' . $_POST['timestamp']);
+    		if (!empty($_FILES) && $_POST['token'] == $verifyToken) {
+    			//客户端对应的文件对象的名称
+    			$fileName = (isset($_POST['customFileName']) && $_POST['customFileName']) ? $_POST['customFileName'] : $_POST['Filename'];
+    			$catalogId = (isset($_POST['catalogId']) && $_POST['catalogId']) ? $_POST['catalogId'] : 0;
+    			//待保存数据
+    			$up = Uploader::factory("upload");
+    			$info = $up->getFileInfo();
+    			if ($info['url']) {
+    				$ossNameExt = explode('.', $info['url']);
+    				$ossName = $ossNameExt[0];
+    				$ossExt = $ossNameExt[1];
+    				$resourceData = array(
+    						'name' => $fileName,
+    						'postfix' => $ossExt,
+    						'catalog_id'=>$catalogId,
+    						'attach_id'=>$ossName,
+    						);
+    				$this->_hander_updata_resource($resourceData);
+    				echo '1';exit;
+    			} else {
+    				echo '上传错误';
+    			}
+    			
+    		}
+    	} else {
+    		echo View::factory('resource_uploaddialog')
+    		->render(null,false);exit;
+    	}
+    }
     /**
-     * 执行添加操作，添加到文件系统，添加到kv表
+     * 执行添加操作，添加到文件系统，添加到resource表
      */
-    public function upload_put()
+    private function _hander_updata_resource($resourceData)
     {
-        $return_struct = array(
-            'status' => 0,
-            'code' => 501,
-            'msg' => 'Not Implemented',
-            'content' => array()
-        );
-        try {
-            //* 初始化返回数据 */
-            $return_data = array();
-            /* 获取站点域名 */
-            $site_domain = Mysite::instance($this->site_id)->get('domain');
-            $ip = $this->input->ip_address();
-            $catalog_id = intval($this->input->get('catelog_id'));
-            $attach_meta = array(
-                'siteId' => $this->site_id,
-                'siteDomain' => $site_domain
-            );
-            // 附件应用类型
-            $attach_app_type = 'resourceAttach';
-            $attach_field = 'Filedata';
-            // 如果有上传请求
-            if (!page::issetFile($attach_field)) {
-                throw new MyRuntimeException(Kohana::lang('o_global.bad_request'), 400);
-            }
-
-            //读取当前应用配置
-            $attach_setup = Kohana::config('resource.' . $attach_app_type);
-            $mime_type2postfix = Kohana::config('mimemap.type2postfix');
-            $mime_postfix2type = Kohana::config('mimemap.postfix2type');
-
-            // 上传文件meta信息
-            $file_meta_data = array();
-            // 验证并采集上传信息,如果上传标志成功
-            if ((int)$_FILES[$attach_field]['error'] === UPLOAD_ERR_OK) {
-                if (!is_uploaded_file($_FILES[$attach_field]['tmp_name'])) {
-                    throw new MyRuntimeException(Kohana::lang('o_resource.resource_upload_error'), 401);
-                }
-                $file_size_current = filesize($_FILES[$attach_field]['tmp_name']);
-                if ($attach_setup['fileSizePreLimit'] > 0 && $file_size_current > $attach_setup['fileSizePreLimit']) {
-                    throw new MyRuntimeException(Kohana::lang('o_resource.resource_file_too_big'), 402);
-                }
-                $file_type_current = page::getPostfix($attach_field); //通过后缀截取
-                foreach ($attach_setup['file_type'] as $idx => $item) {
-                    $attach_setup['file_type'][$idx] = strtolower($item);
-                }
-                if (!empty($attach_setup['file_type']) && !in_array(strtolower($file_type_current), $attach_setup['file_type'])) {
-                    throw new MyRuntimeException(Kohana::lang('o_resource.resource_type_error'), 403);
-                }
-                // 当前文件mime类型
-                $file_mime_current = isset($_FILES[$attach_field]['type']) ? $_FILES[$attach_field]['type'] : '';
-                // 检测规整mime类型
-                if (array_key_exists($file_type_current, $mime_postfix2type)) {
-                    $file_mime_current = $mime_postfix2type[$file_type_current];
-                } else {
-                    $file_mime_current = 'application/octet-stream';
-                }
-                //存储文件meta信息
-                $file_meta_data = array(
-                    'name' => strip_tags(trim($_FILES[$attach_field]['name'])),
-                    'size' => $file_size_current,
-                    'type' => $file_type_current,
-                    'mime' => $file_mime_current,
-                    'tmpfile' => $_FILES[$attach_field]['tmp_name'],
-                );
-                $data['file_meta'] = $file_meta_data;
-                $data['ip'] = $ip;
-                $data['attach_meta'] = json_encode($attach_meta);
-                $data['site_id'] = $this->site_id;
-                $data['manager_id'] = $this->manager_id;
-                $data['catalog_id'] = $catalog_id;
-                $resource_id = bm('resource')->add($data);
-                $return_data['id'] = $resource_id;
-                $return_data['data'] = $data;
-                //* 补充&修改返回结构体 */
-                $return_struct['status'] = 1;
-                $return_struct['code'] = 200;
-                $return_struct['msg'] = 'Success';
-                $return_struct['content'] = $return_data;
-                exit(json_encode($return_struct));
-            } else {
-                throw new MyRuntimeException(Kohana::lang('o_resource.resource_upload_error'), 400);
-            }
-        } catch (MyRuntimeException $ex) {
-            //* 补充&修改返回结构体 */
-            $return_struct['status'] = 0;
-            $return_struct['code'] = 400;
-            $return_struct['msg'] = $ex->getMessage();
-            $return_struct['content'] = array();
-            exit(json_encode($return_struct));
-        }
+        $resourceModel =  EHOVEL::model('resource');
+        $resourceModel->name = $resourceData['name'];
+        $resourceModel->postfix = $resourceData['postfix'];
+        $resourceModel->catalog_id = $resourceData['catalog_id'];
+        $resourceModel->attach_id = $resourceData['attach_id'];
+        $resourceModel->save();
+        return $resourceModel->saved();exit;
     }
 
     /**

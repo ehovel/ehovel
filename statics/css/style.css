@@ -1412,7 +1412,9 @@ nav#topmenu .nav > li > a {
     z-index: 100;
 }
 .subhead {
+	background:	#fff;
     background: -moz-linear-gradient(center top , #FFFFFF 0%, #EDEDED 100%) repeat scroll 0 0 transparent;
+    background: -webkit-linear-gradient(top , #FFFFFF, #EDEDED) repeat scroll 0 0 transparent;
     border-bottom: 1px solid #D3D3D3;
     color: #0C192E;
     margin-bottom: 10px;

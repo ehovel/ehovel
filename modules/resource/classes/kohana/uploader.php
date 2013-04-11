@@ -7,7 +7,11 @@ abstract class Kohana_Uploader extends Kohana_Upload {
 	
 	protected $fileField;            //文件域名
 	protected $file;                 //文件上传对象
-	protected $config;               //配置信息
+	protected $config = array(
+    			"savePath" => '',
+    			"maxSize" => 1000, //单位KB
+    			"allowFiles" => array(".gif", ".png", ".jpg", ".jpeg", ".bmp")
+    	);               //配置信息
 	protected $oriName;              //原始文件名
 	protected $fileName;             //新文件名
 	protected $fullName;             //完整文件名,即从当前配置目录开始的URL
@@ -32,7 +36,7 @@ abstract class Kohana_Uploader extends Kohana_Upload {
 	);
 	public static $default_driver = 'ALIOSS'; //ALIOSS OR FILESYS
 	
-	public static function factory($file , $config , $base64 = false, $driver = NULL)
+	public static function factory($file , $config = NULL , $base64 = false, $driver = NULL)
 	{
 		if ($driver === NULL)
 		{
@@ -42,8 +46,7 @@ abstract class Kohana_Uploader extends Kohana_Upload {
 	
 		// Set the class name
 		$class = 'Kohana_Uploader_'.$driver;
-	
-		return new $class($file , $config , $base64 = false);
+		return new $class($file , $config = NULL, $base64 = false);
 	}
 	/**
 	 * 构造函数
@@ -51,10 +54,10 @@ abstract class Kohana_Uploader extends Kohana_Upload {
 	 * @param array $config  配置项
 	 * @param bool $base64  是否解析base64编码，可省略。若开启，则$fileField代表的是base64编码的字符串表单名
 	*/
-	public function __construct( $fileField , $config , $base64 = false )
+	public function __construct( $fileField , $config = NULL , $base64 = false )
 	{
 		$this->fileField = $fileField;
-		$this->config = $config;
+		$this->config = $config ? $config :$this->config;
 		$this->stateInfo = $this->stateMap[ 0 ];
 		$this->_upFile( $base64 );
 	}
@@ -81,11 +84,10 @@ abstract class Kohana_Uploader extends Kohana_Upload {
 			$this->stateInfo = $this->getStateInfo( "UNKNOWN" );
 			return;
 		}
-	
+		
 		$this->oriName = $file[ 'name' ];
 		$this->fileSize = $file[ 'size' ];
 		$this->fileType = $this->getFileExt();
-	
 		if ( !$this->checkSize() ) {
 			$this->stateInfo = $this->getStateInfo( "SIZE" );
 			return;
