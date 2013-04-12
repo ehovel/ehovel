@@ -82,10 +82,10 @@ class ORM extends Kohana_ORM {
 				case ORM::ALLOW_ALL:
 					break;
 				case ORM::ALLOW_ENABLED:
-					$this->where($this->_disabled_column, '=', 'N');
+					$this->where($this->_disabled_column, '=', '0');
 					break;
 				case ORM::ALLOW_DISABLED:
-					$this->where($this->_disabled_column, '=', 'Y');
+					$this->where($this->_disabled_column, '=', '1');
 					break;
 				default:
 			}
@@ -108,13 +108,13 @@ class ORM extends Kohana_ORM {
 		Event::run($this->_object_name . '.disable_before', $this);
 	
 		$this->_changed[] = $this->_disabled_column;
-		$this->_object[$this->_disabled_column] = 'Y';
+		$this->_object[$this->_disabled_column] = 1;
 	
 		$result = $this->save();
 	
 		Event::run($this->_object_name . '.disable_after', $this);
 	
-		return $result;
+		return $this->saved();
 	}
 	
 	/**
@@ -126,7 +126,7 @@ class ORM extends Kohana_ORM {
 	public function enable($auto_save = TRUE)
 	{
 		if (!empty($this->_disabled_column)) {
-			$this->__set($this->_disabled_column, 'N');
+			$this->__set($this->_disabled_column, 0);
 		}
 		if ($auto_save) {
 			return $this->save();

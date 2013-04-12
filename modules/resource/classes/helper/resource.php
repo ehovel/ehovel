@@ -42,7 +42,10 @@ class Helper_Resource
             if (!empty($object)) {
             	//获取$stand对应的尺寸
             	$wh = isset($config['resourceAttach']['thumbPresets'][$stand]) ? $config['resourceAttach']['thumbPresets'][$stand] : '120x120';
-				return '/attach/'.$resource[0].'-'.$wh.'.'.$resource[1];
+            	if ($wh){
+            		$wh = '-'.$wh;
+            	}
+				return '/attach/'.$resource[0].$wh.'.'.$resource[1];
             }
         }
     }

@@ -145,6 +145,13 @@ class Controller_Admin_Base extends Controller {
     }
     
     /**
+     * 统一处理表单提交的内容，分发
+     */
+    public function action_progressform() {
+    	
+    	
+    }
+    /**
      * 执行跳转，默认当前控制器默认action
      * @param sring $redirect
      */

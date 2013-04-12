@@ -22,7 +22,8 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     public function action_index()
     {
 		$resourceObject = ORM::factory('resource');
-		$count = $resourceObject->count_all();
+		$resourceObjectClone = clone $resourceObject;
+		$count = $resourceObjectClone->count_all();
 		$pagination = new Pagination(
 			array(
 				'total_items' => $count,
@@ -32,9 +33,16 @@ class Controller_Admin_Resource extends Controller_Admin_Base
 		);
 		$page = $this->request->query('page');
 		$page = $page?$page:1;
+		$resourceObject->order_by('date_add','DESC');
 		$resourceObject->offset(($page - 1) * 12);
 		$resourceObject->limit(12);
 		$resources = $resourceObject->find_all()->as_array();
+		
+		$toolBarhelper = Helper_Toolbar::getInstance();
+		$toolBarhelper->appendButton('plus','新建','content.add');
+		$toolBarhelper->appendButton('remove','批量删除','content.delete');
+		$this->toolBar =  $toolBarhelper->render();
+		
 		$this->template = view::factory('resource_list', array(
 			'resources' => $resources,
 			'pagination'=>$pagination
@@ -141,7 +149,7 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     			} else {
     				echo '上传错误';
     			}
-    			
+    			exit;
     		}
     	} else {
     		echo View::factory('resource_uploaddialog')
@@ -158,6 +166,7 @@ class Controller_Admin_Resource extends Controller_Admin_Base
         $resourceModel->postfix = $resourceData['postfix'];
         $resourceModel->catalog_id = $resourceData['catalog_id'];
         $resourceModel->attach_id = $resourceData['attach_id'];
+        $resourceModel->is_storage = 1;
         $resourceModel->save();
         return $resourceModel->saved();exit;
     }
@@ -189,98 +198,34 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     	exit;
     }
 
-    /**
-     * 执行编辑操作
-     *
-     * @access public
-     * @param null
-     * @return void
-     * @throws MyRuntimeException
-     * @exception MyRuntimeException
-     * @author 张白
-     */
-    public function do_edit()
-    {
-        try {
-            $request_data = $this->input->post();
-            //权限验证
-            if ($this->site_id == 0) {
-                throw new MyRuntimeException(Kohana::lang('o_global.select_site'), 400);
-            }
-
-            if (bm('resource')->set($request_data['resource_id'], $request_data)) {
-                remind::set(Kohana::lang('o_resource.resource_update_success'), 'resource', 'success');
-            }
-            else
-            {
-                remind::set(Kohana::lang('o_global.update_error'), 'resource', 'error');
-            }
-        } catch (MyRuntimeException $ex) {
-            remind::set($ex->getMessage(), 'resource', 'error');
-        }
-    }
 
     /**
      * 删除资源
-     *
-     * @access public
-     * @param null
-     * @return void
-     * @throws MyRuntimeException
-     * @exception MyRuntimeException
-     * @author 张白
      */
-    public function delete()
+    public function action_delete()
     {
-        try {
             //收集请求参数
-            $request_data = $this->input->get();
+            $request_ids = $this->request->query('ids');
             //权限及数据验证
             if ($this->site_id == 0) {
-                throw new MyRuntimeException(Kohana::lang('o_global.select_site'), 400);
+                
             }
-            if (empty($request_data['resource_ids'])) {
-                throw new MyRuntimeException(Kohana::lang('o_global.bad_request'), 400);
+            if (empty($request_ids)) {
+                
             }
-            // 删除tag与resource关联表中的数据
-            $used_num = 0;
             $error_sign = 0;
-            $used_resource_name = '';
-            $resource_ids = explode('-', $request_data['resource_ids']);
+            $resource_ids = explode('-', $request_ids);
             foreach ($resource_ids as $resource_id)
             {
-                $resource_data = bm('resource')->get($resource_id);
-                if (!empty($resource_data)) {
-                    if ($resource_data['used_num'] > 0) {
-                        $used_num++;
-                        $used_resource_name .= empty($used_resource_name) ? $resource_data['name']
-                                : (',' . $resource_data['name']);
-                    } else {
-                        if (bm('resource')->remove($resource_id)) {
-                            $query_struct = array(
-                                'where' => array(
-                                    'site_id' => $this->site_id,
-                                    'resource_id' => $resource_id
-                                )
-                            );
-                            bm('resource_tag_relation')->delete($query_struct);
-                        } else {
-                            $error_sign++;
-                        }
-                    }
-                }
+                $resource_data = EHOVEL::model('resource',$resource_id);
+                $error_sign = $resource_data->disable();
             }
-            if ($error_sign) {
-                remind::set(Kohana::lang('o_resource.delete_error'), 'resource', 'error');
-            }
-            if ($used_num) {
-                remind::set(Kohana::lang('o_resource.delete_part') . $used_resource_name . Kohana::lang('o_resource.delete_part_success'), 'resource', 'success');
+            if (!$error_sign) {
+                Message::set(Message::ERROR, 'Delete failed');
             } else {
-                remind::set(Kohana::lang('o_resource.delete_success'), 'resource', 'success');
+            	Message::set(Message::SUCCESS,__('Delete Success'));
             }
-        } catch (MyRuntimeException $ex) {
-            remind::set($ex->getMessage(), request::referrer(), 'error');
-        }
+            $this->go();
     }
 
     /**

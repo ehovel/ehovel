@@ -14,8 +14,7 @@
     <?php Message::render();?>
 		<h1>编辑</h1>
 
-		<form class="uniform" id="myForm" action="<?php echo URL::current(true); ?>"
-			method="post">
+		<form class="uniform" id="myForm" action="<?php echo URL::current(true); ?>" method="post">
 			<div class="row-fluid">
 				<div class="span10 form-horizontal">
 					<ul class="nav nav-tabs">
