@@ -39,8 +39,8 @@ class Controller_Admin_Resource extends Controller_Admin_Base
 		$resources = $resourceObject->find_all()->as_array();
 		
 		$toolBarhelper = Helper_Toolbar::getInstance();
-		$toolBarhelper->appendButton('plus','新建','content.add');
-		$toolBarhelper->appendButton('remove','批量删除','content.delete');
+		$toolBarhelper->appendButton('plus','新建','resource.add');
+		$toolBarhelper->appendButton('remove','批量删除','resource.delete');
 		$this->toolBar =  $toolBarhelper->render();
 		
 		$this->template = view::factory('resource_list', array(
@@ -98,12 +98,11 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     }
     
     /**
-     * ueditor 上传资源
+     * ueditor 资源管理 TODO 资源分页,搜索
      * 添加一个资源.添加到资源表
      */
     public function action_ueimagemanage() {
     	$query = DB::select('attach_id','postfix')->from('resources')->where('site_id','=','62');
-//     	$query = DB::select('attach_id','postfix')->from('resources');
     	$pagination_query = clone $query;
     	$count = $pagination_query->select(DB::expr('COUNT(1) AS mycount'))->execute()->get('mycount');
     	$pagination = Pagination::factory(array(
@@ -114,8 +113,8 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     			'auto_hide'      => TRUE,
     	));
     	$query->order_by('date_add', 'desc')
-    	->limit($pagination->items_per_page)
-    	->offset($pagination->offset);
+    			->limit($pagination->items_per_page)
+    			->offset($pagination->offset);
     	$results = $query->execute()->as_array('attach_id');
 		$files = array();$str = "";
 		foreach ( $results as $value ) {
@@ -124,6 +123,9 @@ class Controller_Admin_Resource extends Controller_Admin_Base
 		print_r($str);exit;
     }
     
+    /**
+     * 资源弹出窗的上传处理
+     */
     public function action_uploaddialog() {
     	if ($_POST) {
     		$verifyToken = md5('unique_salt' . $_POST['timestamp']);
@@ -144,7 +146,7 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     						'catalog_id'=>$catalogId,
     						'attach_id'=>$ossName,
     						);
-    				$this->_hander_updata_resource($resourceData);
+    				$this->_do_add($resourceData);
     				echo '1';exit;
     			} else {
     				echo '上传错误';
@@ -155,20 +157,6 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     		echo View::factory('resource_uploaddialog')
     		->render(null,false);exit;
     	}
-    }
-    /**
-     * 执行添加操作，添加到文件系统，添加到resource表
-     */
-    private function _hander_updata_resource($resourceData)
-    {
-        $resourceModel =  EHOVEL::model('resource');
-        $resourceModel->name = $resourceData['name'];
-        $resourceModel->postfix = $resourceData['postfix'];
-        $resourceModel->catalog_id = $resourceData['catalog_id'];
-        $resourceModel->attach_id = $resourceData['attach_id'];
-        $resourceModel->is_storage = 1;
-        $resourceModel->save();
-        return $resourceModel->saved();exit;
     }
 
     /**
@@ -217,234 +205,29 @@ class Controller_Admin_Resource extends Controller_Admin_Base
             $resource_ids = explode('-', $request_ids);
             foreach ($resource_ids as $resource_id)
             {
-                $resource_data = EHOVEL::model('resource',$resource_id);
-                $error_sign = $resource_data->disable();
+            	$error_sign = $this->_do_disabled($resource_id);
+            	if (!$error_sign) {
+            		Message::set(Message::ERROR, 'Delete failed'.'-id-'.$resource_id);
+            	}
             }
-            if (!$error_sign) {
-                Message::set(Message::ERROR, 'Delete failed');
-            } else {
-            	Message::set(Message::SUCCESS,__('Delete Success'));
-            }
+            Message::set(Message::SUCCESS,__('Delete Success'));
             $this->go();
     }
 
     /**
-     * AJAX调用获取resource_tag信息
-     *
-     * @access public
-     * @param null
-     * @return void
-     * @throws MyRuntimeException
-     * @exception MyRuntimeException
-     * @author 张白
-     */
-    public function ajax_tag_add()
-    {
-        try {
-            //初始化返回结构体
-            $return_struct = array(
-                'status' => 0,
-                'code' => 501,
-                'msg' => 'Not Implemented',
-                'content' => array()
-            );
-            if (request::is_ajax()) {
-                //收集请求参数
-                $request_data = $this->input->get();
-                //权限及数据验证
-                if ($this->site_id == 0) {
-                    throw new MyRuntimeException(Kohana::lang('o_global.select_site'), 400);
-                }
-                if (empty($request_data['id'])) {
-                    throw new MyRuntimeException(Kohana::lang('o_global.bad_request'), 400);
-                }
-                //执行业务逻辑
-                $return_data['tag'] = bm('resource_tag')->get($request_data['id']);
-                //补充&修改返回结构体
-                $return_struct['status'] = 1;
-                $return_struct['code'] = 200;
-                $return_struct['msg'] = '';
-                $return_struct['content'] = $return_data;
-                exit(json_encode($return_struct));
-            }
-        } catch (MyRuntimeException $ex) {
-            remind::set($ex->getMessage(), request::referrer(), 'error');
-        }
-    }
-
-    /**
      * AJAX调用为资源打上标签
-     *
-     * @access public
-     * @param null
-     * @return void
-     * @throws MyRuntimeException
-     * @exception MyRuntimeException
-     * @author 张白
      */
     public function ajax_tag_do()
     {
-        try {
-            //初始化返回结构体
-            $return_struct = array(
-                'status' => 0,
-                'code' => 501,
-                'msg' => 'Not Implemented',
-                'content' => array()
-            );
-            if (request::is_ajax()) {
-                //收集请求参数
-                $request_data = $this->input->get();
-                //权限及数据验证
-                if ($this->site_id == 0) {
-                    throw new MyRuntimeException(Kohana::lang('o_global.select_site'), 400);
-                }
-                if (empty($request_data['tag_ids']) || empty($request_data['resource_ids'])) {
-                    throw new MyRuntimeException(Kohana::lang('o_global.bad_request'), 400);
-                }
-                //执行业务逻辑
-                $tag_ids = explode('-', $request_data['tag_ids']);
-                $resource_ids = explode('-', $request_data['resource_ids']);
-                foreach ($tag_ids as $tag_id)
-                {
-                    foreach ($resource_ids as $resource_id)
-                    {
-                        $query_struct = array(
-                            'where' => array(
-                                'site_id' => $this->site_id,
-                                'resource_id' => $resource_id,
-                                'tag_id' => $tag_id
-                            ),
-                        );
-                        $count = bm('resource_tag_relation')->count($query_struct);
-                        if (!$count) {
-                            bm('resource')->set_tag_id($this->site_id, $resource_id, $tag_id);
-                        }
-                    }
-                }
-                //补充&修改返回结构体
-                $return_struct['status'] = 1;
-                $return_struct['code'] = 200;
-                $return_struct['msg'] = '';
-                $return_struct['content'] = array();
-                exit(json_encode($return_struct));
-            }
-        } catch (MyRuntimeException $ex) {
-            remind::set($ex->getMessage(), request::referrer(), 'error');
-        }
+        
     }
 
     /**
      * AJAX调用资源取消标签
-     *
-     * @access public
-     * @param null
-     * @return void
-     * @throws MyRuntimeException
-     * @exception MyRuntimeException
-     * @author 张白
      */
     public function ajax_tag_cancel()
     {
-        try {
-            //初始化返回结构体
-            $return_struct = array(
-                'status' => 0,
-                'code' => 501,
-                'msg' => 'Not Implemented',
-                'content' => array()
-            );
-            if (request::is_ajax()) {
-                //收集请求参数
-                $request_data = $this->input->get();
-                //权限及数据验证
-                if ($this->site_id == 0) {
-                    throw new MyRuntimeException(Kohana::lang('o_global.select_site'), 400);
-                }
-                if (empty($request_data['tag_ids']) || empty($request_data['resource_ids'])) {
-                    throw new MyRuntimeException(Kohana::lang('o_global.bad_request'), 400);
-                }
-                //执行业务逻辑
-                $tag_ids = explode('-', $request_data['tag_ids']);
-                $resource_ids = explode('-', $request_data['resource_ids']);
-                foreach ($tag_ids as $tag_id)
-                {
-                    foreach ($resource_ids as $resource_id)
-                    {
-                        $query_struct = array(
-                            'where' => array(
-                                'site_id' => $this->site_id,
-                                'resource_id' => $resource_id,
-                                'tag_id' => $tag_id
-                            ),
-                        );
-                        $count = bm('resource_tag_relation')->count($query_struct);
-                        if ($count) {
-                            bm('resource')->cancel_tag_id($this->site_id, $resource_id, $tag_id);
-                        }
-                    }
-                }
-                //补充&修改返回结构体
-                $return_struct['status'] = 1;
-                $return_struct['code'] = 200;
-                $return_struct['msg'] = '';
-                $return_struct['content'] = array();
-                exit(json_encode($return_struct));
-            }
-        } catch (MyRuntimeException $ex) {
-            remind::set($ex->getMessage(), request::referrer(), 'error');
-        }
-    }
-
-    /**
-     * 批量保存上传数据
-     *
-     * @access public
-     * @param null
-     * @return void
-     * @throws MyRuntimeException
-     * @exception MyRuntimeException
-     * @author 张白
-     */
-    public function upload_form_submit()
-    {
-        try {
-            //收集请求数据
-            $request_data = $this->input->post();
-            if (isset($request_data['resources']) && !empty($request_data['resources']) && count($request_data['resources'])) {
-                $catalog_id = 0;
-                if (!empty($request_data['catalog_id'])) {
-                    $catalog_id = $request_data['catalog_id'];
-                }
-                foreach ($request_data['resources'] as $key => $value)
-                {
-                    $value['catalog_id'] = $catalog_id;
-                    unset($value['name']);
-                    bm('resource')->set($key, $value);
-                }
-                $session = Session::instance();
-                $session->set_flash('remind_type', 'success');
-                $session->set_flash('remind_error', Kohana::lang('o_resource.resource_upload_success'));
-            }
-            else {
-            	print_r($request_data);
-                //throw new MyRuntimeException('资源不能为空', 500);
-            }
-            echo "<script>
-                 window.parent.$('#upload_ifm').dialog('close');
-                 parent.location.href = parent.location.href;
-                 </script>";
-            die();
-        } catch (MyRuntimeException $ex) {
-            $session = Session::instance();
-            $session->set_flash('remind_type', 'error');
-            $session->set_flash('remind_error', $ex->getMessage());
-            echo "<script>
-                 window.parent.$('#upload_ifm').dialog('close');
-                 parent.location.href = parent.location.href;
-                 </script>";
-            die();
-        }
+        
     }
 
     /**
@@ -812,106 +595,56 @@ class Controller_Admin_Resource extends Controller_Admin_Base
 
     /**
      * 更新指定站点的容量
-     *
-     * @access public
-     * @param null
-     * @return void
-     * @throws MyRuntimeException
-     * @exception MyRuntimeException
-     * @author Bin 2011-11-08
      */
-    public function update_size()
+    public function action_updatesize()
     {
-        $return_struct = array(
-            'status' => 0,
-            'code' => 501,
-            'msg' => 'Not Implemented',
-            'content' => array(),
-        );
-        try {
-            bm('resource')->update_size($this->site_id);
-            remind::set('更新容量成功.',request::referrer(),'success');
-        } catch (MyRuntimeException $ex) {
-            $this->_ex($ex, $return_struct);
-        }
+    	//TODO site_id
+        Message::set('更新容量成功.',request::referrer(),'success');
+    }
+
+    /**
+     * 处理列表型的表单提交过来的内容
+     */
+    protected function _do_list_form_delete() {
+    	$formData = $this->request->post('eform');
+    	$ids = $formData['ids'];
+    	foreach ($ids as $id) {
+    		$delResult = $this->_do_disabled($id);
+    		if (!$delResult) {
+    			Message::set(Message::ERROR,'Delete failed'.'-id-'.$id);
+    		}
+    	}
+    	Message::set(Message::SUCCESS,__('Delete Success'));
+        $this->go();
     }
     /**
-     * 互联网文件选择请求
-     *
-     * @access public
-     * @param null
-     * @return void
-     * @throws MyRuntimeException
-     * @exception MyRuntimeException
-     * @author fanchongyuan
-     * @mofify Bin (去除接口，网络资源不加入资源库)
+     * 执行添加操作，添加到文件系统，添加到resource表
      */
-    /*
-    public function ajax_upload_link_submit()
+    private function _hander_updata_resource($resourceData)
     {
-        try {
-            //判断请求类型
-            if (!$this->is_ajax_request()) {
-                throw new MyRuntimeException(Kohana::lang('o_global.bad_request'), 404);
-            }
-            $return_struct = array(
-                'status' => 0,
-                'code' => 501,
-                'msg' => 'Not Implemented',
-                'content' => array()
-            );
-            $request_data = $this->input->post();
-            //初始化返回数据
-            $return_data = array();
-            if (empty($request_data['resource'])) {
-                throw new MyRuntimeException(Kohana::lang('o_global.bad_request'), 404);
-            }
-            if (!empty($request_data['resource']) && is_array($request_data['resource'])) {
-                $attach_configure = Kohana::config('resource.resourceAttach');
-                foreach ($request_data['resource'] as $key => $value)
-                {
-                    $resource_data = array();
-                    $resource_data['site_id'] = $this->site_id;
-                    $resource_data['manager_id'] = $this->manager_id;
-                    $resource_data['catalog_id'] = $value['catalog_id'];
-                    $resource_data['name'] = $value['name'];
-                    $resource_data['link'] = $value['link'];
-                    $resource_data['tag'] = $value['tag'];
-                    $resource_data['title'] = $value['title'];
-                    $resource_data['alter'] = $value['alter'];
-                    $resource_data['introduction'] = $value['introduction'];
-                    $resource_data['description'] = $value['description'];
-                    $resource_id = bm('resource')->add($resource_data);
-                    $resource_data_tmp = bm('resource')->get($resource_id);
-                    if (!empty($resource_data_tmp)) {
-                        if (in_array($resource_data_tmp['postfix'], $attach_configure['image_type'])) {
-                            $resource_data_tmp['type'] = 'image';
-                        } else {
-                            if (empty($resource_data_tmp['postfix']) && !empty($resource_data_tmp['link'])) {
-                                $resource_data_tmp['type'] = 'network';
-                            } else {
-                                $resource_data_tmp['type'] = 'attachment';
-                            }
-                        }
-                        $resource_data_tmp['url'] = $value['link'];
-                        $return_data[$resource_id] = $resource_data_tmp;
-                    }
-                }
-            }
-            //补充&修改返回结构体
-            $return_struct['status'] = 1;
-            $return_struct['code'] = 200;
-            $return_struct['msg'] = '';
-            $return_struct['content'] = $return_data;
-            exit(json_encode($return_struct));
-        } catch (MyRuntimeException $ex) {
-            //补充&修改返回结构体
-            $return_struct['status'] = 0;
-            $return_struct['code'] = 400;
-            $return_struct['msg'] = $ex->getMessage();
-            $return_struct['content'] = array();
-            exit(json_encode($return_struct));
-        }
+        $resourceModel =  EHOVEL::model('resource');
+        $resourceModel->name = $resourceData['name'];
+        $resourceModel->postfix = $resourceData['postfix'];
+        $resourceModel->catalog_id = $resourceData['catalog_id'];
+        $resourceModel->attach_id = $resourceData['attach_id'];
+        $resourceModel->is_storage = 1;
+        $resourceModel->save();
+        return $resourceModel->saved();exit;
     }
-    */
+    
+    private function _do_add($resourceData) {
+    	$resourceModel =  EHOVEL::model('resource');
+    	$resourceModel->name = $resourceData['name'];
+    	$resourceModel->postfix = $resourceData['postfix'];
+    	$resourceModel->catalog_id = $resourceData['catalog_id'];
+    	$resourceModel->attach_id = $resourceData['attach_id'];
+    	$resourceModel->is_storage = 1;
+    	$resourceModel->save();
+    	return $resourceModel->saved();
+    }
+    private function _do_disabled($resource_id) {
+    	$resource_data = EHOVEL::model('resource',$resource_id);
+    	return $resource_data->disable();
+    }
+    
 }

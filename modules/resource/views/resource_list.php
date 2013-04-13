@@ -29,7 +29,7 @@
         <!--standard table-->
         <div class="table_wrap">
             <div class="standard_table">
-                <form method="get" action="<?php echo EHOVEL::admin_base_url()?>resource/delete" id="myForm">
+                <form method="post" action="<?php echo EHOVEL::admin_base_url()?>resource/processlistform" id="myForm">
                     <table class="table">
                         <tr>
                             <th width="50px" class="no_leftbor"><input class="input_c" type="checkbox" id="check_all"/></th>
@@ -56,7 +56,7 @@
                                 }
                                 ?>
                                 <tr>
-                                    <td><input class="input_c sel" type="checkbox" name="eform['ids']" value="<?php echo $resource['id']; ?>"/></td>
+                                    <td><input class="input_c sel" type="checkbox" name="eform[ids][]" value="<?php echo $resource['id']; ?>"/></td>
                                     <td>
                                         <a href="<?php echo EHOVEL::admin_base_url(); ?>resource/edit/<?php echo $resource['id']; ?>" class="edit_item" title="编辑">
                                         	<i class="icon-edit"></i></a>

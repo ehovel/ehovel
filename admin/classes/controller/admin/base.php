@@ -40,6 +40,8 @@ class Controller_Admin_Base extends Controller {
     public $toolBar = '';
     public $profileShow = true;
     
+    protected $_accessCheck = true;
+    
     /**
      * 当期控制器所属APP对象
      * 
@@ -59,7 +61,8 @@ class Controller_Admin_Base extends Controller {
     public function before()
     {
         parent::before();
-        $this->_redirect = URL::referrer();
+        $urlReferrer = URL::referrer();
+        $this->_redirect = $urlReferrer=='/' ? EHOVEL::admin_base_url() :URL::referrer();
     }
     
     /**
@@ -145,11 +148,38 @@ class Controller_Admin_Base extends Controller {
     }
     
     /**
-     * 统一处理表单提交的内容，分发
+     * 统一处理表单提交的内容，分发给各控制器内相应方法处理
      */
-    public function action_progressform() {
+    public function action_processlistform() {
+    	$task = $this->request->post('task');
+    	list($controller,$action) = explode('.', $task);
+    	$processAction = '_do_list_form_'.$action;
+    	$this->$processAction();
+    	//TODO access controller
+    	//$this->authorise($controller,$action);
     	
-    	
+    }
+    
+    /**
+     * 验证权限 ....TODO
+     * @param string $task 操作
+     * @param string $taskId 操作的资源
+     * @return boolean
+     */
+    public function authorise($task,$tastId = NULL)
+    { 
+    	return true;
+    	// Only do access check if the aco section is set
+    	if ($this->_accessCheck)
+    	{
+    		$user = EHOVEL::get_user();
+    		return $user->authorise($user->id,$task, $tastId);
+    	}
+    	else
+    	{
+    		// Nothing set, nothing to check... so obviously it's ok :)
+    		return true;
+    	}
     }
     /**
      * 执行跳转，默认当前控制器默认action

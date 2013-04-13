@@ -372,4 +372,10 @@ class EHOVEL {
     public static function front_base_url (){
         return url::base();
     }
+    
+    public static function get_user() {
+    	$auth = Auth::instance();
+    	$auth->get_user();
+    	return 1;
+    }
 }

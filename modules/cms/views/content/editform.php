@@ -1,9 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.'); ?>
 <?php echo EHOVEL::js('joomla_template');?>
+<link rel="stylesheet" type="text/css" href="/statics/css/fancybox/jquery.fancybox-1.3.4.css" />
 <script type="text/javascript">
 	//实例化编辑器
 	window.UEDITOR_HOME_URL = "/statics/js/ueditor125/";
 </script>
+<?php echo EHOVEL::js('ueditor125/editor_config');?>
 <?php echo EHOVEL::js('ueditor125/editor_config');?>
 <?php echo EHOVEL::js('ueditor125/editor_all');?>
 <script type="text/javascript">
@@ -1205,7 +1207,19 @@
 			<input type="hidden" name="return" value="" />
 		</form>
 </section>
+<script type="text/javascript" src="/statics/js/jquery.fancybox-1.3.4.pack.js"></script>
 <script type="text/javascript">
+function facyboxclose() {
+	$.fancybox.close();
+}
+$(document).ready(function(){
+	$(".edit_item").fancybox({
+    	'padding':'30',
+		'autoScale' : false,
+   		 'transitionIn' : 'elastic',
+		 'transitionOut' : 'elastic',
+		});
+});
 Joomla.submitbutton = function(task) {
 	if(ue.hasContents()){ //此处以非空为例
 	    ue.sync();       //同步内容
