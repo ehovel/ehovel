@@ -1,5 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.'); ?>
-<?php echo EHOVEL::js('joomla_template');?>
+<?php echo EHOVEL::js('ehovel_template');?>
 <link rel="stylesheet" type="text/css" href="/statics/css/fancybox/jquery.fancybox-1.3.4.css" />
 <script type="text/javascript">
 	//实例化编辑器
@@ -22,8 +22,9 @@
 					<ul class="nav nav-tabs">
 						<li class="active"><a href="#general" data-toggle="tab"><?php echo __('文章详情');?></a></li>
 						<li><a href="#publishing" data-toggle="tab"><?php echo __('发布信息');?></a></li>
-						<li><a href="#attrib-basic" data-toggle="tab"><?php echo __('文章选项');?></a></li>
+						<li><a href="#piclist" data-toggle="tab"><?php echo __('图片信息');?></a></li>
 						<li><a href="#metadata" data-toggle="tab"><?php echo __('SEO相关');?></a></li>
+						<li><a href="#permissions" data-toggle="tab"><?php echo __('权限设置');?></a></li>
 					</ul>
 					<div class="tab-content">
 						<!-- Begin Tabs -->
@@ -47,79 +48,17 @@
 							</fieldset>
 							<div class="row-fluid">
 								<div class="span6">
-									<legend><?php echo __('图片和链接');?></legend>
-									<div class="control-group">
-										<div class="controls"></div>
-									</div>
-									<div class="control-group">
-										<label id="eform_images_image_intro-lbl"
-											for="eform_images_image_intro" class="hasTip control-label"
-											title="引言图片::博客式排版时显示的引言使用的图片">引言图片</label>
-										<div class="controls">
-											<div class="input-prepend input-append">
-												<div class="media-preview add-on">
-												<span title="" class="hasTipPreview"><i class="icon-eye"></i></span>
-												</div>
-													<input type="text" readonly="readonly" value="" id="eform_images_image_intro" name="eform[images][image_intro]" class="input-small">
-												<a rel="{handler: 'iframe', size: {x: 800, y: 500}}" href="index.php?option=com_media&amp;view=images&amp;tmpl=component&amp;asset=35&amp;author=478&amp;fieldid=eform_images_image_intro&amp;folder=" title="选择" class="btn">
-												选择</a><a onclick="
-												jInsertFieldValue('', 'eform_images_image_intro');
-												return false;
-												" href="#" class="btn hasTooltip" data-original-title="清除">&nbsp;<i class="icon-remove"></i></a>
-											</div>									
-										</div>
-									</div>
-									<div class="control-group">
-										<label id="eform_images_float_intro-lbl"
-											for="eform_images_float_intro" class="hasTip control-label"
-											title="图片浮动::控制图片的位置安排">图片浮动</label>
-										<div class="controls">
-											<select id="eform_images_float_intro"
-												name="eform[images][float_intro]">
-												<option value="" selected="selected">使用全局设置</option>
-												<option value="right">右浮动</option>
-												<option value="left">左浮动</option>
-												<option value="none">无</option>
-											</select>
-										</div>
-									</div>
-									<div class="control-group">
-										<label id="eform_images_image_intro_alt-lbl"
-											for="eform_images_image_intro_alt"
-											class="hasTip control-label"
-											title="文字替身::未访问到图片的访客将看到的替换性的文本。将以标题文本代替图片。">文字替身</label>
-										<div class="controls">
-											<input type="text" name="eform[images][image_intro_alt]"
-												id="eform_images_image_intro_alt" value="" class="inputbox"
-												size="20" />
-										</div>
-									</div>
-									<div class="control-group">
-										<label id="eform_images_image_intro_caption-lbl"
-											for="eform_images_image_intro_caption"
-											class="hasTip control-label" title="标题::图片的标题">标题</label>
-										<div class="controls">
-											<input type="text" name="eform[images][image_intro_caption]"
-												id="eform_images_image_intro_caption" value=""
-												class="inputbox" size="20" />
-										</div>
-									</div>
-								</div>
-								<div class="span6">
 										<legend><?php echo __('Basic Info');?></legend>
 										<div class="control-group">
-											<label id="eform_images_image_intro_alt-lbl" for="eform_images_image_intro_alt" class="hasTip control-label" title="文字替身::未访问到图片的访客将看到的替换性的文本。将以标题文本代替图片。"><?php echo __('Show type');?></label>
+											<label id="eform_images_image_intro_alt-lbl" for="eform_images_image_intro_alt" class="hasTip control-label" title="显示类型::你可以选择不显示网站头尾内容，一般用于特殊页面，公告页面等"><?php echo __('Show head');?></label>
 											<div class="controls">
 												<select name="eform[show_type]" id="show_type" class="small">
 													<option value="DEFAULT"
-														<?php echo (!empty($model_content) && 'DEFAULT' == $model_content->show_type) ? 'selected="selected"'
-						                                    : '';?>><?php echo __('show Default');?></option>
+														<?php echo (!empty($content) && 'DEFAULT' == $content->show_type) ? 'selected="selected"'
+						                                    : '';?>><?php echo __('Show default');?></option>
 													<option value="All"
-														<?php echo (!empty($model_content) && 'ALL' == $model_content->show_type) ? 'selected="selected"'
-						                                    : '';?>><?php echo __('show all content');?></option>
-													<option value="HEAD"
-														<?php echo (!empty($model_content) && 'HEAD' == $model_content->show_type) ? 'selected="selected"'
-						                                    : '';?>><?php echo __('show head');?></option>
+														<?php echo (!empty($content) && 'CONTENT' == $content->show_type) ? 'selected="selected"'
+						                                    : '';?>><?php echo __('Show content');?></option>
 												</select>
 											</div>
 										</div>
@@ -152,7 +91,7 @@
 												<select id="eform_attribs_article_layout"
 													name="eform[attribs][article_layout]">
 													<optgroup label="---从全局设置---">
-														<option value="" selected="selected">使用全局设置</option>
+														<option value="0" selected="selected">使用全局设置</option>
 													</optgroup>
 													<optgroup id="eform_attribs_article_layout__" label="---从组件---">
 														<option value="_:default">默认</option>
@@ -195,8 +134,7 @@
 													id="eform_created_by_name" value="Super User"
 													disabled="disabled" /> <a
 													class="btn btn-primary modal_eform_created_by" title="选择用户"
-													href="index.php?option=com_users&amp;view=users&amp;layout=modal&amp;tmpl=component&amp;field=eform_created_by"
-													rel="{handler: 'iframe', size: {x: 800, y: 500}}">&nbsp;<i
+													href="index.php?option=com_users&amp;view=users&amp;layout=modal&amp;tmpl=component&amp;field=eform_created_by">&nbsp;<i
 													class="icon-user"></i></a>
 											</div>
 											<input type="hidden" id="eform_created_by_id"
@@ -304,223 +242,30 @@
 								</div>
 							</div>
 						</div>
-						<div class="tab-pane" id="attrib-basic">
+						<div class="tab-pane clearfix" id="piclist">
 							<div class="control-group">
-								<label id="eform_attribs_show_title-lbl"
-									for="eform_attribs_show_title" class="hasTip control-label"
-									title="显示标题::如果设置为显示，文章的标题将显示。">显示标题</label>
-								<div class="controls">
-									<fieldset id="eform_attribs_show_title" class="radio btn-group">
-										<input type="radio" id="eform_attribs_show_title0"
-											name="eform[attribs][show_title]" value="" checked="checked" /><label
-											for="eform_attribs_show_title0">使用全局设置</label><input
-											type="radio" id="eform_attribs_show_title1"
-											name="eform[attribs][show_title]" value="0" /><label
-											for="eform_attribs_show_title1">隐藏</label><input type="radio"
-											id="eform_attribs_show_title2"
-											name="eform[attribs][show_title]" value="1" /><label
-											for="eform_attribs_show_title2">显示</label>
-									</fieldset>
-								</div>
+								<a class="btn btn-primary" onclick="showresourcedialog(this,'/admin/resource/uploaddialog')">
+									<i class="icon-picture"></i>选择图片
+								</a>
 							</div>
-							<div class="control-group">
-								<label id="eform_attribs_show_create_date-lbl"
-									for="eform_attribs_show_create_date"
-									class="hasTip control-label"
-									title="显示创建日期::如果设置为显示，则文章的创建日期和时间会被显示。这是全局设置，但是可被分类，菜单和文章设置更改。">显示创建日期</label>
-								<div class="controls">
-									<fieldset id="eform_attribs_show_create_date"
-										class="radio btn-group">
-										<input type="radio" id="eform_attribs_show_create_date0"
-											name="eform[attribs][show_create_date]" value=""
-											checked="checked" /><label
-											for="eform_attribs_show_create_date0">使用全局设置</label><input
-											type="radio" id="eform_attribs_show_create_date1"
-											name="eform[attribs][show_create_date]" value="0" /><label
-											for="eform_attribs_show_create_date1">隐藏</label><input
-											type="radio" id="eform_attribs_show_create_date2"
-											name="eform[attribs][show_create_date]" value="1" /><label
-											for="eform_attribs_show_create_date2">显示</label>
-									</fieldset>
-								</div>
-							</div>
-							<div class="control-group">
-								<label id="eform_attribs_show_modify_date-lbl"
-									for="eform_attribs_show_modify_date"
-									class="hasTip control-label"
-									title="显示修改时间::如果设置为显示，文章的最后修改日期和时间将被显示。这是全局设置，但是可以被分类，菜单和文章设置更改。">显示修改时间</label>
-								<div class="controls">
-									<fieldset id="eform_attribs_show_modify_date"
-										class="radio btn-group">
-										<input type="radio" id="eform_attribs_show_modify_date0"
-											name="eform[attribs][show_modify_date]" value=""
-											checked="checked" /><label
-											for="eform_attribs_show_modify_date0">使用全局设置</label><input
-											type="radio" id="eform_attribs_show_modify_date1"
-											name="eform[attribs][show_modify_date]" value="0" /><label
-											for="eform_attribs_show_modify_date1">隐藏</label><input
-											type="radio" id="eform_attribs_show_modify_date2"
-											name="eform[attribs][show_modify_date]" value="1" /><label
-											for="eform_attribs_show_modify_date2">显示</label>
-									</fieldset>
-								</div>
-							</div>
-							<div class="control-group">
-								<label id="eform_attribs_show_hits-lbl"
-									for="eform_attribs_show_hits" class="hasTip control-label"
-									title="显示浏览量::如果设置为显示，个别的文章的浏览量将被显示。这是全局设置，但是可被分类，菜单和文章设置更改。">显示浏览量</label>
-								<div class="controls">
-									<fieldset id="eform_attribs_show_hits" class="radio btn-group">
-										<input type="radio" id="eform_attribs_show_hits0"
-											name="eform[attribs][show_hits]" value="" checked="checked" /><label
-											for="eform_attribs_show_hits0">使用全局设置</label><input
-											type="radio" id="eform_attribs_show_hits1"
-											name="eform[attribs][show_hits]" value="0" /><label
-											for="eform_attribs_show_hits1">隐藏</label><input type="radio"
-											id="eform_attribs_show_hits2" name="eform[attribs][show_hits]"
-											value="1" /><label for="eform_attribs_show_hits2">显示</label>
-									</fieldset>
-								</div>
-							</div>
-							<div class="control-group">
-								<label id="eform_attribs_show_noauth-lbl"
-									for="eform_attribs_show_noauth" class="hasTip control-label"
-									title="显示未经许可链接::如果设置为是，在没有登陆的情况下，需已注册用户访问的内容，将会显示一个链接。您需要登陆才能浏览全文。">显示未经许可链接</label>
-								<div class="controls">
-									<fieldset id="eform_attribs_show_noauth" class="radio btn-group">
-										<input type="radio" id="eform_attribs_show_noauth0"
-											name="eform[attribs][show_noauth]" value="" checked="checked" /><label
-											for="eform_attribs_show_noauth0">使用全局设置</label><input
-											type="radio" id="eform_attribs_show_noauth1"
-											name="eform[attribs][show_noauth]" value="0" /><label
-											for="eform_attribs_show_noauth1">否</label><input type="radio"
-											id="eform_attribs_show_noauth2"
-											name="eform[attribs][show_noauth]" value="1" /><label
-											for="eform_attribs_show_noauth2">是</label>
-									</fieldset>
-								</div>
-							</div>
-							<div class="control-group">
-								<label id="eform_attribs_urls_position-lbl"
-									for="eform_attribs_urls_position" class="hasTip control-label"
-									title="链接的位置::将链接显示于内容之上还是之下">链接的位置</label>
-								<div class="controls">
-									<fieldset id="eform_attribs_urls_position"
-										class="radio btn-group">
-										<input type="radio" id="eform_attribs_urls_position0"
-											name="eform[attribs][urls_position]" value=""
-											checked="checked" /><label for="eform_attribs_urls_position0">使用全局设置</label><input
-											type="radio" id="eform_attribs_urls_position1"
-											name="eform[attribs][urls_position]" value="0" /><label
-											for="eform_attribs_urls_position1">内容之上</label><input
-											type="radio" id="eform_attribs_urls_position2"
-											name="eform[attribs][urls_position]" value="1" /><label
-											for="eform_attribs_urls_position2">内容之下</label>
-									</fieldset>
-								</div>
-							</div>
-							<div class="control-group">
-								<span class="spacer"><span class="before"></span><span class=""><hr
-											class="" /></span><span class="after"></span></span>
-								<div class="controls"></div>
-							</div>
-						</div>
-						<div class="tab-pane" id="attrib-editorConfig"></div>
-						<div class="tab-pane" id="attrib-basic-limited"></div>
-						<div class="tab-pane" id="editor">
-							<div class="control-group">
-								<label id="eform_attribs_show_publishing_options-lbl"
-									for="eform_attribs_show_publishing_options"
-									class="hasTip control-label"
-									title="显示发布选项::在文章编辑视图里显示或隐藏发布选项滑块。这些选项允许根据指定的日期和作者而变化。">显示发布选项</label>
-								<div class="controls">
-									<fieldset id="eform_attribs_show_publishing_options"
-										class="radio btn-group">
-										<input type="radio" id="eform_attribs_show_publishing_options0"
-											name="eform[attribs][show_publishing_options]" value=""
-											checked="checked" /><label
-											for="eform_attribs_show_publishing_options0">使用全局设置</label><input
-											type="radio" id="eform_attribs_show_publishing_options1"
-											name="eform[attribs][show_publishing_options]" value="0" /><label
-											for="eform_attribs_show_publishing_options1">否</label><input
-											type="radio" id="eform_attribs_show_publishing_options2"
-											name="eform[attribs][show_publishing_options]" value="1" /><label
-											for="eform_attribs_show_publishing_options2">是</label>
-									</fieldset>
-								</div>
-							</div>
-							<div class="control-group">
-								<label id="eform_attribs_show_article_options-lbl"
-									for="eform_attribs_show_article_options"
-									class="hasTip control-label"
-									title="显示文章选项::在管理后台的文章编辑视图里显示或隐藏文章选项滑块。这些选项允许覆盖全局设置里的相应设置。">显示文章选项</label>
-								<div class="controls">
-									<fieldset id="eform_attribs_show_article_options"
-										class="radio btn-group">
-										<input type="radio" id="eform_attribs_show_article_options0"
-											name="eform[attribs][show_article_options]" value=""
-											checked="checked" /><label
-											for="eform_attribs_show_article_options0">使用全局设置</label><input
-											type="radio" id="eform_attribs_show_article_options1"
-											name="eform[attribs][show_article_options]" value="0" /><label
-											for="eform_attribs_show_article_options1">否</label><input
-											type="radio" id="eform_attribs_show_article_options2"
-											name="eform[attribs][show_article_options]" value="1" /><label
-											for="eform_attribs_show_article_options2">是</label>
-									</fieldset>
-								</div>
-							</div>
-							<div class="control-group">
-								<label id="eform_attribs_show_urls_images_backend-lbl"
-									for="eform_attribs_show_urls_images_backend"
-									class="hasTip control-label"
-									title="管理后台编辑的图片和链接::在管理后台显示或隐藏插入标准化的图片和链接的区域">管理后台编辑的图片和链接</label>
-								<div class="controls">
-									<fieldset id="eform_attribs_show_urls_images_backend"
-										class="radio btn-group">
-										<input type="radio"
-											id="eform_attribs_show_urls_images_backend0"
-											name="eform[attribs][show_urls_images_backend]" value=""
-											checked="checked" /><label
-											for="eform_attribs_show_urls_images_backend0">使用全局设置</label><input
-											type="radio" id="eform_attribs_show_urls_images_backend1"
-											name="eform[attribs][show_urls_images_backend]" value="0" /><label
-											for="eform_attribs_show_urls_images_backend1">否</label><input
-											type="radio" id="eform_attribs_show_urls_images_backend2"
-											name="eform[attribs][show_urls_images_backend]" value="1" /><label
-											for="eform_attribs_show_urls_images_backend2">是</label>
-									</fieldset>
-								</div>
-							</div>
-							<div class="control-group">
-								<label id="eform_attribs_show_urls_images_frontend-lbl"
-									for="eform_attribs_show_urls_images_frontend"
-									class="hasTip control-label"
-									title="前台编辑的图片和链接::显示或隐藏前台编辑时的插入标准化的图片和链接的区域">前台编辑的图片和链接</label>
-								<div class="controls">
-									<fieldset id="eform_attribs_show_urls_images_frontend"
-										class="radio btn-group">
-										<input type="radio"
-											id="eform_attribs_show_urls_images_frontend0"
-											name="eform[attribs][show_urls_images_frontend]" value=""
-											checked="checked" /><label
-											for="eform_attribs_show_urls_images_frontend0">使用全局设置</label><input
-											type="radio" id="eform_attribs_show_urls_images_frontend1"
-											name="eform[attribs][show_urls_images_frontend]" value="0" /><label
-											for="eform_attribs_show_urls_images_frontend1">否</label><input
-											type="radio" id="eform_attribs_show_urls_images_frontend2"
-											name="eform[attribs][show_urls_images_frontend]" value="1" /><label
-											for="eform_attribs_show_urls_images_frontend2">是</label>
-									</fieldset>
-								</div>
-							</div>
+							<div class="choose_pics">
+		                        <div class="pic">
+		                            <div class="pic">
+		                                <div class="pic_inner img120">
+		                                    <img alt="" src="/statics/img/no_image_available.png" id="upload_pic" style="max-height:120px; max-width:120px">
+		                                </div>
+		                            </div>
+		                            <ul class="inline">
+									  <li><a onclick="removepic(this)" href="javascript:;"><i class="icon-remove"></i></a></li>
+									</ul>
+		                            <input type="hidden" value="/attachment/view/5467.jpg" name="attachs[]"> 
+	                            </div> 
+	                        </div>
 						</div>
 	
 						<div class="tab-pane" id="metadata">
 								<div class="control-group">
-									<label id="eform_metadesc-lbl" for="eform_metadesc"
-										class="hasTip control-label"
-										title="简介::可选。该段文字用于在页面HTML中的description标签。description标签常常被搜索引擎用于搜索结果中。">简介</label>
+									<label id="eform_metadesc-lbl" for="eform_metadesc" class="hasTip control-label" title="简介::可选。该段文字用于在页面HTML中的description标签。description标签常常被搜索引擎用于搜索结果中。">简介</label>
 									<div class="controls">
 										<textarea name="eform[metadesc]" id="eform_metadesc" cols="30"
 											rows="3" class="inputbox"></textarea>
@@ -1207,23 +952,27 @@
 			<input type="hidden" name="return" value="" />
 		</form>
 </section>
-<script type="text/javascript" src="/statics/js/jquery.fancybox-1.3.4.pack.js"></script>
+<a class="resourcedialog" href="#"></a>
+<script type="text/javascript" src="/statics/js/jquery.fancybox-1.3.4.js"></script>
 <script type="text/javascript">
 function facyboxclose() {
 	$.fancybox.close();
 }
-$(document).ready(function(){
-	$(".edit_item").fancybox({
-    	'padding':'30',
-		'autoScale' : false,
-   		 'transitionIn' : 'elastic',
-		 'transitionOut' : 'elastic',
+function showresourcedialog(obj,url) {
+	$.fancybox({
+		'href':url,
+		'padding':'30',
+		'title':'选择图片',
+		'titlePosition':'inside'
 		});
-});
-Joomla.submitbutton = function(task) {
+}
+function removepic(obj){
+	$(obj).parents(".choose_pics").remove();
+}
+Ehovel.submitbutton = function(task) {
 	if(ue.hasContents()){ //此处以非空为例
 	    ue.sync();       //同步内容
-	    Joomla.submitform(task, document.getElementById('myForm'));
+	    Ehovel.submitform(task, document.getElementById('myForm'));
 	}
 }
 </script> 

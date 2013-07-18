@@ -133,6 +133,7 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     			//客户端对应的文件对象的名称
     			$fileName = (isset($_POST['customFileName']) && $_POST['customFileName']) ? $_POST['customFileName'] : $_POST['Filename'];
     			$catalogId = (isset($_POST['catalogId']) && $_POST['catalogId']) ? $_POST['catalogId'] : 0;
+    			echo 1;exit;
     			//待保存数据
     			$up = Uploader::factory("upload");
     			$info = $up->getFileInfo();
@@ -147,7 +148,7 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     						'attach_id'=>$ossName,
     						);
     				$this->_do_add($resourceData);
-    				echo '1';exit;
+    				echo json_encode($info);exit;
     			} else {
     				echo '上传错误';
     			}

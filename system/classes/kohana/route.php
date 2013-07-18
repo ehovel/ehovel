@@ -35,7 +35,7 @@
  */
 class Kohana_Route {
 
-	// Defines the pattern of a <segment>
+	// Defines the pattern of a <segment>P
 	const REGEX_KEY     = '<([a-zA-Z0-9_]++)>';
 
 	// What can be part of a <segment> value

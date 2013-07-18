@@ -102,7 +102,7 @@
 <div id="add_tag_ifm" class="ui-dialog-content ui-widget-content" style="width:auto;">
     <iframe style="border:0px;width:100%;height:95%;" frameborder="0" src="" scrolling="auto"></iframe>
 </div>
-<script type="text/javascript" src="/statics/js/jquery.fancybox-1.3.4.pack.js"></script>
+<script type="text/javascript" src="/statics/js/jquery.fancybox-1.3.4.js"></script>
 <script type="text/javascript">
     function facyboxclose() {
     	$.fancybox.close();
@@ -113,6 +113,8 @@
     		'autoScale' : false,
 	   		 'transitionIn' : 'elastic',
 			 'transitionOut' : 'elastic',
+			 'title':'编辑资源',
+			 'titlePosition':'inside'
     		});
     	$("a.ori_img").fancybox();
         $('#check_all').click(function(){
@@ -129,7 +131,7 @@
             }
         });
     });
-    Joomla.submitbutton = function(task) {
-    	Joomla.submitform(task, document.getElementById('myForm'));
+    Ehovel.submitbutton = function(task) {
+    	Ehovel.submitform(task, document.getElementById('myForm'));
     }
 </script>

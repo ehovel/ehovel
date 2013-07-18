@@ -6,7 +6,7 @@ class Route extends Kohana_Route {
 	{
 		return isset(Route::$_routes[$name]);
 	}
-	
+
 	/**
 	 * Generates a URI for the current route based on the parameters given.
 	 *

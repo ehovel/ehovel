@@ -39,7 +39,7 @@ class Model_Menu extends ORM{
     public function get_all_menus($pid=0)
     {
         static $all_menus = array();
-        empty($all_menus) && $all_menus = BES::model('Menu')->order_by('position', 'DESC')->find_all()->as_array();
+        empty($all_menus) && $all_menus = EHOVEL::model('Menu')->order_by('position', 'DESC')->find_all()->as_array();
         $return_menu = array();
         foreach($all_menus as $menu){
             if($menu->pid == $pid){
@@ -56,7 +56,7 @@ class Model_Menu extends ORM{
     public function has_children()
     {
         if($this->loaded()){
-            return BES::model('Menu')->where('pid', '=', $this->id)->count_all() > 0;
+            return EHOVEL::model('Menu')->where('pid', '=', $this->id)->count_all() > 0;
         }
         return false;
     }

@@ -13,6 +13,9 @@
                 return '<a href="javascript:void(0);" rel="id='+product_id+'&on_sale=Y" title="deleted"><i class="icon-trash"></i></a>';
             }
         }
+        function iconEdit(id) {
+            return '<a href="<?php echo Url::site('cms_content/edit');?>/' + id + '" title="edit"><i style="color:#51A351;" class="icon-ok"></i></a>'
+        }
     $('.on_sale').live('click', function(){
         var obj = $(this);
         var obj_p = $(this).parent();
@@ -36,14 +39,18 @@
     jQuery(document).ready(function(){
         jQuery("#whitelist").jqGrid({
             url: '<?php echo Request::factory()->current()->url(); ?>',
-            colNames:['<?php echo __('ID'); ?>','<?php echo __('Title') ?>','<?php echo __('Category') ?>','<?php echo __('User') ?>','<?php echo __('Language') ?>','<?php echo __('Modified Time'); ?>','<?php echo __('Status'); ?>'],
-            colModel:[ {name:'id',index:'id', width:20,align:"right"},
-                       {name:'title',index:'title'}, 
-                       {name:'cat_name',index:'cat_name'}, 
-                       {name:'modified_by',index:'modified_by', width:50}, 
-                       {name:'language',index:'language', width:30, align:"right"}, 
-                       {name:'modified',index:'modified', width:60, align:"right"}, 
-                       {name:'state',index:'state', width:25,
+            colNames:['<?php echo __('Action') ?>','<?php echo __('Title') ?>','<?php echo __('Category') ?>','<?php echo __('User') ?>','<?php echo __('Language') ?>','<?php echo __('Modified Time'); ?>','<?php echo __('Status'); ?>','<?php echo __('ID'); ?>'],
+            colModel:[ 
+                       {name:'id',index:'id', width:50,align:"right",formatter:function(cellValue, options, rowObject){
+                                    return iconEdit(rowObject.id, cellValue);
+                                }
+                        },
+                       {name:'title',index:'title', width:500}, 
+                       {name:'cat_name',index:'cat_name', width:300}, 
+                       {name:'modified_by',index:'modified_by', width:100, align:"center"}, 
+                       {name:'language',index:'language', width:60, align:"right"}, 
+                       {name:'modified',index:'modified', width:150, align:"right"}, 
+                       {name:'state',index:'state', align:"center",width:100,
                       		formatter:function(cellValue, options, rowObject){
       				                return iconState_content(rowObject.id, cellValue);
       				        	},
@@ -52,7 +59,8 @@
       				                dataUrl: '<?php echo Ehovel::url('cms_content/searchoptions', array('key' => 'state')); ?>',
       				                buildSelect: jqGridBuildSelect
       				            }
-      			        }
+      			        },
+                        {name:'id',index:'id', width:100,align:"left"}
                         ],
             sortable: true,
             datatype: 'json',
@@ -60,6 +68,7 @@
             pager: '#pager',
             pgbuttons: true,
             height: '100%',
+            width:1485,
             autowidth: true,
             viewrecords: true,
             multiselect: true,

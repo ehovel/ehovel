@@ -114,10 +114,10 @@ class EHOVEL {
             
             $explode = explode('/', $uri);
             if (isset($explode[0]) AND strtolower($explode[0]) !== 'index') {
-                $params['controller'] = $explode[0];
+                $params['controller'] = strtolower($explode[0]);
             }
             if (isset($explode[1]) AND strtolower($explode[1]) !== 'index') {
-                $params['action'] = $explode[1];
+                $params['action'] = strtolower($explode[1]);
             }
             
             return Route::url($route_rule, $params);

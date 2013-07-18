@@ -260,11 +260,14 @@
 }
 
 .fancybox-title-inside {
-	padding-bottom: 10px;
-	text-align: center;
-	color: #333;
-	background: #fff;
+	padding: 5px 10px;
+	text-align: left;
+	background: #1685B1;
 	position: relative;
+	color: #F5F5F5;
+    font-size: 14px !important;
+    font-weight: bold;
+    line-height: 26px;
 }
 
 .fancybox-title-outside {
@@ -289,8 +292,8 @@
 .fancybox-title-float {
 	position: absolute;
 	left: 0;
-	bottom: -20px;
-	height: 32px;
+	top: -13px;
+	height: 33px;
 }
 
 #fancybox-title-float-wrap {
@@ -306,7 +309,7 @@
 
 #fancybox-title-float-left {
 	padding: 0 0 0 15px;
-	background: url('fancybox.png') -40px -90px no-repeat;
+	/*background: url('fancybox.png') -40px -90px no-repeat;*/
 }
 
 #fancybox-title-float-main {
@@ -314,12 +317,12 @@
 	line-height: 29px;
 	font-weight: bold;
 	padding: 0 0 3px 0;
-	background: url('fancybox-x.png') 0px -40px;
+	/*background: url('fancybox-x.png') 0px -40px;*/
 }
 
 #fancybox-title-float-right {
 	padding: 0 0 0 15px;
-	background: url('fancybox.png') -55px -90px no-repeat;
+	/*background: url('fancybox.png') -55px -90px no-repeat;*/
 }
 
 /* IE6 */

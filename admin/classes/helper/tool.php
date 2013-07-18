@@ -75,7 +75,7 @@ class Helper_Tool{
      *
      * @return String
      */
-    public function get_client_ip(){
+    public static function get_client_ip(){
         if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
             $ip = getenv("HTTP_CLIENT_IP");
         else if (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown"))

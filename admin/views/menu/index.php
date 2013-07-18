@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.'); ?>
-<?php echo BES::css('demo_table_jui');?>
-<?php echo BES::js('jquery.dataTables.min');?>
+<?php echo EHOVEL::css('demo_table_jui');?>
+<?php echo EHOVEL::js('jquery.dataTables.min');?>
 <script type="text/javascript">
     jQuery(function($) {
         $('#datatable').dataTable({
@@ -11,7 +11,7 @@
                 { "bSortable": false, "aTargets": [ 0,1,2,3,4,5,6,7 ] }
             ],
             "oLanguage": {
-                "sUrl": "<?php echo STATICS_BASE_URL;?>js/datatables/i18n/<?php echo $language;?>.txt"
+                "sUrl": "<?php echo STATICS_BASE_URL;?>js/datatables/i18n/zh.txt"
             }
         });
 
@@ -26,7 +26,6 @@
 </script>
 <section class="container_12 clearfix">
     <section id="main">
-        <?php remind::render_current();?>
         <article>
             <h2><?php echo __('System Menu List');?></h2>
 
@@ -34,7 +33,7 @@
                 <div class="actions">
                     <ul class="tabletoolbar">
                         <li>
-                            <?php echo HTML::add_anchor(BES::url('menu/add'), __('Add System Menu'));?>
+                            <?php echo HTML::add_anchor(EHOVEL::url('menu/add'), __('Add System Menu'));?>
                         </li>
                     </ul>
                 </div>

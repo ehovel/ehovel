@@ -49,13 +49,15 @@ class Model_Auth_Admin extends ORM {
      * @return Model_Auth_Admin
      */
     public static function get_current_user($session_id=null)
-    {$user = ORM::factory('Admin_auth',1);print_r($user);exit;return $user;
+    {
+        $user = ORM::factory('Auth_admin',1);
+        self::$_current_user = $user;
         if(empty(self::$_current_user))
         {
             $session = Session::instance(NULL, $session_id);
             $user = $session->get('EH_admin');
             $secure = $session->get('EH_admin_secure');
-            $ip = Tool::get_client_ip();
+            $ip = Helper_Tool::get_client_ip();
             if(!empty($user) && $user->loaded())
             {
                 $cur_secure = md5($user->id . $user->username . $ip);

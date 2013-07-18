@@ -1,24 +1,18 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.'); ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title></title>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <link rel="stylesheet" href="/statics/css/bootstrap.css" type="text/css"></link>
-    <link rel="stylesheet" href="/statics/js/uploadify/uploadify.css" type="text/css"></link>
-    <script type="text/javascript" src="/statics/js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="/statics/js/bootstrap.js"></script>
-    <script type="text/javascript" src="/statics/js/uploadify/jquery.uploadify.js"></script>
-</head>
-<body>
-    <div class="container">
+<link rel="stylesheet" href="/statics/css/bootstrap.css" type="text/css"></link>
+<link rel="stylesheet" href="/statics/js/uploadify/uploadify.css" type="text/css"></link>
+<script type="text/javascript">
+	if (typeof jQuery == 'undefined') {
+		document.write("<script type=\"text/javascript\" src=\"/statics/js/jquery-1.7.2.min.js\"><\/script>");
+	}
+</script>
+<script type="text/javascript" src="/statics/js/uploadify/jquery.uploadify.js"></script>
+<div class="container">
     	<ul class="nav nav-tabs" id="myTab">
 			<li class="active"><a data-toggle="tab" href="#resource_local">本地上传</a></li>
 			<li><a data-toggle="tab" href="#resource_data">资源库选择</a></li>
 			<li><a data-toggle="tab" href="#resource_remote">网络资源</a></li>
 		</ul>
-		<fieldset class="adminform">
 		<div class="tab-content" id="myTabContent">
 			<div class="tab-pane fade in active" id="resource_local">
 				<div class="form-horizontal">
@@ -44,8 +38,9 @@
 		            </div>
 		            <div class="control-group">
 		              	<div class="controls">
-		              		<button type="submit" class="btn btn-primary" onclick="doupload()">开始上传</button>
-			   				<button type="button" class="btn" onclick="">取消</button>
+		              		<button type="submit" class="btn btn-primary" onclick="doupload()"><i class=" icon-upload-alt"></i>开始上传</button>
+		              		<button type="submit" class="btn btn-primary" onclick="doinsert()">插入选中</button>
+			   				<button type="button" class="btn" onclick="facyboxclose();">取消</button>
 		              	</div>
 			    	</div>
 		    	</div>
@@ -57,11 +52,13 @@
 				网络资源
 			</div>
 		</div>
-		</fieldset>
 	<?php $timestamp = time();?>
     <script type="text/javascript">
 	    function doupload() {
 	    	$('#file_upload').uploadify('upload','*');
+	    }
+	    function doinsert() {
+			
 	    }
 	    $(document).ready(function() {
 	        $("#file_upload").uploadify({
@@ -70,25 +67,21 @@
 					'token'     : '<?php echo md5('unique_salt' . $timestamp);?>'
 				},
 	            //开启调试
-	            'debug' : true,
+	            'debug' : false,
 	            //是否自动上传
-	            'auto':true,
+	            'auto':false,
 	            //超时时间
 	            'successTimeout':99999,
 	            //flash
 	            'swf': "/statics/js/uploadify/uploadify.swf",
-	            //不执行默认的onSelect事件
-	            'overrideEvents' : ['onDialogClose'],
 	            //文件选择后的容器ID
 	            'queueID':'uploadfileQueue',
-	            //服务器端脚本使用的文件对象的名称 $_FILES个['upload']
+	            //服务器端脚本使用的文件对象的名称 $_FILES['upload']
 	            'fileObjName':'upload',
 	            //上传处理程序
 	            'uploader':'/admin/resource/uploaddialog',
 	            'buttonClass':'btn',
 	            'buttonText':'选择文件',
-	            //浏览按钮的背景图片路径
-	            //'buttonImage':'/statics/js/uploadify/upbutton.gif',
 	            //浏览按钮的宽度
 	            'width':'80',
 	            //浏览按钮的高度
@@ -98,11 +91,13 @@
 	            //允许上传的文件后缀
 	            'fileTypeExts':'*.jpg;*.jpge;*.gif;*.png',
 	            //上传文件的大小限制
-	            'fileSizeLimit':'1MB',
+	            'fileSizeLimit':'2MB',
 	            //上传数量
 	            'queueSizeLimit' : 5,
+	            //上传完成后是否删除进度条
+	            'removeCompleted':false,
 	            //每次更新上载的文件的进展
-	            'itemTemplate':'<div id="${fileID}" class="uploadify-queue-item">\
+	            'itemTemplate':'<div id="${fileID}" class="uploadify-queue-item"><img style="display:none;" src=""/>\
 					<div class="cancel">\
 					<a href="javascript:$(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')">X</a>\
 				</div><input type="text" value="${fullName}" id="name_${fileID}"/>\
@@ -111,10 +106,6 @@
 					<div class="uploadify-progress-bar bar"><!--Progress Bar--></div>\
 				</div>\
 			</div>',
-	            'onUploadProgress' : function(file, bytesUploaded, bytesTotal, totalBytesUploaded, totalBytesTotal) {
-	                 //有时候上传进度什么想自己个性化控制，可以利用这个方法
-	                 //使用方法见官方说明
-	            },
 	            //选择上传文件后调用
 	            'onSelect' : function(file) {
 	                 
@@ -150,10 +141,13 @@
 	            },
 	            //上传到服务器，服务器返回相应信息到data里
 	            'onUploadSuccess':function(file, data, response){
-	                alert(data);
+		            var currentFile = file.id;
+	            	this.queueData.files.currentFile.hide();
+		            $(currentFile).children('.uploadify-progress').hidden();
+		            $(currentFile).children('img').value(data.src).show();
+	                console.log(data);
 	            }
 	        });
 	    });
     </script>
-</body>
-</html>
+</div>

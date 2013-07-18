@@ -9,6 +9,9 @@ class Controller_Admin_Cms_Content extends Controller_Admin_Base {
 	
 	public function action_index()
 	{
+		$toolBarhelper = Helper_Toolbar::getInstance();
+		$toolBarhelper->appendButton('new','新建','content.add');
+		$this->toolBar =  $toolBarhelper->render();
 		if ($this->request->is_ajax()) {
 			$contents       = ORM::factory('content');
 			
