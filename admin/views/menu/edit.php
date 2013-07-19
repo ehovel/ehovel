@@ -7,7 +7,7 @@
             title: '<?php echo __('Select Node')?>',
             autoOpen: false,
             modal: true,
-            width:200,
+            width:400,
             height:500,
             buttons:{
                 '<?php echo __('Sure')?>':function(){
@@ -27,54 +27,64 @@
 <section class="container_12 clearfix">
     <article>
         <h1><?php echo !empty($current_menu) ? __('Edit System Menu') : __('Add System Menu');?></h1>
-        <form class="uniform" id="myForm" action="<?php echo Url::current(true);?>" method="post">
-            <dl>
-                <dt><label for="name"><?php echo __('Name');?><span class="require">*</span></label></dt>
-                <dd><input type="text" name="name" id="name" class="medium required" maxlength="64"
-                           value="<?php echo !empty($current_menu) ? $current_menu->name : '';?>"/></dd>
-                <dt><label for="name_en"><?php echo __('English name');?><span class="require">*</span></label></dt>
-                <dd><input type="text" name="name_en" id="name_en" class="medium required" maxlength="64"
-                           value="<?php echo !empty($current_menu) ? $current_menu->title : '';?>"/></dd>
-
-                <dt><label for="pid"><?php echo __('Parent item');?></label></dt>
-                <dd>
-                    <?php $name_field = Session::instance()->get('l') == 'zh' ? 'name' : 'name_en';?>
+        <form class="uniform form-horizontal" id="myForm" action="<?php echo Url::current(true);?>" method="post">
+            <div class="control-group">
+                <label class="control-label" for="name"><?php echo __('Name');?><span class="require">*</span></label>
+                <div class="controls">
+                    <input type="text" name="name" id="name" class="medium required" maxlength="64"
+                           value="<?php echo !empty($current_menu) ? $current_menu->name : '';?>"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="title"><?php echo __('Title');?><span class="require">*</span></label>
+                <div class="controls">
+                    <input type="text" name="title" id="title" class="medium required" maxlength="64"
+                           value="<?php echo !empty($current_menu) ? $current_menu->title : '';?>"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="pid"><?php echo __('Parent item');?></label>
+                <div class="controls">
+                    <?php $name_field = 'zh';?>
                     <select name="pid" id='pid' class="medium">
                         <option value="0"><?php echo __('Root Menu');?></option>
                         <?php echo empty($current_menu) ? Helper_Menu::generate_menu_option($menus, $name_field) : Helper_Menu::generate_menu_option($menus, $name_field,$current_menu);?>
                     </select>
-                </dd>
-                <dt><label for="uri"><?php echo __('Uri');?></label></dt>
-                <dd>
-                    <input type="text" name="uri" id="uri" readonly class="medium" maxlength="255" value="<?php echo !empty($current_menu) ? $current_menu->uri : '';?>" />
-                    <input type="button" name="select_node" id="select_node" class="button" style="width:90px" value="<?php echo __('Select Node')?>"/>
-                             
-                </dd>
-
-                <dt><label for="position"><?php echo __('Position');?></label></dt>
-                <dd>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="uri"><?php echo __('Uri');?></label>
+                <div class="controls">
+                    <input type="text" name="name" id="name" class="medium required" maxlength="64"
+                           value="<?php echo !empty($current_menu) ? $current_menu->name : '';?>"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="uri"><?php echo __('Position');?><span class="require">*</span></label>
+                <div class="controls">
                     <input type="text" name="position" id="position" class="tiny digits" maxlength="10" value="<?php echo !empty($current_menu) ? $current_menu->position : 0;?>"/>
-                </dd>
-                
-                <dt><label for="is_show"><?php echo __('Is Show');?></label></dt>
-                <dd>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="is_show"><?php echo __('Is Show');?></label>
+                <div class="controls">
                     <select name="is_show" id="is_show">
                         <option value="Y" <?php if(!empty($current_menu) && $current_menu->is_show=='Y'){ ?>selected="selected"<?php }?>><?php echo __('Yes');?></option>
                         <option value="N" <?php if(!empty($current_menu) && ($current_menu->is_show=='N' || $current_menu->is_show=='')){ ?>selected="selected"<?php }?>><?php echo __('No');?></option>
                     </select>
-                </dd>
-                
-                
-
-            </dl>
+                </div>
+            </div>
             <p>
-                <button type="submit" class="button big"><?php echo __('Save');?></button>
+                <button type="submit" class="btn btn-info big"><?php echo __('Save');?></button>
                 <?php echo HTML::cancel_anchor(EHOVEL::url('menu'));?>
             </p>
         </form>
 <div style="display:none;" id="nodes_list">
-<input type="radio" value="" name="node" /><?php echo __('Empty uri');?>
-<?php echo get_auth_list($nodes);?>
+    <label class="radio">
+      <input type="radio" name="node" id="optionsRadios1" value="option1">
+      <?php echo __('Empty uri');?>
+    </label>
+    <?php echo get_auth_list($nodes);?>
 </div>
 <?php 
 function get_auth_list($nodes, $level=1)

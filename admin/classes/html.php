@@ -180,7 +180,7 @@ class HTML extends Kohana_HTML {
             $title = __('Cancel');
         }
         if (empty($attributes['class'])) {
-            $attributes['class'] = 'button white big';
+            $attributes['class'] = 'btn';
         }
         return '<button' . HTML::attributes($attributes) . '>' . $title . '</button>';
     }

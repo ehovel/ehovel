@@ -1,0 +1,117 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# Explicit paths specified without -i nor -o; assuming --only paths...
+# On branch master
+# You are currently rebasing branch 'master' on '086a858'.
+#   (all conflicts fixed: run "git rebase --continue")
+#
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file:   .tags
+#	modified:   admin/bootstrap.php
+#	modified:   admin/cache/a4/a4b50012e9a6c5200c40dc59b07a59c958d72207.txt
+#	modified:   admin/classes/controller/admin/base.php
+#	modified:   admin/classes/controller/admin/index.php
+#	modified:   admin/classes/controller/admin/menu.php
+#	modified:   admin/classes/helper/menu.php
+#	modified:   admin/classes/helper/tool.php
+#	modified:   admin/classes/helper/toolbar.php
+#	new file:   admin/classes/html.php
+#	modified:   admin/classes/model/menu.php
+#	new file:   admin/logs/2013/06/01.php
+#	new file:   admin/logs/2013/07/18.php
+#	modified:   admin/views/layout/default.php
+#	modified:   admin/views/menu/edit.php
+#	modified:   admin/views/menu/index.php
+#	new file:   attach/130415004894-120x120.jpg
+#	new file:   attach/130415022535-120x120.jpg
+#	new file:   attach/130415036070-120x120.jpg
+#	new file:   attach/130415049138-120x120.gif
+#	new file:   attach/130415062229-120x120.gif
+#	new file:   attach/130415108623-120x120.jpg
+#	new file:   attach/130415151122-120x120.jpg
+#	new file:   attach/130415164713-120x120.jpg
+#	new file:   attach/130415238552-120x120.jpg
+#	new file:   attach/130415353207-120x120.jpg
+#	new file:   attach/130415407032-120x120.jpg
+#	new file:   attach/130415617306-120x120.jpg
+#	new file:   attach/130415617306.jpg
+#	new file:   attach/130415676101-120x120.jpg
+#	new file:   attach/130415775074-120x120.jpg
+#	new file:   attach/130415790787-120x120.jpg
+#	new file:   attach/130415930491-120x120.jpg
+#	new file:   attach/130415951836-120x120.jpg
+#	new file:   front/logs/2013/07/18.php
+#	modified:   modules/auth/classes/helper/auth.php
+#	modified:   modules/auth/classes/model/auth/admin.php
+#	modified:   modules/cms/classes/controller/admin/cms/content.php
+#	modified:   modules/cms/i18n/zh.php
+#	modified:   modules/cms/views/content/editform.php
+#	modified:   modules/cms/views/content/index.php
+#	modified:   modules/ehovel/classes/ehovel.php
+#	modified:   modules/ehovel/classes/url.php
+#	modified:   modules/resource/classes/controller/admin/resource.php
+#	modified:   modules/resource/views/resource_form.php
+#	modified:   modules/resource/views/resource_list.php
+#	modified:   modules/resource/views/resource_uploaddialog.php
+#	modified:   statics/css/bootstrap.css
+#	new file:   statics/css/custom-theme/Selene-master.zip
+#	new file:   statics/css/custom-theme/images/images.png
+#	new file:   statics/css/custom-theme/images/lines.png
+#	new file:   statics/css/custom-theme/images/ui-bg_diagonals-thick_18_b81900_40x40.png
+#	new file:   statics/css/custom-theme/images/ui-bg_diagonals-thick_20_666666_40x40.png
+#	new file:   statics/css/custom-theme/images/ui-bg_flat_10_000000_40x100.png
+#	new file:   statics/css/custom-theme/images/ui-bg_glass_100_f6f6f6_1x400.png
+#	new file:   statics/css/custom-theme/images/ui-bg_glass_100_fdf5ce_1x400.png
+#	new file:   statics/css/custom-theme/images/ui-bg_gloss-wave_35_f6a828_500x100.png
+#	new file:   statics/css/custom-theme/images/ui-bg_highlight-soft_100_eeeeee_1x100.png
+#	new file:   statics/css/custom-theme/images/ui-bg_highlight-soft_75_ffe45c_1x100.png
+#	new file:   statics/css/custom-theme/images/ui-icons_228ef1_256x240.png
+#	new file:   statics/css/custom-theme/images/ui-icons_494f5c_256x240.png
+#	new file:   statics/css/custom-theme/images/ui-icons_666666_256x240.png
+#	new file:   statics/css/custom-theme/images/ui-icons_ef8c08_256x240.png
+#	new file:   statics/css/custom-theme/images/ui-icons_ffd27a_256x240.png
+#	new file:   statics/css/custom-theme/images/ui-icons_ffffff_256x240.png
+#	new file:   statics/css/custom-theme/images1.8.13/images.png
+#	new file:   statics/css/custom-theme/images1.8.13/lines.png
+#	new file:   statics/css/custom-theme/images1.8.13/ui-bg_diagonals-thick_18_b81900_40x40.png
+#	new file:   statics/css/custom-theme/images1.8.13/ui-bg_diagonals-thick_20_666666_40x40.png
+#	renamed:    statics/css/custom-theme/images/ui-bg_flat_0_aaaaaa_40x100.png -> statics/css/custom-theme/images1.8.13/ui-bg_flat_0_aaaaaa_40x100.png
+#	new file:   statics/css/custom-theme/images1.8.13/ui-bg_flat_10_000000_40x100.png
+#	renamed:    statics/css/custom-theme/images/ui-bg_flat_75_ffffff_40x100.png -> statics/css/custom-theme/images1.8.13/ui-bg_flat_75_ffffff_40x100.png
+#	new file:   statics/css/custom-theme/images1.8.13/ui-bg_glass_100_f6f6f6_1x400.png
+#	new file:   statics/css/custom-theme/images1.8.13/ui-bg_glass_100_fdf5ce_1x400.png
+#	renamed:    statics/css/custom-theme/images/ui-bg_glass_55_fbf9ee_1x400.png -> statics/css/custom-theme/images1.8.13/ui-bg_glass_55_fbf9ee_1x400.png
+#	new file:   statics/css/custom-theme/images1.8.13/ui-bg_glass_65_ffffff_1x400.png
+#	renamed:    statics/css/custom-theme/images/ui-bg_glass_75_dadada_1x400.png -> statics/css/custom-theme/images1.8.13/ui-bg_glass_75_dadada_1x400.png
+#	renamed:    statics/css/custom-theme/images/ui-bg_glass_75_e6e6e6_1x400.png -> statics/css/custom-theme/images1.8.13/ui-bg_glass_75_e6e6e6_1x400.png
+#	renamed:    statics/css/custom-theme/images/ui-bg_glass_95_fef1ec_1x400.png -> statics/css/custom-theme/images1.8.13/ui-bg_glass_95_fef1ec_1x400.png
+#	new file:   statics/css/custom-theme/images1.8.13/ui-bg_gloss-wave_35_f6a828_500x100.png
+#	new file:   statics/css/custom-theme/images1.8.13/ui-bg_highlight-soft_100_eeeeee_1x100.png
+#	renamed:    statics/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png -> statics/css/custom-theme/images1.8.13/ui-bg_highlight-soft_75_cccccc_1x100.png
+#	new file:   statics/css/custom-theme/images1.8.13/ui-bg_highlight-soft_75_ffe45c_1x100.png
+#	new file:   statics/css/custom-theme/images1.8.13/ui-icons_222222_256x240.png
+#	new file:   statics/css/custom-theme/images1.8.13/ui-icons_228ef1_256x240.png
+#	renamed:    statics/css/custom-theme/images/ui-icons_2e83ff_256x240.png -> statics/css/custom-theme/images1.8.13/ui-icons_2e83ff_256x240.png
+#	renamed:    statics/css/custom-theme/images/ui-icons_454545_256x240.png -> statics/css/custom-theme/images1.8.13/ui-icons_454545_256x240.png
+#	new file:   statics/css/custom-theme/images1.8.13/ui-icons_494f5c_256x240.png
+#	new file:   statics/css/custom-theme/images1.8.13/ui-icons_666666_256x240.png
+#	renamed:    statics/css/custom-theme/images/ui-icons_888888_256x240.png -> statics/css/custom-theme/images1.8.13/ui-icons_888888_256x240.png
+#	renamed:    statics/css/custom-theme/images/ui-icons_cd0a0a_256x240.png -> statics/css/custom-theme/images1.8.13/ui-icons_cd0a0a_256x240.png
+#	new file:   statics/css/custom-theme/images1.8.13/ui-icons_ef8c08_256x240.png
+#	new file:   statics/css/custom-theme/images1.8.13/ui-icons_ffd27a_256x240.png
+#	new file:   statics/css/custom-theme/images1.8.13/ui-icons_ffffff_256x240.png
+#	new file:   statics/css/custom-theme/jquery-ui-1.8.17.custom.css
+#	modified:   statics/css/fancybox/jquery.fancybox-1.3.4.css
+#	modified:   statics/css/style.css
+#	new file:   statics/img/no_image_available.png
+#	renamed:    statics/js/joomla_template.js -> statics/js/ehovel_template.js
+#	modified:   statics/js/jqGrid/css/ui.jqgrid.css
+#	new file:   statics/js/jquery.fancybox-1.3.4.js
+#	modified:   statics/js/uploadify/jquery.uploadify.js
+#	modified:   system/classes/kohana/route.php
+#	modified:   system/classes/route.php
+#
+

@@ -2,6 +2,7 @@
 <script type="text/javascript" src="/statics/js/jqGrid/i18n/grid.locale-cn.js"></script>
 <script type="text/javascript" src="/statics/js/jqGrid/jquery.jqGrid.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/statics/js/jqGrid/css/ui.jqgrid.css" />
+<?php echo Ehovel::js('ehovel_template');?>
 
 <script type="text/javascript">
         function iconState_content(product_id, active) {
@@ -14,7 +15,7 @@
             }
         }
         function iconEdit(id) {
-            return '<a href="<?php echo Url::site('cms_content/edit');?>/' + id + '" title="edit"><i style="color:#51A351;" class="icon-ok"></i></a>'
+            return '<a href="<?php echo EHOVEL::url('cms_content/edit');?>/' + id + '" title="edit"><i style="color:#51A351;" class="icon-ok"></i></a>'
         }
     $('.on_sale').live('click', function(){
         var obj = $(this);
@@ -72,8 +73,8 @@
             autowidth: true,
             viewrecords: true,
             multiselect: true,
-            rowNum: 20,
-            rowList: [10,20,50,100],
+            rowNum: 15,
+            rowList: [15,25,50,100],
             sortorder: 'asc',
             jsonReader: {
                 root: 'rows',
@@ -88,55 +89,23 @@
         jQuery("#whitelist").jqGrid('navGrid',"#pager",{edit:false,add:false,del:false});
         jQuery("#whitelist").jqGrid('filterToolbar');
     });
-</script>
-                        
-<section class="container_12 clearfix">
-    <section id="main">
-        <?php Message::render(); ?>
-            <div class="tabcontent">
-                <div id="tabs-1">
-				
-					<fieldset id="productSearch">
-						<legend><?php echo __('Product List');?></legend>
-					</fieldset>
-                    <div class="tableheader clearfix">
-                        <div class="actions">
-                            <ul class="tabletoolbar">
-                                <li><a id="add" class="add btn btn-success" href="<?php //echo Route::url('product/add'); ?>"><i class="icon-plus"></i><?php echo __('Add New');?></a></li>
-                                <!--<li><a href="javascript:void(0)" class="export" id="do_export"><?php echo __('Export');?></a></li>-->
-                            </ul>
-                        </div>
-                    </div>
-                    <form>
-                        <table id="whitelist"></table>
-                        <div id="pager"></div>
-                    </form>
-                </div>
-            </div>
-    </section>
+</script>                
+<section class="container-fluid clearfix">
+    <div class="tabcontent">
+        <div id="tabs-1">
+		
+			<fieldset id="productSearch">
+				<legend><?php echo __('Product List');?></legend>
+			</fieldset>
+                <form action="<?php echo URL::current(true); ?>" method="post" id="adminForm">
+                    <input type="hidden" name="task" value="" />
+                    <input type="hidden" name="return" value="" />
+                    <table id="whitelist"></table>
+                    <div id="pager"></div>
+                </form>
+        </div>
+    </div>
 </section>
-<div id="dialog_attributeset_selector" title="<?php echo __('Select Category And Type'); ?>" style="display:none;">
-    <form class="uniform" action="<?php //echo Route::url('product/add'); ?>" method="get">
-        <dl>
-            <dt><label for="type"><?php echo __('Type');?></label></dt>
-            <dd>
-                <select name="type" id="product_type" class="required">
-                    <option value="SIMPLE"></option>
-                    <option value="CONFIGURABLE"></option>
-                </select>
-            </dd>
-            <dt><label for="category_id"><?php echo __('Category');?></label></dt>
-            <dd>
-                <select name="category_id" id="category_id" class="required">
-                <?php foreach($categories as $category): ?>
-                <option value="<?php echo $category->id?>"><?php echo str_repeat('--',$category->level-1).$category->name;?></option>
-                <?php endforeach;?>
-                </select>
-            </dd>
-        </dl>
-    </form>
-</div>
-
 <script type="text/javascript">
         var default_order = '0';
         $('input[name=position]').live('focus',function(){
