@@ -48,15 +48,24 @@ class Model_Auth_Admin extends ORM {
      * @param string $session_id
      * @return Model_Auth_Admin
      */
+<<<<<<< Updated upstream
     public static function get_current_user($session_id=null) {
         $user = ORM::factory('Auth_admin',1);
         self::$_current_user = $user;
+=======
+    public static function get_current_user($session_id=null)
+    {$user = ORM::factory('Admin_auth',1);print_r($user);exit;return $user;
+>>>>>>> Stashed changes
         if(empty(self::$_current_user))
         {
             $session = Session::instance(NULL, $session_id);
             $user = $session->get('EH_admin');
             $secure = $session->get('EH_admin_secure');
+<<<<<<< Updated upstream
             $ip = Helper_Tool::get_client_ip();
+=======
+            $ip = Tool::get_client_ip();
+>>>>>>> Stashed changes
             if(!empty($user) && $user->loaded())
             {
                 $cur_secure = md5($user->id . $user->username . $ip);
