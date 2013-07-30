@@ -77,7 +77,7 @@ class HTML extends Kohana_HTML {
         if (isset($attributes['class'])) {
             $attributes['class'] = $attributes['class'] . ' add';
         } else {
-            $attributes['class'] = 'add';
+            $attributes['class'] = 'btn btn-success';
         }
         return HTML::anchor($uri, $title, $attributes);
     }

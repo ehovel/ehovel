@@ -100,21 +100,17 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
                 }
                 $current_menu->pid = $pid;
                 $current_menu->name = trim($this->request->post('name'));
-                $current_menu->name_en = trim($this->request->post('name_en'));
+                $current_menu->title = trim($this->request->post('title'));
                 $current_menu->uri= trim($this->request->post('uri'));
                 $current_menu->position= trim($this->request->post('position'));
                 $current_menu->is_show = trim($this->request->post('is_show'));
                 $current_menu->save($current_menu->validation());
                 if($current_menu->saved()){
-                    Remind::factory(Remind::TYPE_SUCCESS)
-                        ->message(__('Edited Successfully!'))
-                        ->redirect(EHOVEL::url('menu/index'))
-                        ->send();
+                    Message::set(Message::SUCCESS,__('Edited Successfully!'));
+                    $this->redirect(EHOVEL::url('menu/index'));
                 }else{
-                    Remind::factory(Remind::TYPE_ERROR)
-                        ->message($current_menu->validation()->errors())
-                        ->redirect(EHOVEL::url('menu/edit', array('id'=>$id)))
-                        ->send();
+                    Message::set(Message::ERROR,json_encode($current_menu->validation()->errors()));
+                    $this->redirect(EHOVEL::url('menu/edit', array('id'=>$id)));
                 }
             }
             $menus = EHOVEL::model($this->_model)->get_all_menus();
@@ -124,8 +120,7 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
                 'nodes' => Helper_Auth::get_current(),
             ));
         }catch(Exception_BES $ex){
-            Remind::factory($ex)
-                ->send();
+            Message::set($ex);
         }
     }
     /**

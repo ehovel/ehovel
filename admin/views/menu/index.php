@@ -38,7 +38,7 @@
                     </ul>
                 </div>
             </div>
-            <form class="uniform" id="adminForm" action="<?php echo url::current(true);?>" method="post"> />
+            <form class="uniform" id="adminForm" action="<?php echo url::current(true);?>" method="post" />
                 <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatable">
                     <thead>
                     <tr>

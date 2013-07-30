@@ -55,8 +55,8 @@
             <div class="control-group">
                 <label class="control-label" for="uri"><?php echo __('Uri');?></label>
                 <div class="controls">
-                    <input type="text" name="name" id="name" class="medium required" maxlength="64"
-                           value="<?php echo !empty($current_menu) ? $current_menu->name : '';?>"/>
+                    <input type="text" name="uri" id="uri" class="medium required" maxlength="64"
+                           value="<?php echo !empty($current_menu) ? $current_menu->uri : '';?>"/>
                 </div>
             </div>
             <div class="control-group">

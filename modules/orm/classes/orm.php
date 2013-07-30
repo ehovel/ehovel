@@ -34,7 +34,7 @@ class ORM extends Kohana_ORM {
 	 * @var array
 	 */
 	protected $_updated_column = array(
-			'column' => 'modified',
+			'column' => 'date_upd',
 			'format' => 'Y-m-d H:i:s',
 	);
 	/**
@@ -246,6 +246,14 @@ class ORM extends Kohana_ORM {
 		$this->before_save();
 		parent::save($validation);
 		$this->after_save();
+	}
+
+	public function saved()
+	{
+		if (empty($this->_changed)) {
+			return TRUE;
+		}
+		return $this->_saved;
 	}
 	
 	/**
