@@ -1,4 +1,5 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');?>
+<?php echo EHOVEL::js('joomla_template');?>
 <link rel="stylesheet" type="text/css" href="/statics/css/fancybox/jquery.fancybox-1.3.4.css" />
 <section id="main">
 	<fieldset>
@@ -28,7 +29,7 @@
         <!--standard table-->
         <div class="table_wrap">
             <div class="standard_table">
-                <form action="" method="">
+                <form method="post" action="<?php echo EHOVEL::admin_base_url()?>resource/processlistform" id="myForm">
                     <table class="table">
                         <tr>
                             <th width="50px" class="no_leftbor"><input class="input_c" type="checkbox" id="check_all"/></th>
@@ -55,17 +56,19 @@
                                 }
                                 ?>
                                 <tr>
-                                    <td><input class="input_c sel" type="checkbox" name="resource" value="<?php echo $resource['id']; ?>"/></td>
+                                    <td><input class="input_c sel" type="checkbox" name="eform[ids][]" value="<?php echo $resource['id']; ?>"/></td>
                                     <td>
-                                        <a href="<?php echo EHOVEL::admin_base_url(); ?>resource/edit/<?php echo $resource['id']; ?>" class="edit_item">
-                                        	<i class="icon-edit"></i>编辑</a>
+                                        <a href="<?php echo EHOVEL::admin_base_url(); ?>resource/edit/<?php echo $resource['id']; ?>" class="edit_item" title="编辑">
+                                        	<i class="icon-edit"></i></a>
+                                        <a href="<?php echo EHOVEL::admin_base_url(); ?>resource/delete?ids=<?php echo $resource['id']; ?>" class="del_item" title="删除">
+                                        	<i class="icon-trash"></i></a>
                                     </td>
                                     <td>
                                     	<span class="file_name"><?php echo $resource['title'] ? $resource['title'] : $resource['name']; ?></span>
                                     </td>
                                     <td>
                                         <span class="file_pic">
-                                        	<a class="ori_img" href="<?php echo $resource['is_storage']?Helper_Resource::get_img(array($resource['attach_id'],$resource['postfix']),'lx'):$resource['link']; ?>">
+                                        	<a class="ori_img" href="<?php echo $resource['is_storage']?Helper_Resource::get_img(array($resource['attach_id'],$resource['postfix']),'o'):$resource['link']; ?>">
                                             	<img style="max-height:120px; max-width:120px" src="<?php echo $resource['is_storage']?Helper_Resource::get_img(array($resource['attach_id'],$resource['postfix'])):$resource['link']; ?>" alt="<?php echo $resource['name']; ?>" />
                                             </a>
                                         </span> 
@@ -75,6 +78,8 @@
                             <?php endforeach; ?>
                         <?php } ?>
                     </table> 
+                    <input type="hidden" name="task" value="" />
+					<input type="hidden" name="return" value="" />
                 </form>
             </div> 
         </div>
@@ -97,7 +102,7 @@
 <div id="add_tag_ifm" class="ui-dialog-content ui-widget-content" style="width:auto;">
     <iframe style="border:0px;width:100%;height:95%;" frameborder="0" src="" scrolling="auto"></iframe>
 </div>
-<script type="text/javascript" src="/statics/js/jquery.fancybox-1.3.4.pack.js"></script>
+<script type="text/javascript" src="/statics/js/jquery.fancybox-1.3.4.js"></script>
 <script type="text/javascript">
     function facyboxclose() {
     	$.fancybox.close();
@@ -108,6 +113,8 @@
     		'autoScale' : false,
 	   		 'transitionIn' : 'elastic',
 			 'transitionOut' : 'elastic',
+			 'title':'编辑资源',
+			 'titlePosition':'inside'
     		});
     	$("a.ori_img").fancybox();
         $('#check_all').click(function(){
@@ -124,4 +131,7 @@
             }
         });
     });
+    Ehovel.submitbutton = function(task) {
+    	Ehovel.submitform(task, document.getElementById('myForm'));
+    }
 </script>

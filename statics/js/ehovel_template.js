@@ -1,20 +1,20 @@
 /**
- * @package     Joomla.Administrator
+ * @package     Ehovel.Administrator
  * @subpackage  Templates.isis
  * @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @since       3.0
  */
-if ("undefined" === typeof Joomla) var Joomla = {};
-Joomla.submitform = function(a, b) {
+if ("undefined" === typeof Ehovel) var Ehovel = {};
+Ehovel.submitform = function(a, b) {
 	"undefined" === typeof b && (b = document.getElementById("adminForm"));
 	"undefined" !== typeof a && (b.task.value = a);
 	if ("function" == typeof b.onsubmit) b.onsubmit();
 	"function" == typeof b.fireEvent && b.fireEvent("submit");
 	b.submit()
 };
-Joomla.submitbutton = function(a) {
-	Joomla.submitform(a)
+Ehovel.submitbutton = function(a) {
+	Ehovel.submitform(a)
 };
 (function($)
 {

@@ -158,7 +158,7 @@ class Helper_Toolbar{
     	}
     	else
     	{
-    		$cmd = "Joomla.submitbutton('$task')";
+    		$cmd = "Ehovel.submitbutton('$task')";
     	}
     
     	return $cmd;

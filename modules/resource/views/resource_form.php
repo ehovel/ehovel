@@ -41,7 +41,7 @@
 			<div class="control-group">
 				<label class="control-label" for="inputEmail">&nbsp;</label>
 				<div class="controls">
-					<input type="submit" id="submit_button" name="button" class="btn btn-success" value="保存"/>
+					<input type="submit" id="submit_button" name="button" class="btn btn-primary" value="保存"/>
 		            <input class="btn" type="button" onclick="facyboxclose()" value="取消"/>
 				</div>
 			</div>

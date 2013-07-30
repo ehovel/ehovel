@@ -1656,3 +1656,31 @@ footer .alignright {
 	border:none;
 	border-color:#fff;
 }
+
+/*content image thumb*/
+.choose_pics {
+    overflow: hidden;
+	padding-right:10px;
+	float:left;
+}
+.choose_pics .pic {
+    border: 1px solid #CACACA;
+    float: left;
+    overflow: hidden;
+    position: relative;
+}
+.choose_pics .act {
+    overflow: hidden;
+    padding-left: 10px;
+}
+.img120 {
+    height: 120px;
+    width: 120px;
+}
+.choose_pics ul.inline {
+	margin:0;
+}
+.choose_pics ul.inline li {
+	padding-left:16px;
+	padding-right:17px;
+}

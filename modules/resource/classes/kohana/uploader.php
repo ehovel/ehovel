@@ -9,7 +9,7 @@ abstract class Kohana_Uploader extends Kohana_Upload {
 	protected $file;                 //文件上传对象
 	protected $config = array(
     			"savePath" => '',
-    			"maxSize" => 1000, //单位KB
+    			"maxSize" => 3000, //单位KB
     			"allowFiles" => array(".gif", ".png", ".jpg", ".jpeg", ".bmp")
     	);               //配置信息
 	protected $oriName;              //原始文件名

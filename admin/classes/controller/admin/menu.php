@@ -22,8 +22,8 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
     public function action_index()
     {
         try{
-            $menus = BES::model($this->_model)->get_all_menus();
-            $this->template = BES::view('menu/index',array(
+            $menus = EHOVEL::model($this->_model)->get_all_menus();
+            $this->template = EHOVEL::view('menu/index',array(
                 'menus' => $menus,
             ));
         }catch(Exception_BES $ex){
@@ -40,12 +40,12 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
             if($_POST){
                 $pid = $this->request->post('pid');
                 if($pid != 0){
-                    $parent_menu = BES::model($this->_model, $pid);
+                    $parent_menu = EHOVEL::model($this->_model, $pid);
                     if(!$parent_menu->loaded()){
                         throw new Exception_BES(__('Parent item Loading failed.'));
                     }
                 }
-                $menu_model = BES::model($this->_model);
+                $menu_model = EHOVEL::model($this->_model);
                 $menu_model->pid = $pid;
                 $menu_model->name = trim($this->request->post('name'));
                 $menu_model->name_en = trim($this->request->post('name_en'));
@@ -58,17 +58,17 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
                 if($menu_model->saved()){
                     Remind::factory(Remind::TYPE_SUCCESS)
                         ->message(__('Saved Successfully!'))
-                        ->redirect(BES::url('menu/index'))
+                        ->redirect(EHOVEL::url('menu/index'))
                         ->send();
                 }else{
                     Remind::factory(Remind::TYPE_ERROR)
                         ->message($menu_model->validation()->errors())
-                        ->redirect(BES::url('menu/add'))
+                        ->redirect(EHOVEL::url('menu/add'))
                         ->send();
                 }
             }
-            $menus = BES::model($this->_model)->get_all_menus();
-            $this->template = BES::view('menu/edit',array(
+            $menus = EHOVEL::model($this->_model)->get_all_menus();
+            $this->template = EHOVEL::view('menu/edit',array(
                 'menus' => $menus,
                 'nodes' => Helper_Auth::get_current(),
             ));
@@ -84,50 +84,43 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
     public function action_edit()
     {
         try{
-            $id = $this->request->query('id');
-            $current_menu = BES::model($this->_model, $id);
+            $id = $this->request->param('id');
+            $current_menu = EHOVEL::model($this->_model, $id);
             if(!$current_menu->loaded()){
-                Remind::factory(Remind::TYPE_ERROR)
-                    ->message(__('Bad Request!'))
-                    ->redirect(BES::url('menu/index'))
-                    ->send();
+                Message::set(Message::SUCCESS, __('test测试提示信息'));
+                
             }
             if($_POST){
                 $pid = $this->request->post('pid');
                 if($pid != 0){
-                    $parent_menu = BES::model($this->_model, $pid);
+                    $parent_menu = EHOVEL::model($this->_model, $pid);
                     if(!$parent_menu->loaded()){
                         throw new Exception_BES(__('Parent item Loading failed.'));
                     }
                 }
                 $current_menu->pid = $pid;
                 $current_menu->name = trim($this->request->post('name'));
-                $current_menu->name_en = trim($this->request->post('name_en'));
+                $current_menu->title = trim($this->request->post('title'));
                 $current_menu->uri= trim($this->request->post('uri'));
                 $current_menu->position= trim($this->request->post('position'));
                 $current_menu->is_show = trim($this->request->post('is_show'));
                 $current_menu->save($current_menu->validation());
                 if($current_menu->saved()){
-                    Remind::factory(Remind::TYPE_SUCCESS)
-                        ->message(__('Edited Successfully!'))
-                        ->redirect(BES::url('menu/index'))
-                        ->send();
+                    Message::set(Message::SUCCESS,__('Edited Successfully!'));
+                    $this->redirect(EHOVEL::url('menu/index'));
                 }else{
-                    Remind::factory(Remind::TYPE_ERROR)
-                        ->message($current_menu->validation()->errors())
-                        ->redirect(BES::url('menu/edit', array('id'=>$id)))
-                        ->send();
+                    Message::set(Message::ERROR,json_encode($current_menu->validation()->errors()));
+                    $this->redirect(EHOVEL::url('menu/edit', array('id'=>$id)));
                 }
             }
-            $menus = BES::model($this->_model)->get_all_menus();
-            $this->template = BES::view('menu/edit',array(
+            $menus = EHOVEL::model($this->_model)->get_all_menus();
+            $this->template = EHOVEL::view('menu/edit',array(
                 'menus' => $menus,
                 'current_menu' => $current_menu,
                 'nodes' => Helper_Auth::get_current(),
             ));
         }catch(Exception_BES $ex){
-            Remind::factory($ex)
-                ->send();
+            Message::set($ex);
         }
     }
     /**
@@ -137,23 +130,23 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
     {
         try{
             $id = $this->request->query('id');
-            $current_menu = BES::model($this->_model, $id);
+            $current_menu = EHOVEL::model($this->_model, $id);
             if(!$current_menu->loaded()){
                 Remind::factory(Remind::TYPE_ERROR)
                     ->message(__('Bad Request!'))
-                    ->redirect(BES::url('menu/index'))
+                    ->redirect(EHOVEL::url('menu/index'))
                     ->send();
             }
             if($current_menu->has_children()){
                 Remind::factory(Remind::TYPE_ERROR)
                     ->message(__('Delete failed, this menu has children!'))
-                    ->redirect(BES::url('menu/index'))
+                    ->redirect(EHOVEL::url('menu/index'))
                     ->send();
             }
             $current_menu->delete();
             Remind::factory(Remind::TYPE_SUCCESS)
                 ->message(__('Delete Successfully!'))
-                ->redirect(BES::url('menu/index'))
+                ->redirect(EHOVEL::url('menu/index'))
                 ->send();
         }catch(Exception_BES $ex){
             Remind::factory($ex)

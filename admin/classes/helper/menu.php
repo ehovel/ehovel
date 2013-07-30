@@ -14,6 +14,7 @@ class Helper_Menu{
     /**
      * 生成菜单
      * @param array $menus
+     * @param int $mark
      * @return string
      */
     public static function generate_menu($menus=array(),$mark=0)
@@ -51,7 +52,7 @@ class Helper_Menu{
                 if(Helper_Auth::check($menu['uri'])){
                     $return_menu .= '<li'.(!empty($menu['children']) ? $liClass : '').'>';
                     $dataToggle = !empty($menu['children'])? ' data-toggle="dropdown" class="dropdown-toggle" ':'';
-                    $return_menu .= '<a href="'.(!empty($menu['uri']) ? Route::url($menu['uri']) : 'javascript:void(0);').'" '.$dataToggle.'>'.$menu[$name_field];
+                    $return_menu .= '<a href="'.(!empty($menu['uri']) ? EHOVEL::url($menu['uri']) : 'javascript:void(0);').'" '.$dataToggle.'>'.$menu[$name_field];
                     if (!empty($menu['children'])) {
                     	$return_menu .= $mark>1?'<span class="caret-right"></span>':'<span class="caret"></span>';
                     }
@@ -94,10 +95,10 @@ class Helper_Menu{
             foreach($menus as $menu){
                 $return_str .= '<tr class="odd gradeU">';
                 $return_str .= '<td>'.$menu['id'].'</td>';
-                $return_str .= '<td>'.HTML::edit_anchor(BES::url('menu/edit', array('id' => $menu['id'])))."&nbsp;&nbsp;"
-                    . HTML::delete_anchor(BES::url('menu/delete', array('id'=>$menu['id']))) . '</td>';
+                $return_str .= '<td>'.HTML::edit_anchor(EHOVEL::url('menu/edit', array('id' => $menu['id'])))."&nbsp;&nbsp;"
+                    . HTML::delete_anchor(EHOVEL::url('menu/delete', array('id'=>$menu['id']))) . '</td>';
                 $return_str .= '<td>'.str_pad('', $level*2, '-').$menu['name'].'</td>';
-                $return_str .= '<td>'.str_pad('', $level*2, '-').$menu['name_en'].'</td>';
+                $return_str .= '<td>'.str_pad('', $level*2, '-').$menu['title'].'</td>';
                 $return_str .= '<td>'.$menu['uri'].'</td>';
                 $return_str .= '<td>'.$menu['position'].'</td>';
                 $return_str .= '<td>'.$menu['date_add'].'</td>';

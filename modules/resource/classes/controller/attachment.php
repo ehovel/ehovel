@@ -30,15 +30,12 @@ class Controller_Attachment extends Controller_Base
     		$object = $name.'.'.$postfix;
     	}
     	//if exist
-   		$query = DB::query(Database::SELECT, 'SELECT count(1) as num FROM attachments WHERE attachid = :attachid AND del_flag = 0');
-		$query->param(':attachid', $ossname);
-		$result = $query->execute()->get('num');
-		if (!$result) {
-			header('content-type:image/png');
-			$thumbDefault = DOCROOT.'attach'.DIRECTORY_SEPARATOR.'no_file.png';
-			echo file_get_contents($thumbDefault);exit;
-		} else {
     		$objectInfo = Helper_Oss::checkObject($object);
+    	if (!$objectInfo) {
+    		header('content-type:image/png');
+    		$thumbDefault = DOCROOT.'attach'.DIRECTORY_SEPARATOR.'no_file.png';
+    		echo file_get_contents($thumbDefault);exit;
+    	} else {
     		header('content-type:'.$objectInfo->header['content-type']);
     		header('content-length:'.$objectInfo->header['content-length']);
     		header('date:'.$objectInfo->header['date']);
@@ -58,7 +55,7 @@ class Controller_Attachment extends Controller_Base
 //     			echo $thumbPath;exit;
     			echo file_get_contents($thumbPath);exit;
     		}
-		}
+    	}
     	//default img
     	header('content-type:image/png');
     	$thumbDefault = DOCROOT.'attach'.DIRECTORY_SEPARATOR.'no_image.png';

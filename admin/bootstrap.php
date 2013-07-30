@@ -16,6 +16,8 @@ else
 	require SYSPATH.'classes/kohana'.EXT;
 }
 
+define('STATICS_BASE_URL', '/statics/');
+
 /**
  * Set the default time zone.
  *

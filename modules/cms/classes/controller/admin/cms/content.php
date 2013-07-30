@@ -9,6 +9,9 @@ class Controller_Admin_Cms_Content extends Controller_Admin_Base {
 	
 	public function action_index()
 	{
+		$toolBarhelper = Helper_Toolbar::getInstance();
+		$toolBarhelper->appendButton('new','新建','content.add');
+		$this->toolBar =  $toolBarhelper->render();
 		if ($this->request->is_ajax()) {
 			$contents       = ORM::factory('content');
 			
@@ -66,13 +69,11 @@ class Controller_Admin_Cms_Content extends Controller_Admin_Base {
 
 	public function action_edit()
 	{
-            $content = EHOVEL::model('content', intval($this->request->param('id')));
-            $categoriesModel = EHOVEL::model('content_category');
-            $categories = $categoriesModel->where('extension','=','com_content')->find_all()->as_array();
-            if ($content->loaded()) 
-            {
-                if (!empty($_POST)) 
-                {
+		$content = EHOVEL::model('content', intval($this->request->param('id')));
+        $categoriesModel = EHOVEL::model('content_category');
+        $categories = $categoriesModel->where('extension','=','com_content')->find_all()->as_array();
+        if ($content->loaded()) {
+            if (!empty($_POST)) {
                 	$this->_prepareData($content);
                 	$content->save();
                     if ($content->saved()) {
@@ -81,23 +82,24 @@ class Controller_Admin_Cms_Content extends Controller_Admin_Base {
                     	Message::set(Message::ERROR, $content->validation()->errors());
                     }
                     $this->go();
-                } else {
-                	$toolBarhelper = Helper_Toolbar::getInstance();
-                	$toolBarhelper->appendButton('edit','保存','content.edit');
-                	$toolBarhelper->appendButton('ok','保存并关闭','content.save');
-                	$toolBarhelper->appendButton('plus','保存并新建','content.save2new');
-                	$toolBarhelper->appendButton('copy','保存为副本','content.save2copy');
-                	$toolBarhelper->appendButton('undo','取消','content.cancel');
-                	$this->toolBar =  $toolBarhelper->render();
-                    $this->template = EHOVEL::view('content/editform', array(
-                        'content'       => $content
-                    	,'categories'=>$categories
-                    ));
-                }
             } else {
-                Message::set(Message::ERROR,__('Loading failed, try again'));
-                $this->go();
+                $toolBarhelper = Helper_Toolbar::getInstance();
+            	$toolBarhelper->appendButton('edit','保存','content.edit');
+             	$toolBarhelper->appendButton('ok','保存并关闭','content.save');
+                $toolBarhelper->appendButton('plus','保存并新建','content.save2new');
+                $toolBarhelper->appendButton('copy','保存为副本','content.save2copy');
+                $toolBarhelper->appendButton('undo','取消','content.cancel');
+                $this->toolBar =  $toolBarhelper->render();
+                
+                $this->template = EHOVEL::view('content/editform', array(
+                	    'content'       => $content
+                    	,'categories'=>$categories
+                ));
             }
+        } else {
+            Message::set(Message::ERROR,__('Loading failed, try again'));
+            $this->go();
+        }
 	}
 	
 	/**

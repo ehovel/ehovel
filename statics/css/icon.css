@@ -9,12 +9,12 @@
 	line-height: 14px;
 	background:none;
 }
-.icon-edit:before,
-.icon-pencil:before {
-	color: #fff;
-}
+
 .icon-undo:before {
 	color: #BD362F;
+}
+.icon-trash:before,.icon-remove:before {
+	color: #C44742;
 }
 .icon-plus:before {
 	color: #51A351;

@@ -2,6 +2,7 @@
 <script type="text/javascript" src="/statics/js/jqGrid/i18n/grid.locale-cn.js"></script>
 <script type="text/javascript" src="/statics/js/jqGrid/jquery.jqGrid.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/statics/js/jqGrid/css/ui.jqgrid.css" />
+<?php echo Ehovel::js('ehovel_template');?>
 
 <script type="text/javascript">
         function iconState_content(product_id, active) {
@@ -12,6 +13,9 @@
             } else if(active==-1){
                 return '<a href="javascript:void(0);" rel="id='+product_id+'&on_sale=Y" title="deleted"><i class="icon-trash"></i></a>';
             }
+        }
+        function iconEdit(id) {
+            return '<a href="<?php echo EHOVEL::url('cms_content/edit');?>/' + id + '" title="edit"><i style="color:#51A351;" class="icon-ok"></i></a>'
         }
     $('.on_sale').live('click', function(){
         var obj = $(this);
@@ -36,14 +40,18 @@
     jQuery(document).ready(function(){
         jQuery("#whitelist").jqGrid({
             url: '<?php echo Request::factory()->current()->url(); ?>',
-            colNames:['<?php echo __('ID'); ?>','<?php echo __('Title') ?>','<?php echo __('Category') ?>','<?php echo __('User') ?>','<?php echo __('Language') ?>','<?php echo __('Modified Time'); ?>','<?php echo __('Status'); ?>'],
-            colModel:[ {name:'id',index:'id', width:20,align:"right"},
-                       {name:'title',index:'title'}, 
-                       {name:'cat_name',index:'cat_name'}, 
-                       {name:'modified_by',index:'modified_by', width:50}, 
-                       {name:'language',index:'language', width:30, align:"right"}, 
-                       {name:'modified',index:'modified', width:60, align:"right"}, 
-                       {name:'state',index:'state', width:25,
+            colNames:['<?php echo __('Action') ?>','<?php echo __('Title') ?>','<?php echo __('Category') ?>','<?php echo __('User') ?>','<?php echo __('Language') ?>','<?php echo __('Modified Time'); ?>','<?php echo __('Status'); ?>','<?php echo __('ID'); ?>'],
+            colModel:[ 
+                       {name:'id',index:'id', width:50,align:"right",formatter:function(cellValue, options, rowObject){
+                                    return iconEdit(rowObject.id, cellValue);
+                                }
+                        },
+                       {name:'title',index:'title', width:500}, 
+                       {name:'cat_name',index:'cat_name', width:300}, 
+                       {name:'modified_by',index:'modified_by', width:100, align:"center"}, 
+                       {name:'language',index:'language', width:60, align:"right"}, 
+                       {name:'modified',index:'modified', width:150, align:"right"}, 
+                       {name:'state',index:'state', align:"center",width:100,
                       		formatter:function(cellValue, options, rowObject){
       				                return iconState_content(rowObject.id, cellValue);
       				        	},
@@ -52,7 +60,8 @@
       				                dataUrl: '<?php echo Ehovel::url('cms_content/searchoptions', array('key' => 'state')); ?>',
       				                buildSelect: jqGridBuildSelect
       				            }
-      			        }
+      			        },
+                        {name:'id',index:'id', width:100,align:"left"}
                         ],
             sortable: true,
             datatype: 'json',
@@ -60,11 +69,12 @@
             pager: '#pager',
             pgbuttons: true,
             height: '100%',
+            width:1485,
             autowidth: true,
             viewrecords: true,
             multiselect: true,
-            rowNum: 20,
-            rowList: [10,20,50,100],
+            rowNum: 15,
+            rowList: [15,25,50,100],
             sortorder: 'asc',
             jsonReader: {
                 root: 'rows',
@@ -79,55 +89,23 @@
         jQuery("#whitelist").jqGrid('navGrid',"#pager",{edit:false,add:false,del:false});
         jQuery("#whitelist").jqGrid('filterToolbar');
     });
-</script>
-                        
-<section class="container_12 clearfix">
-    <section id="main">
-        <?php Message::render(); ?>
-            <div class="tabcontent">
-                <div id="tabs-1">
-				
-					<fieldset id="productSearch">
-						<legend><?php echo __('Product List');?></legend>
-					</fieldset>
-                    <div class="tableheader clearfix">
-                        <div class="actions">
-                            <ul class="tabletoolbar">
-                                <li><a id="add" class="add btn btn-success" href="<?php //echo Route::url('product/add'); ?>"><i class="icon-plus"></i><?php echo __('Add New');?></a></li>
-                                <!--<li><a href="javascript:void(0)" class="export" id="do_export"><?php echo __('Export');?></a></li>-->
-                            </ul>
-                        </div>
-                    </div>
-                    <form>
-                        <table id="whitelist"></table>
-                        <div id="pager"></div>
-                    </form>
-                </div>
-            </div>
-    </section>
+</script>                
+<section class="container-fluid clearfix">
+    <div class="tabcontent">
+        <div id="tabs-1">
+		
+			<fieldset id="productSearch">
+				<legend><?php echo __('Product List');?></legend>
+			</fieldset>
+                <form action="<?php echo URL::current(true); ?>" method="post" id="adminForm">
+                    <input type="hidden" name="task" value="" />
+                    <input type="hidden" name="return" value="" />
+                    <table id="whitelist"></table>
+                    <div id="pager"></div>
+                </form>
+        </div>
+    </div>
 </section>
-<div id="dialog_attributeset_selector" title="<?php echo __('Select Category And Type'); ?>" style="display:none;">
-    <form class="uniform" action="<?php //echo Route::url('product/add'); ?>" method="get">
-        <dl>
-            <dt><label for="type"><?php echo __('Type');?></label></dt>
-            <dd>
-                <select name="type" id="product_type" class="required">
-                    <option value="SIMPLE"></option>
-                    <option value="CONFIGURABLE"></option>
-                </select>
-            </dd>
-            <dt><label for="category_id"><?php echo __('Category');?></label></dt>
-            <dd>
-                <select name="category_id" id="category_id" class="required">
-                <?php foreach($categories as $category): ?>
-                <option value="<?php echo $category->id?>"><?php echo str_repeat('--',$category->level-1).$category->name;?></option>
-                <?php endforeach;?>
-                </select>
-            </dd>
-        </dl>
-    </form>
-</div>
-
 <script type="text/javascript">
         var default_order = '0';
         $('input[name=position]').live('focus',function(){
