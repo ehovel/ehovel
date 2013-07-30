@@ -110,7 +110,7 @@ echo Request::factory()
 	->body();
 // start profiling
 
-register_shutdown_function('myshutdown_hxm');
+//register_shutdown_function('myshutdown_hxm');
 function myshutdown_hxm(){
 
 	$data = xhprof_disable();

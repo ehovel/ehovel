@@ -341,12 +341,9 @@ return array (
   'Settings' => '设置',
   'Show' => '显示',
   'Show Submitted Info' => '显示提交信息',
-<<<<<<< Updated upstream
   'Show head'=>'显示头尾',
   'Show default'=>'默认',
   'Show content'=>'只显示内容',
-=======
->>>>>>> Stashed changes
   'Show Title' => '显示标题',
   'Show widget on specific pages' => '特定页面上显示图标',
   'SimpleXML Extension' => 'SimpleXML扩展',
