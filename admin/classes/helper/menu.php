@@ -117,13 +117,13 @@ class Helper_Menu{
      * @param Model_Menu $current_menu
      * @return string
      */
-    public static function generate_menu_option($menus, $name_field,$current_menu=null, $level=1)
+    public static function generate_menu_option($menus, $name_field='title',$current_menu=null, $level=1)
     {
         $return_str = '';      
         if(is_array($menus)){
             foreach($menus as $menu){
                 if(empty($current_menu) || $current_menu->id != $menu['id']){
-                    $return_str .= '<option value="'.$menu['id'].'" '.(!empty($current_menu) && $current_menu->pid==$menu['id'] ? 'selected="selected"' : '').'>'.str_pad('', $level*2, '-').(isset($menu[$name_field]) ? $menu[$name_field] : '').'</option>';
+                    $return_str .= '<option value="'.$menu['id'].'" '.(!empty($current_menu) && $current_menu->pid==$menu['id'] ? 'selected="selected"' : '').'>'.str_pad('', $level*2, '-').(isset($menu['title']) ? $menu['title'] : '').'</option>';
                     if(isset($menu['children']) && !empty($menu['children'])){
                         $return_str .= self::generate_menu_option($menu['children'],$name_field,$current_menu, $level+1);
                     }
