@@ -48,7 +48,7 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
                 $menu_model = EHOVEL::model($this->_model);
                 $menu_model->pid = $pid;
                 $menu_model->name = trim($this->request->post('name'));
-                $menu_model->name_en = trim($this->request->post('name_en'));
+                $menu_model->title = trim($this->request->post('title'));
                 $menu_model->uri= trim($this->request->post('uri'));
                 $menu_model->position= trim($this->request->post('position'));
                 $menu_model->is_show = trim($this->request->post('is_show'));
@@ -56,15 +56,11 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
                 $menu_model->date_upd = date('Y-m-d H:i:s');
                 $menu_model->save($menu_model->validation());
                 if($menu_model->saved()){
-                    Remind::factory(Remind::TYPE_SUCCESS)
-                        ->message(__('Saved Successfully!'))
-                        ->redirect(EHOVEL::url('menu/index'))
-                        ->send();
+                    Message::set(Message::SUCCESS,__('Saved Successfully!'));
+                    $this->redirect(EHOVEL::url('menu/index'));
                 }else{
-                    Remind::factory(Remind::TYPE_ERROR)
-                        ->message($menu_model->validation()->errors())
-                        ->redirect(EHOVEL::url('menu/add'))
-                        ->send();
+                    Message::set(Message::ERROR,json_encode($current_menu->validation()->errors()));
+                    $this->redirect(EHOVEL::url('menu/add'));
                 }
             }
             $menus = EHOVEL::model($this->_model)->get_all_menus();
@@ -73,8 +69,7 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
                 'nodes' => Helper_Auth::get_current(),
             ));
         }catch(Exception_BES $ex){
-            Remind::factory($ex)
-                ->send();
+            Message::set($ex);
         }
     }
 
@@ -87,7 +82,7 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
             $id = $this->request->param('id');
             $current_menu = EHOVEL::model($this->_model, $id);
             if(!$current_menu->loaded()){
-                Message::set(Message::SUCCESS, __('test测试提示信息'));
+                Message::set(Message::SUCCESS, __('加载失败'));
                 
             }
             if($_POST){
@@ -129,28 +124,21 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
     public function action_delete()
     {
         try{
-            $id = $this->request->query('id');
+            $id = $this->request->param('id');
             $current_menu = EHOVEL::model($this->_model, $id);
             if(!$current_menu->loaded()){
-                Remind::factory(Remind::TYPE_ERROR)
-                    ->message(__('Bad Request!'))
-                    ->redirect(EHOVEL::url('menu/index'))
-                    ->send();
+                Message::set(Message::ERROR,__('Bad Request!'));
+                $this->redirect(EHOVEL::url('menu/index'));
             }
             if($current_menu->has_children()){
-                Remind::factory(Remind::TYPE_ERROR)
-                    ->message(__('Delete failed, this menu has children!'))
-                    ->redirect(EHOVEL::url('menu/index'))
-                    ->send();
+                Message::set(Message::ERROR,__('Delete failed, this menu has children!'));
+                $this->redirect(EHOVEL::url('menu/index'));
             }
             $current_menu->delete();
-            Remind::factory(Remind::TYPE_SUCCESS)
-                ->message(__('Delete Successfully!'))
-                ->redirect(EHOVEL::url('menu/index'))
-                ->send();
+            Message::set(Message::SUCCESS,__('Delete Successfully!'));
+            $this->redirect(EHOVEL::url('menu/index'));
         }catch(Exception_BES $ex){
-            Remind::factory($ex)
-                ->send();
+            Message::set($ex);
         }
     }
 }

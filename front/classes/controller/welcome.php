@@ -11,7 +11,7 @@ class Controller_Welcome extends Controller_Base {
 // 		->find()
 // 		->as_array();
 		$left = View::factory('left')->render(NULL,false);
-		$this->template = View::factory('index',array(
+		$this->template = View::factory('home',array(
 					'data' => $data,
 					'left' => $left,
 					)

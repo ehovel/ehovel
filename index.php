@@ -76,7 +76,7 @@ define('MODPATH', realpath($modules).DIRECTORY_SEPARATOR);
 define('SYSPATH', realpath($system).DIRECTORY_SEPARATOR);
 
 // 前台主题模板
-define('THEME', 'dblog');
+define('THEME', 'kabumetro');
 
 // Clean up the configuration vars
 unset($application, $modules, $system);

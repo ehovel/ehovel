@@ -69,7 +69,7 @@ abstract class Kohana_Uploader extends Kohana_Upload {
 			$this->base64ToImage( $content );
 			return;
 		}
-	
+
 		//处理普通上传
 		$file = $this->file = $_FILES[ $this->fileField ];
 		if ( !$file ) {

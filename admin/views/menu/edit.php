@@ -48,7 +48,7 @@
                     <?php $name_field = 'zh';?>
                     <select name="pid" id='pid' class="medium">
                         <option value="0"><?php echo __('Root Menu');?></option>
-                        <?php echo empty($current_menu) ? Helper_Menu::generate_menu_option($menus, $name_field) : Helper_Menu::generate_menu_option($menus, $name_field,$current_menu);?>
+                        <?php echo empty($current_menu) ? Helper_Menu::generate_menu_option($menus) : Helper_Menu::generate_menu_option($menus, $name_field,$current_menu);?>
                     </select>
                 </div>
             </div>
