@@ -133,29 +133,21 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
             $ads_detail = EHOVEL::model ( 'ads', intval ( $id ) );
             if($_POST)
             {
-                $ads_detail->name = $this->request->post ( 'ads_title' );
-                $ads_detail->type = $ads_type;
-                $ads_detail->linkurl = $this->request->post ( 'link_address' );
-                $ads_detail->imageurl = $this->request->post ( 'image' );
-                $ads_detail->flashurl = $this->request->post ( 'flash_address' );
-                $ads_detail->alt = $this->request->post ( 'alt_tip' );
-                $ads_detail->title = $this->request->post ( 'text_content' );
-                $ads_detail->date_upd = date('Y-m-d H:i:s');
+                $ads_detail->title = $this->request->post ( 'ads_title' );
+                $ads_detail->type = $this->request->post ( 'ads_type' );
+                $ads_detail->content = serialize($data['content']);
+                $ads_detail->modified = date('Y-m-d H:i:s');
                 
                 if($this->public_check_ads( $this->request->post ( 'ads_title' ) , $id) == FALSE)
                 {
-                    Remind::factory ( Remind::TYPE_ERROR )
-                                ->message ( __ ('Name cannot be repeated' ) )
-                                ->redirect ( BES::url ( 'site_ads/edit',array('id'=>$id,'type'=>$type,'spaceid'=>$spaceid) ) )
-                                ->send ();
+                    Message::set ( Message::ERROR , __ ('Name cannot be repeated' ) );
+                    $this->redirect ( EHOVEL::url ( 'cms_ads/edit',array('id'=>$id) ) );
                 }
-                    
                 $ads_detail->save();
-                Remind::factory ( Remind::TYPE_SUCCESS )
-                            ->message ( __ ( 'Edited Successfully!' ) )
-                            ->redirect ( BES::url ( 'site_ads',array('spaceid'=>$spaceid,'type'=>$type) ) )
-                            ->send ();
+                Message::set ( Message::SUCCESS,__ ( 'Edited Successfully!' ) );
+                $this->redirect ( EHOVEL::url ( 'cms_ads',array('id'=>$ads_detail->id)) );
             }
+            $ads_detail->content = unserialize($ads_detail->content);
             $this->template = EHOVEL::view ( 'ads/edit' , array(
                                                             'types'=>$this->types,
                                                             'id' => $id,
