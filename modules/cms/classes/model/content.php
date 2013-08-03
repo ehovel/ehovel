@@ -2,10 +2,7 @@
 
 class Model_Content extends ORM
 {
-<<<<<<< HEAD
-=======
     protected $_table_name = 'cms_contents';
->>>>>>> 28336508c32209d8e3a170c94c345fab746e4da2
     /** 指定软删除字段 */
     protected $_disabled_column = 'disabled';
     
