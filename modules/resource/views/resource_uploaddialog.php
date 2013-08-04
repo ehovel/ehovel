@@ -142,10 +142,9 @@
 	            //上传到服务器，服务器返回相应信息到data里
 	            'onUploadSuccess':function(file, data, response){
 		            var currentFile = file.id;
-	            	this.queueData.files.currentFile.hide();
-		            $(currentFile).children('.uploadify-progress').hidden();
-		            $(currentFile).children('img').value(data.src).show();
 	                console.log(data);
+		            $(currentFile).children('.uploadify-progress').hide();
+		            $(currentFile).children('img').val(data.src).show();
 	            }
 	        });
 	    });

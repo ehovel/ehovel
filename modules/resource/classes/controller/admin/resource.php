@@ -133,10 +133,9 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     			//客户端对应的文件对象的名称
     			$fileName = (isset($_POST['customFileName']) && $_POST['customFileName']) ? $_POST['customFileName'] : $_POST['Filename'];
     			$catalogId = (isset($_POST['catalogId']) && $_POST['catalogId']) ? $_POST['catalogId'] : 0;
-    			echo 1;exit;
     			//待保存数据
     			$up = Uploader::factory("upload");
-    			$info = $up->getFileInfo();
+    			$info = $up->getFileInfo();print_r($info);exit;
     			if ($info['url']) {
     				$ossNameExt = explode('.', $info['url']);
     				$ossName = $ossNameExt[0];
@@ -182,9 +181,10 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     		echo View::factory('resource_form')
     			->set('resource',$resource->as_array())
     			->render(null,false);
+    	} else {
+        	echo __('Load failed');
+        	exit;
     	}
-    	echo 'Load failed';
-    	exit;
     }
 
 
@@ -630,7 +630,7 @@ class Controller_Admin_Resource extends Controller_Admin_Base
         $resourceModel->attach_id = $resourceData['attach_id'];
         $resourceModel->is_storage = 1;
         $resourceModel->save();
-        return $resourceModel->saved();exit;
+        return $resourceModel->saved();
     }
     
     private function _do_add($resourceData) {

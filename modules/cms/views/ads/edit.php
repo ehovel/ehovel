@@ -1,6 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.'); ?>
-<link rel="stylesheet" type="text/css"
-	href="/statics/css/fancybox/jquery.fancybox-1.3.4.css" />
+<link rel="stylesheet" type="text/css" href="/statics/css/fancybox/jquery.fancybox-1.3.4.css" />
 <?php echo EHOVEL::js('jquery.fancybox-1.3.4');?>
 <script type="text/javascript">
     window.onload=function()
@@ -43,33 +42,35 @@
 			<div class="control-group">
 				<label id="eform_alias-lbl" for="eform_alias" class="hasTip control-label" title="广告位名称"><?php echo __('名称');?></label>
 				<div class="controls">
-				    <input type="text" name="ads_title" id="ads_title" class="inputbox medium required" maxlength="20" value="<?php if(!empty($ads_detail->title)){echo $ads_detail->title;}?>" />
+				    <input type="text" name="ads_title" class="inputbox medium required" maxlength="20" value="<?php if(!empty($ads_detail->title)){echo $ads_detail->title;}?>" />
 				</div>
 			</div>
 			<div class="control-group">
-				<label id="eform_alias-lbl" for="eform_alias" class="hasTip control-label" title="广告位名称"><?php echo __('类型');?></label>
+				<label id="eform_alias-lbl" for="eform_alias" class="hasTip control-label" title="广告位类型"><?php echo __('类型');?></label>
 				<div class="controls">
-				    <input type="text" name="ads_title" id="ads_type" class="inputbox medium required" maxlength="20" value="<?php if(!empty($ads_detail->type)){echo $ads_detail->type;}?>" />
+				    <input type="text" name="ads_type" id="ads_type" class="inputbox medium required" maxlength="20" value="<?php if(!empty($ads_detail->type)){echo $ads_detail->type;}?>" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label id="eform_alias-lbl" for="eform_alias" class="hasTip control-label" title="广告位名称"><?php echo __('图片');?></label>
 				<div class="controls">
-				    <?php foreach ($ads_detail->content as $pics) {?>
-				    <div class="choose_pics">
-                        <div class="pic">
+				    <div id="photo_container">
+    				    <?php foreach ($ads_detail->content as $pics) {?>
+    				    <div class="choose_pics">
                             <div class="pic">
-                                <div class="pic_inner img120">
-                                    <img alt="" src="/attach/<?php echo $pics['banner']?>.jpg" id="upload_pic" style="max-height:120px; max-width:120px">
+                                <div class="pic">
+                                    <div class="pic_inner img120">
+                                        <img alt="" src="/attach/<?php echo $pics['banner']?>.jpg" id="upload_pic" style="max-height:120px; max-width:120px">
+                                    </div>
                                 </div>
-                            </div>
-                            <ul class="inline">
-        					  <li><a onclick="removepic(this)" href="javascript:;"><i class="icon-remove"></i></a></li>
-        					</ul>
-                            <input type="hidden" value="/attachment/view/130415617306.jpg" name="attachs[]"> 
-                        </div> 
+                                <ul class="inline">
+            					  <li><a onclick="removepic(this)" href="javascript:;"><i class="icon-remove"></i></a></li>
+            					</ul>
+                                <input type="hidden" value="/attachment/view/130415617306.jpg" name="attachs[]"> 
+                            </div> 
+                        </div>
+                        <?php }?>
                     </div>
-                    <?php }?>
 				</div>
 			</div>
 			<div class="control-group">

@@ -34,7 +34,7 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
                             'types' => $this->types,
                                         )               
                             );
-        }catch ( Exception_BES $ex ){
+        }catch ( Exception $ex ){
             Message::set($ex);
         }
     }
@@ -135,7 +135,7 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
             {
                 $ads_detail->title = $this->request->post ( 'ads_title' );
                 $ads_detail->type = $this->request->post ( 'ads_type' );
-                $ads_detail->content = serialize($data['content']);
+                $ads_detail->content = serialize($this->request->post['content']);
                 $ads_detail->modified = date('Y-m-d H:i:s');
                 
                 if($this->public_check_ads( $this->request->post ( 'ads_title' ) , $id) == FALSE)
@@ -153,7 +153,7 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
                                                             'id' => $id,
                                                             'ads_detail'=>$ads_detail,
             ));
-        }catch ( Exception_BES $ex ){
+        }catch ( Exception $ex ){
             Message::set($ex);
         }
     }

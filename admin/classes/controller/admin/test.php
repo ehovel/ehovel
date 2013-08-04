@@ -66,4 +66,12 @@ class Controller_Admin_Test extends Controller_Admin_Base
     	echo $ip = $this->request->ip_address();echo '<br>';
     	echo $date = date('Y-m-d H:i:s');echo '<br>';
     }
+    
+    public function action_aliupload() {
+        if ($_FILES) {
+            $res = Uploader::factory("upload");
+            print_r($res->getFileInfo());exit;
+        }
+        echo '<form action="/admin/test/aliupload" method="post" enctype="multipart/form-data"><input type="file" name="upload" /><input type="submit" /></form>';
+    }
 }
