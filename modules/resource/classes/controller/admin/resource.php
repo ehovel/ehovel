@@ -232,11 +232,15 @@ class Controller_Admin_Resource extends Controller_Admin_Base
 	    	}
     		echo View::factory('resource_form')
     			->set('resource',$resource->as_array())
-    			->render(null);
+    			->render(null,false);
     	} else {
     	    echo 'Load failed';
-    	}
+    	} 
+<<<<<<< .mine
     	exit;
+=======
+
+>>>>>>> .theirs
     }
 
 
@@ -680,7 +684,7 @@ class Controller_Admin_Resource extends Controller_Admin_Base
         $resourceModel->attach_id = $resourceData['attach_id'];
         $resourceModel->is_storage = 1;
         $resourceModel->save();
-        return $resourceModel->saved();exit;
+        return $resourceModel->saved();
     }
     
     private function _do_add($resourceData) {

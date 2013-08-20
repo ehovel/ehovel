@@ -34,7 +34,7 @@ class URL extends Kohana_URL
             if (Route::is_set($name)) {
                 return Route::url($name, $param);
             } else {
-                $url = BES::front_base_url() . $name;
+                $url = EHOVEL::front_base_url() . $name;
                 $param_str = '';
                 if (is_array($param)) {
                     if (count($param) > 0) {

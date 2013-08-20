@@ -34,7 +34,7 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
                             'types' => $this->types,
                                         )               
                             );
-        }catch ( Exception_BES $ex ){
+        }catch ( Exception $ex ){
             Message::set($ex);
         }
     }
@@ -133,11 +133,15 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
             $ads_detail = EHOVEL::model ( 'ads', intval ( $id ) );
             if($_POST)
             {
-                $ads_detail->title = $this->request->post ('ads_title');
-                $ads_detail->type = $this->request->post ('ads_type');
-                $resource_ids = $this->request->post('resource_ids');
+                $ads_detail->type = $this->request->post ( 'ads_type' );
+                $ads_detail->modified = date('Y-m-d H:i:s');
+				$resource_ids = $this->request->post('resource_ids');
                 foreach ($resource_ids as $id) {
                     $ads_content[] = array('banner'=>$id,'bannerurl'=>Helper_Resource::getLinkByResourceId($id));
+
+
+
+
                 }
                 $ads_detail->content = serialize($ads_content);
                 $ads_detail->save();
@@ -150,7 +154,7 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
                                                             'id' => $id,
                                                             'ads_detail'=>$ads_detail,
             ));
-        }catch ( Exception_BES $ex ){
+        }catch ( Exception $ex ){
             Message::set($ex);
         }
     }

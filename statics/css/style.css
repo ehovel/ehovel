@@ -261,7 +261,7 @@ ul, ol {
 	opacity: .7;
 }
 
-.brand img {
+.brand-custom img {
 	margin-top: -7px;
 }
 
@@ -1391,7 +1391,7 @@ nav#topmenu .nav > li > a {
     visibility: visible;
 }
 
-.navbar .brand {
+.navbar .brand-custom {
     color: #ccc;
     display: block;
     float: left;

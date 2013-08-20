@@ -1,13 +1,13 @@
 <?php defined('SYSPATH') OR die('No direct script access allowed.'); ?>
 <div class="navbar">
-	<div class="navbar-inner">
+	<div class="navbar-inner-custom navbar-inner">
 		<div class="container-fluid">
 			<a data-target=".top-nav.nav-collapse,.sidebar-nav.nav-collapse" data-toggle="collapse" class="btn btn-navbar">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</a>
-			<a href="index.html" class="brand"> <img width="70" src="/statics/img/logo.png" alt="Optimus Dashboard"> <span>Optimus Dashboard</span></a>
+			<a href="index.html" class="brand-custom"> <img width="70" src="/statics/img/logo.png" alt="Optimus Dashboard"> <span>Optimus Dashboard</span></a>
 							
 			<!-- start: Header Menu -->
 			<div class="btn-group pull-right">

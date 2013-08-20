@@ -1,6 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.'); ?>
-<link rel="stylesheet" type="text/css"
-	href="/statics/css/fancybox/jquery.fancybox-1.3.4.css" />
+<link rel="stylesheet" type="text/css" href="/statics/css/fancybox/jquery.fancybox-1.3.4.css" />
 <?php echo EHOVEL::js('jquery.fancybox-1.3.4');?>
 <?php echo EHOVEL::css('ehovel_modules');?>
 <section class="container_12 clearfix">
@@ -22,20 +21,12 @@
 			<div class="control-group">
 				<label id="eform_alias-lbl" for="eform_alias" class="hasTip control-label" title="广告位名称"><?php echo __('图片');?></label>
 				<div class="controls" id="piclist">
-				    <?php foreach ($ads_detail->content as $pics) {?>
 				    <div class="choose_pics">
-                        <div class="pic">
-                            <div class="pic_inner img120">
-                                <?php //TODO 附件地址使用助手函数生成?>
-                                <img alt="" src="<?php echo Helper_Resource::getLinkByResourceId($pics['banner']);?>" style="max-height:120px; max-width:120px">
-                            </div>
-                            <ul class="inline">
-        					  <li><a onclick="removepic(this)" href="javascript:;"><i class="icon-remove"></i></a></li>
-        					</ul>
-                            <input type="hidden" value="<?php echo $pics['banner']?>" name="resource_ids[]"> 
-                        </div> 
-                    </div>
-                    <?php }?>
+                                <div class="pic_inner img120">
+                                	<?php //TODO 附件地址使用助手函数生成?>
+                                	<img alt="" src="<?php echo Helper_Resource::getLinkByResourceId($pics['banner']);?>" style="max-height:120px; max-width:120px">
+								</div>                            <input type="hidden" value="<?php echo $pics['banner']?>" name="resource_ids[]"> 
+                        </div>                    </div>
 				</div>
 			</div>
 			<div class="control-group">

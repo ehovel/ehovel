@@ -48,8 +48,7 @@ class Model_Auth_Admin extends ORM {
      * @param string $session_id
      * @return Model_Auth_Admin
      */
-    public static function get_current_user($session_id=null)
-    {
+    public static function get_current_user($session_id=null) {
         $user = ORM::factory('Auth_admin',1);
         self::$_current_user = $user;
         if(empty(self::$_current_user))
