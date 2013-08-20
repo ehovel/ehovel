@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.'); ?>
 <?php echo EHOVEL::js('ehovel_template');?>
-<link rel="stylesheet" type="text/css" href="/statics/css/fancybox/jquery.fancybox-1.3.4.css" />
+<?php echo EHOVEL::css('ehovel_modules');?>
 <script type="text/javascript">
 	//实例化编辑器
 	window.UEDITOR_HOME_URL = "/statics/js/ueditor125/";
@@ -244,7 +244,7 @@
 						</div>
 						<div class="tab-pane clearfix" id="piclist">
 							<div class="control-group">
-								<a class="btn btn-primary" onclick="showresourcedialog(this,'/admin/resource/uploaddialog')">
+								<a class="btn btn-primary" id="upload_pictures" onclick="showresourcedialog()">
 									<i class="icon-picture"></i>选择图片
 								</a>
 							</div>
@@ -952,18 +952,32 @@
 			<input type="hidden" name="return" value="" />
 		</form>
 </section>
-<a class="resourcedialog" href="#"></a>
-<script type="text/javascript" src="/statics/js/jquery.fancybox-1.3.4.js"></script>
+<div id="upload"><p class="upload"></p></div>
+<?php echo EHOVEL::js('ehovel_upload');?>
 <script type="text/javascript">
-function facyboxclose() {
-	$.fancybox.close();
-}
-function showresourcedialog(obj,url) {
-	$.fancybox({
-		'href':url,
-		'padding':'30',
-		'title':'选择图片',
-		'titlePosition':'inside'
+function showresourcedialog() {
+	$('#upload_pictures').Upload({
+		title: '图片上传',
+		file_size_limit: '1 MB',
+		file_types: '*.jpg;*.gif;*.png;',
+		file_upload_limit: 10,
+		session_id: $('#session_id').val(),
+		base_url: '/',
+		before_upload:function(){
+		    return true;
+		},
+		upload_success: function(server_data){
+			for (var i in server_data) {
+				var h = '';
+				h += '<div class="choose_pics"><div class="pic"><div class="pic_inner img120">';
+				h += '<img alt="" src="'+ server_data[i]['url'] +'" style="max-height:120px; max-width:120px">';
+				h += '</div>';
+				h += '<ul class="inline"><li><a onclick="removepic(this)" href="javascript:;"><i class="icon-remove"></i></a></li></ul>';
+				h += '<input type="hidden" value="'+ server_data[i]['id'] +'" name="resource_ids[]"></div></div>';
+				h = $(h);
+				$('#piclist').append(h);
+			}
+		}
 		});
 }
 function removepic(obj){

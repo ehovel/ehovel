@@ -1,5 +1,4 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.'); ?>
-<link rel="stylesheet" href="/statics/css/bootstrap.css" type="text/css"></link>
 <link rel="stylesheet" href="/statics/js/uploadify/uploadify.css" type="text/css"></link>
 <script type="text/javascript">
 	if (typeof jQuery == 'undefined') {
@@ -39,14 +38,14 @@
 		            <div class="control-group">
 		              	<div class="controls">
 		              		<button type="submit" class="btn btn-primary" onclick="doupload()"><i class=" icon-upload-alt"></i>开始上传</button>
-		              		<button type="submit" class="btn btn-primary" onclick="doinsert()">插入选中</button>
-			   				<button type="button" class="btn" onclick="facyboxclose();">取消</button>
+		              		<button type="submit" class="btn btn-primary" id="btnSubmit1">插入选中</button>
+			   				<button type="button" class="btn" id="btnCancel1">取消</button>
 		              	</div>
 			    	</div>
 		    	</div>
 			</div>
 			<div class="tab-pane fade" id="resource_data">
-				资源库资源
+				<?php echo $resourceList;?>
 			</div>
 			<div class="tab-pane fade" id="resource_remote">
 				网络资源
@@ -56,9 +55,6 @@
     <script type="text/javascript">
 	    function doupload() {
 	    	$('#file_upload').uploadify('upload','*');
-	    }
-	    function doinsert() {
-			
 	    }
 	    $(document).ready(function() {
 	        $("#file_upload").uploadify({
@@ -97,11 +93,11 @@
 	            //上传完成后是否删除进度条
 	            'removeCompleted':false,
 	            //每次更新上载的文件的进展
-	            'itemTemplate':'<div id="${fileID}" class="uploadify-queue-item"><img style="display:none;" src=""/>\
+	            'itemTemplate':'<div id="${fileID}" class="uploadify-queue-item"><a href="#" class="pull-left"><img class="pri_img" style="display:none;" width="50" height="50" src=""/></a>\
 					<div class="cancel">\
 					<a href="javascript:$(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')">X</a>\
-				</div><input type="text" value="${fullName}" id="name_${fileID}"/>\
-				<span class="fileName">(${fileSize})</span><span class="data"></span>\
+				</div><div class="media-body"><input type="text" value="${fullName}" id="name_${fileID}"/><input type="hidden" value="" name="resource_ids[]" />\
+				<p><span class="data"></span>${fileSize}</p></div>\
 				<div class="uploadify-progress progress progress-info progress-striped">\
 					<div class="uploadify-progress-bar bar"><!--Progress Bar--></div>\
 				</div>\
@@ -141,11 +137,11 @@
 	            },
 	            //上传到服务器，服务器返回相应信息到data里
 	            'onUploadSuccess':function(file, data, response){
+	            	var data=eval("("+data+")");
 		            var currentFile = file.id;
-	            	this.queueData.files.currentFile.hide();
-		            $(currentFile).children('.uploadify-progress').hidden();
-		            $(currentFile).children('img').value(data.src).show();
-	                console.log(data);
+		            $('#'+currentFile).find('.uploadify-progress').hide();
+		            $('#'+currentFile).find('.pri_img').attr('src',data.url).show();
+		            $('#'+currentFile).find('input[name^="resource_ids"]').val(data.resource_id);
 	            }
 	        });
 	    });

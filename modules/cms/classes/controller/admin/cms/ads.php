@@ -129,20 +129,17 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
             'content' => array(),
         );
         try {
-            $id = intval ( $this->request->query ( 'id' ) );
+            $id = intval ($this->request->param('id'));
             $ads_detail = EHOVEL::model ( 'ads', intval ( $id ) );
             if($_POST)
             {
-                $ads_detail->title = $this->request->post ( 'ads_title' );
-                $ads_detail->type = $this->request->post ( 'ads_type' );
-                $ads_detail->content = serialize($data['content']);
-                $ads_detail->modified = date('Y-m-d H:i:s');
-                
-                if($this->public_check_ads( $this->request->post ( 'ads_title' ) , $id) == FALSE)
-                {
-                    Message::set ( Message::ERROR , __ ('Name cannot be repeated' ) );
-                    $this->redirect ( EHOVEL::url ( 'cms_ads/edit',array('id'=>$id) ) );
+                $ads_detail->title = $this->request->post ('ads_title');
+                $ads_detail->type = $this->request->post ('ads_type');
+                $resource_ids = $this->request->post('resource_ids');
+                foreach ($resource_ids as $id) {
+                    $ads_content[] = array('banner'=>$id,'bannerurl'=>Helper_Resource::getLinkByResourceId($id));
                 }
+                $ads_detail->content = serialize($ads_content);
                 $ads_detail->save();
                 Message::set ( Message::SUCCESS,__ ( 'Edited Successfully!' ) );
                 $this->redirect ( EHOVEL::url ( 'cms_ads',array('id'=>$ads_detail->id)) );

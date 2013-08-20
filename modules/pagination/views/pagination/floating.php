@@ -58,15 +58,15 @@ for ($i = $n7; $i <= $n8; $i++)
 <div class="pagination pagination-centered">
 <ul>
 	<?php if ($first_page !== FALSE): ?>
-		<li><a href="<?php echo HTML::chars($page->url($first_page)) ?>" rel="first"><?php echo __('First') ?></a></li>
+		<li><a href="<?php echo HTML::chars($page->url($first_page)) ?>" rel="first"><?php echo __('First Page') ?></a></li>
 	<?php else: ?>
-		<li class="disabled"><a href="javascript:;"><?php echo __('First') ?></a></li>
+		<li class="disabled"><a href="javascript:;"><?php echo __('First Page') ?></a></li>
 	<?php endif ?>
 
 	<?php if ($previous_page !== FALSE): ?>
-		<li><a href="<?php echo HTML::chars($page->url($previous_page)) ?>" rel="prev"><?php echo __('Previous') ?></a></li>
+		<li><a href="<?php echo HTML::chars($page->url($previous_page)) ?>" rel="prev"><?php echo __('Previous Page') ?></a></li>
 	<?php else: ?>
-		<li class="disabled"><a href="javascript:;"><?php echo __('Previous') ?></a></li>
+		<li class="disabled"><a href="javascript:;"><?php echo __('Previous Page') ?></a></li>
 	<?php endif ?>
 
 	<?php foreach ($links as $number => $content): ?>
@@ -80,15 +80,15 @@ for ($i = $n7; $i <= $n8; $i++)
 	<?php endforeach ?>
 
 	<?php if ($next_page !== FALSE): ?>
-		<li><a href="<?php echo HTML::chars($page->url($next_page)) ?>" rel="next"><?php echo __('Next') ?></a></li>
+		<li><a href="<?php echo HTML::chars($page->url($next_page)) ?>" rel="next"><?php echo __('Next Page') ?></a></li>
 	<?php else: ?>
-		<li class="disabled"><a href="javascript:;"><?php echo __('Next') ?></a></li>
+		<li class="disabled"><a href="javascript:;"><?php echo __('Next Page') ?></a></li>
 	<?php endif ?>
 
 	<?php if ($last_page !== FALSE): ?>
-		<li><a href="<?php echo HTML::chars($page->url($last_page)) ?>" rel="last"><?php echo __('Last') ?></a></li>
+		<li><a href="<?php echo HTML::chars($page->url($last_page)) ?>" rel="last"><?php echo __('Last Page') ?></a></li>
 	<?php else: ?>
-		<li class="disabled"><a href="javascript:;"><?php echo __('Last') ?></a></li>
+		<li class="disabled"><a href="javascript:;"><?php echo __('Last Page') ?></a></li>
 	<?php endif ?>
 </ul>
 </div><!-- .pagination -->

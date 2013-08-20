@@ -24,7 +24,7 @@ class Controller_Admin_Resource extends Controller_Admin_Base
 		$resourceObject = ORM::factory('resource');
 		$resourceObjectClone = clone $resourceObject;
 		$count = $resourceObjectClone->count_all();
-		$pagination = new Pagination(
+		$pagination = Pagination::factory(
 			array(
 				'total_items' => $count,
 				'items_per_page' => 12,
@@ -92,6 +92,19 @@ class Controller_Admin_Resource extends Controller_Admin_Base
 	     *   'state'    :'SUCCESS'  //上传状态，成功时返回SUCCESS,其他任何值将原样返回至图片上传框中
 	     * }
 	     */
+	    $info = $up->getFileInfo();
+		if ($info['url']) {
+			$ossNameExt = explode('.', $info['url']);
+			$ossName = $ossNameExt[0];
+			$ossExt = $ossNameExt[1];
+			$resourceData = array(
+					'name' => $info['name'],
+					'postfix' => $ossExt,
+					'catalog_id'=>1,
+					'attach_id'=>$ossName,
+					);
+			$this->_do_add($resourceData);
+		}
 	    echo "{'url':'" . $info["url"] . "','title':'" . $title . "','original':'" . $info["originalName"] . "','state':'" . $info["state"] . "'}";
 
 	    exit;
@@ -102,14 +115,14 @@ class Controller_Admin_Resource extends Controller_Admin_Base
      * 添加一个资源.添加到资源表
      */
     public function action_ueimagemanage() {
-    	$query = DB::select('attach_id','postfix')->from('resources')->where('site_id','=','62');
+    	$query = DB::select('attach_id','postfix')->from('resources')->where('site_id','=','0');
     	$pagination_query = clone $query;
     	$count = $pagination_query->select(DB::expr('COUNT(1) AS mycount'))->execute()->get('mycount');
     	$pagination = Pagination::factory(array(
     			'total_items' => $count,
     			'current_page'   => array('source' => 'route', 'key' => 'page'),
     			'items_per_page' => 200,
-    			'view'           => 'pagination/pretty',
+    			'view'           => 'pagination/basic',
     			'auto_hide'      => TRUE,
     	));
     	$query->order_by('date_add', 'desc')
@@ -124,6 +137,37 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     }
     
     /**
+     * 资源弹出窗的资源库列表
+     */
+    public function action_uploadlist($return = FALSE) {
+        $resourceObject = ORM::factory('resource');
+		$resourceObjectClone = clone $resourceObject;
+		$count = $resourceObjectClone->count_all();
+		$pagination = Pagination::factory(
+			array(
+				'total_items' => $count,
+				'items_per_page' => 12,
+				'view' => 'pagination/floating',
+			)
+		);
+		$page = $this->request->query('page');
+		$page = $page?$page:1;
+		$resourceObject->order_by('date_add','DESC');
+		$resourceObject->offset(($page - 1) * 12);
+		$resourceObject->limit(12);
+		$resources = $resourceObject->find_all()->as_array();
+        
+		$result = view::factory('resource_listdialog', array(
+                'resources' => $resources,
+                'pagination'=>$pagination
+        ))->render(NULL,false);
+        if($return) {
+            return $result;
+        } else {
+            echo $result; 
+        }
+    }
+    /**
      * 资源弹出窗的上传处理
      */
     public function action_uploaddialog() {
@@ -133,7 +177,6 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     			//客户端对应的文件对象的名称
     			$fileName = (isset($_POST['customFileName']) && $_POST['customFileName']) ? $_POST['customFileName'] : $_POST['Filename'];
     			$catalogId = (isset($_POST['catalogId']) && $_POST['catalogId']) ? $_POST['catalogId'] : 0;
-    			echo 1;exit;
     			//待保存数据
     			$up = Uploader::factory("upload");
     			$info = $up->getFileInfo();
@@ -147,7 +190,11 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     						'catalog_id'=>$catalogId,
     						'attach_id'=>$ossName,
     						);
-    				$this->_do_add($resourceData);
+    				$resourceId = $this->_do_add($resourceData);
+    				if ($resourceId) {
+    				    $info['resource_id'] = $resourceId;
+    				    $info['url'] = Helper_Resource::getLinkByResourceId($resourceId);
+    				}
     				echo json_encode($info);exit;
     			} else {
     				echo '上传错误';
@@ -155,11 +202,15 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     			exit;
     		}
     	} else {
-    		echo View::factory('resource_uploaddialog')
+    	    $resourceList = $this->action_uploadlist(TRUE);
+    		echo View::factory('resource_uploaddialog',array('resourceList'=>$resourceList))
     		->render(null,false);exit;
     	}
     }
 
+    public function action_add() {
+        echo 'TODO：添加资源页面';
+    }
     /**
      * 编辑一个资源
      */
@@ -181,9 +232,10 @@ class Controller_Admin_Resource extends Controller_Admin_Base
 	    	}
     		echo View::factory('resource_form')
     			->set('resource',$resource->as_array())
-    			->render(null,false);
+    			->render(null);
+    	} else {
+    	    echo 'Load failed';
     	}
-    	echo 'Load failed';
     	exit;
     }
 
@@ -522,21 +574,14 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     }
 
     /**
-     * 资源库选择请求
-     *
-     * @access public
-     * @param null
-     * @return void
-     * @throws MyRuntimeException
-     * @exception MyRuntimeException
-     * @author fanchongyuan
+     * 从资源库列表选择后提交的资源ids获取到资源的信息
      */
-    public function ajax_upload_list_submit()
+    public function action_ajax_upload_list_submit()
     {
         try {
             //判断请求类型
-            if (!$this->is_ajax_request()) {
-                throw new MyRuntimeException(Kohana::lang('o_global.bad_request'), 404);
+            if (!$this->request->is_ajax()) {
+                throw new Exception(Kohana::lang('o_global.bad_request'), 404);
             }
             $return_struct = array(
                 'status' => 0,
@@ -544,17 +589,17 @@ class Controller_Admin_Resource extends Controller_Admin_Base
                 'msg' => 'Not Implemented',
                 'content' => array()
             );
-            $request_data = $this->input->post();
+            $request_data = $this->request->post();
             //初始化返回数据
             $return_data = array();
             if (empty($request_data['resource'])) {
-                throw new MyRuntimeException(Kohana::lang('o_global.bad_request'), 404);
+                throw new Exception(Kohana::lang('o_global.bad_request'), 404);
             }
             if (!empty($request_data['resource']) && is_array($request_data['resource'])) {
-                $attach_configure = Kohana::config('resource.resourceAttach');
+                $attach_configure = Kohana::$config->load('resource.resourceConfig.resourceAttach');
                 foreach ($request_data['resource'] as $key => $value)
                 {
-                    $resource_data_tmp = bm('resource')->get($value);
+                    $resource_data_tmp = ORM::factory('resource')->where('id', '=', $value)->find()->as_array();
                     if (!empty($resource_data_tmp)) {
                         if (in_array($resource_data_tmp['postfix'], $attach_configure['image_type'])) {
                             $resource_data_tmp['type'] = 'image';
@@ -565,11 +610,10 @@ class Controller_Admin_Resource extends Controller_Admin_Base
                                 $resource_data_tmp['type'] = 'attachment';
                             }
                         }
-                        //附件链接地址
-                        $resource_data_tmp['url'] = bm('resource')->get_attach_link($resource_data_tmp['id']);
-                        $resource_data_tmp['link'] = bm('resource')->get_attach_link($resource_data_tmp['id']);
-                        //附件展示图
-                        $resource_data_tmp['img'] = bm('resource')->get_attach_img($resource_data_tmp['id']);
+                        //附件链接地址   TODO 助手函数生成
+                        $resource_data_tmp['url'] = '/attach/'.$resource_data_tmp['attach_id'].'.'.$resource_data_tmp['postfix'];
+                        //TODO 附件展示图 
+                        $resource_data_tmp['img'] = '/attach/'.$resource_data_tmp['attach_id'].'.'.$resource_data_tmp['postfix'];
                         //网络资源无attach_id用link代替
                         if (empty($resource_data_tmp['attach_id'])) {
                             $resource_data_tmp['attach_id'] = $resource_data_tmp['link'];
@@ -584,7 +628,7 @@ class Controller_Admin_Resource extends Controller_Admin_Base
             $return_struct['msg'] = '';
             $return_struct['content'] = $return_data;
             exit(json_encode($return_struct));
-        } catch (MyRuntimeException $ex) {
+        } catch (Exception $ex) {
             //补充&修改返回结构体
             $return_struct['status'] = 0;
             $return_struct['code'] = 400;
@@ -604,7 +648,13 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     }
 
     /**
-     * 处理列表型的表单提交过来的内容
+     * 处理列表型的表单提交的添加请求
+     */
+    protected function _do_list_form_add() {
+        $this->action_add();
+    }
+    /**
+     * 处理列表型的表单提交的删除请求
      */
     protected function _do_list_form_delete() {
     	$formData = $this->request->post('eform');
@@ -641,7 +691,11 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     	$resourceModel->attach_id = $resourceData['attach_id'];
     	$resourceModel->is_storage = 1;
     	$resourceModel->save();
-    	return $resourceModel->saved();
+    	if ($resourceModel->saved()){
+    	    return $resourceModel->id;
+    	} else {
+    	    return false;
+    	}
     }
     private function _do_disabled($resource_id) {
     	$resource_data = EHOVEL::model('resource',$resource_id);
