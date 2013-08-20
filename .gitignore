@@ -161,3 +161,8 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+/admin/cache/a4
+
+/front/logs/2013/08
+
+/*.komodoproject
