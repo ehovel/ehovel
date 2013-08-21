@@ -952,7 +952,7 @@
 			<input type="hidden" name="return" value="" />
 		</form>
 </section>
-<div id="upload"><p class="upload"></p></div>
+<div id="upload"><p class="upload" id="uploaddialog"></p></div>
 <?php echo EHOVEL::js('ehovel_upload');?>
 <script type="text/javascript">
 function showresourcedialog() {

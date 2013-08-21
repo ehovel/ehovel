@@ -21,7 +21,21 @@ class Controller_Admin_Resource extends Controller_Admin_Base
      */
     public function action_index()
     {
+        //收集请求数据
+        $catalog_id = intval($this->request->query('catalog'));
+        $name = trim($this->request->query('name'));
+        
+        //分类
+        $catalog = ORM::factory('resource_catalog')->order_by('date_add', 'DESC')->find_all();
+        $catalog = ORM::factory('resource_catalog')->tree($catalog);
+        
 		$resourceObject = ORM::factory('resource');
+		if(!empty($catalog_id)) {
+		    $resourceObject = $resourceObject->where('catalog_id', '=', $catalog_id);
+		}
+		if(!empty($name)) {
+		    $resourceObject = $resourceObject->where('name', 'LIKE', "%$name%");
+		}
 		$resourceObjectClone = clone $resourceObject;
 		$count = $resourceObjectClone->count_all();
 		$pagination = Pagination::factory(
@@ -44,6 +58,9 @@ class Controller_Admin_Resource extends Controller_Admin_Base
 		$this->toolBar =  $toolBarhelper->render();
 		
 		$this->template = view::factory('resource_list', array(
+		    'catalog' => $catalog,
+		    'catalog_id' => $catalog_id,
+		    'name' => $name,
 			'resources' => $resources,
 			'pagination'=>$pagination
 		));
@@ -137,6 +154,70 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     }
     
     /**
+     * TODO资源ajax搜索
+     */
+    public function action_search()
+    {
+        $return_struct = array (
+                'status' => 0,
+                'code' => 501,
+                'msg' => 'Not Implemented',
+                'content' => array ()
+        );
+        try {
+            //收集请求数据
+            $id = trim($this->request->query('id'));
+            $catalog_id = intval($this->request->query('catalog'));
+            $name = trim($this->request->query('name'));
+            $postfixs = $this->_get_postfixs();
+            $multi = intval($this->request->query('multi'));
+    
+            //文件夹
+            $catalog = BES::model('resource_catalog')->order_by('date_add', 'DESC')->find_all();
+            $catalog = BES::model('resource_catalog')->tree($catalog);
+    
+            //资源
+            $model_upload = BES::model('upload');
+            if(!empty($catalog_id)) {
+                $model_upload = $model_upload->where('catalog_id', '=', $catalog_id);
+            }
+            if(!empty($name)) {
+                $model_upload = $model_upload->where('name', 'LIKE', "%$name%");
+            }
+            if(!empty($postfixs)) {
+                $model_upload = $model_upload->where('extension', 'IN', $postfixs);
+            }
+            $model = clone $model_upload;
+            $count = $model_upload->count_all();
+    
+            //分页
+            $this->pagination = new PaginationAdmin(array(
+                    'total_items'    => $count,
+                    'items_per_page' => $this->per_page,
+                    'first_page_in_url' => $id
+            ));
+    
+            //列表
+            $data = $model->order_by('date_add', 'DESC')->offset($this->pagination->offset)->limit($this->per_page)->find_all();
+            $this->pagination = $this->pagination->render('resource_search_page');
+    
+            //模板
+            $result = BES::view('resource_search', array('id' => $id, 'count' => $count, 'data' => $data, 'pagination' => $this->pagination, 'catalog' => $catalog, 'catalog_id' => $catalog_id, 'name' => $name, 'multi' => $multi))->render(NULL,FALSE);
+            exit(json_encode(array(
+                    'status' => 1,
+                    'code' => 200,
+                    'content'=> array(
+                            'catalog_id' => $catalog_id,
+                            'name' => $name,
+                            'data' => (string)$result
+                    ),
+            )));
+        } catch ( Exception_BES $ex ) {
+            $this->_ex($ex, $return_struct);
+        }
+    }
+    
+    /**
      * 资源弹出窗的资源库列表
      */
     public function action_uploadlist($return = FALSE) {
@@ -166,6 +247,7 @@ class Controller_Admin_Resource extends Controller_Admin_Base
         } else {
             echo $result; 
         }
+        exit;
     }
     /**
      * 资源弹出窗的上传处理
@@ -235,12 +317,8 @@ class Controller_Admin_Resource extends Controller_Admin_Base
     			->render(null,false);
     	} else {
     	    echo 'Load failed';
-    	} 
-<<<<<<< .mine
+    	}
     	exit;
-=======
-
->>>>>>> .theirs
     }
 
 

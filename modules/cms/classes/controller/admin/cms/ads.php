@@ -131,6 +131,10 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
         try {
             $id = intval ($this->request->param('id'));
             $ads_detail = EHOVEL::model ( 'ads', intval ( $id ) );
+            if (!$ads_detail->loaded()) {
+                echo 'Load Failed';
+                exit;
+            }
             if($_POST)
             {
                 $ads_detail->type = $this->request->post ( 'ads_type' );
@@ -138,10 +142,6 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
 				$resource_ids = $this->request->post('resource_ids');
                 foreach ($resource_ids as $id) {
                     $ads_content[] = array('banner'=>$id,'bannerurl'=>Helper_Resource::getLinkByResourceId($id));
-
-
-
-
                 }
                 $ads_detail->content = serialize($ads_content);
                 $ads_detail->save();
@@ -154,7 +154,7 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
                                                             'id' => $id,
                                                             'ads_detail'=>$ads_detail,
             ));
-        }catch ( Exception $ex ){
+        }catch (Exception $ex ){
             Message::set($ex);
         }
     }
@@ -176,7 +176,7 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
             $spaceid = intval ( $this->request->query ( 'spaceid' ) );
             $type =  $this->request->query ( 'type' ) ;
             $id = $this->request->query ('id');
-            $ads_info = BES::config ( 'site_ads' );
+            $ads_info = Kohana::load('site_ads');
             $ads_detail = BES::model ( 'Site_Poster', intval ( $id ) );
             if (! $ads_detail->loaded ()) 
             {

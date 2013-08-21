@@ -75,6 +75,12 @@ class Controller_Admin_Cms_Content extends Controller_Admin_Base {
         if ($content->loaded()) {
             if (!empty($_POST)) {
                 	$this->_prepareData($content);
+                	//图片信息
+                	if ($resourceIds = $this->request->post('resource_ids')) {
+                	    foreach ($resourceIds as $rId) {
+                	        
+                	    }
+                	}
                 	$content->save();
                     if ($content->saved()) {
                         Message::set(Message::SUCCESS, __('Edited Successfully'));

@@ -21,13 +21,15 @@
 			<div class="control-group">
 				<label id="eform_alias-lbl" for="eform_alias" class="hasTip control-label" title="广告位名称"><?php echo __('图片');?></label>
 				<div class="controls" id="piclist">
+				<?php foreach ($ads_detail->content as $pics){?>
 				    <div class="choose_pics">
                                 <div class="pic_inner img120">
                                 	<?php //TODO 附件地址使用助手函数生成?>
                                 	<img alt="" src="<?php echo Helper_Resource::getLinkByResourceId($pics['banner']);?>" style="max-height:120px; max-width:120px">
 								</div>                            <input type="hidden" value="<?php echo $pics['banner']?>" name="resource_ids[]"> 
-                        </div>                    </div>
-				</div>
+                        </div>
+                <?php }?>
+                </div>
 			</div>
 			<div class="control-group">
 				<a class="btn btn-primary" id="upload_pictures" onclick="showresourcedialog()">

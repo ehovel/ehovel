@@ -45,7 +45,7 @@
 		    	</div>
 			</div>
 			<div class="tab-pane fade" id="resource_data">
-				<?php echo $resourceList;?>
+				<?php //echo $resourceList;?>
 			</div>
 			<div class="tab-pane fade" id="resource_remote">
 				网络资源
@@ -143,6 +143,10 @@
 		            $('#'+currentFile).find('.pri_img').attr('src',data.url).show();
 		            $('#'+currentFile).find('input[name^="resource_ids"]').val(data.resource_id);
 	            }
+	        });
+	        var resource_url = '/admin/resource/uploadlist';
+	        $.get(resource_url, function(data){
+	              $('#resource_data').html(data);
 	        });
 	    });
     </script>

@@ -26,5 +26,5 @@ function init_site_route_before()
 }
 function init_site_route_after()
 {
-    
+    I18n::package('zh');
 }

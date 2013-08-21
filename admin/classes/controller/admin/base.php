@@ -38,7 +38,7 @@ class Controller_Admin_Base extends Controller {
     public $_redirect = '';
     
     public $toolBar = '';
-    public $profileShow = true;
+    public $profileShow = false;
     
     protected $_accessCheck = true;
     

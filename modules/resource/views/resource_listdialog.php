@@ -73,21 +73,31 @@
             </div>
     	</div>
     </div>
-</div>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#check_all').click(function(){
-            if($(this).attr('checked')){
-                $('.sel').each(function(){
-                    $(this).attr('checked',true);
-                });
-            }
-            else
-            {
-                $('.sel').each(function(){
-                    $(this).attr('checked',false);
-                });
-            }
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#check_all').click(function(){
+                if($(this).attr('checked')){
+                    $('.sel').each(function(){
+                        $(this).attr('checked',true);
+                    });
+                }
+                else
+                {
+                    $('.sel').each(function(){
+                        $(this).attr('checked',false);
+                    });
+                }
+            });
+            $('#resource_data .pagination_wrap').find('a').click(function(){
+                var url = $(this).attr('href');
+                if(url != 'javascript:;') {
+                    $.get(url,function(data) {
+                        $('#resource_data').html(data);
+                    })
+                }
+                return false;
+            });
         });
-    });
-</script>
+    </script>
+</div>
+
