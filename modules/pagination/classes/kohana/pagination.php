@@ -9,7 +9,7 @@
  * @license    http://kohanaphp.com/license.html
  */
 class Kohana_Pagination {
-	
+
 	// Merged configuration settings
 	protected $config = array(
 		'current_page'      => array('source' => 'query_string', 'key' => 'page'),
@@ -52,15 +52,6 @@ class Kohana_Pagination {
 
 	// Query offset
 	protected $offset;
-	
-	// Request object
-	protected $_request;
-	
-	// Route to use for URIs
-	protected $_route;
-	
-	// Parameters to use with Route to create URIs
-	protected $_route_params = array();
 
 	/**
 	 * Creates a new Pagination object.
@@ -68,9 +59,9 @@ class Kohana_Pagination {
 	 * @param   array  configuration
 	 * @return  Pagination
 	 */
-	public static function factory(array $config = array(), Request $request = NULL)
+	public static function factory(array $config = array())
 	{
-		return new Pagination($config, $request);
+		return new Pagination($config);
 	}
 
 	/**
@@ -79,25 +70,11 @@ class Kohana_Pagination {
 	 * @param   array  configuration
 	 * @return  void
 	 */
-	public function __construct(array $config = array(), Request $request = NULL)
+	public function __construct(array $config = array())
 	{
 		// Overwrite system defaults with application defaults
 		$this->config = $this->config_group() + $this->config;
-		
-		// Assing Request
-		if ($request === NULL)
-		{
-			$request = Request::current();
-		}
-		
-		$this->_request = $request;
 
-		// Assign default Route
-		$this->_route = $request->route();
-
-		// Assign default route params
-		$this->_route_params = $request->param();
-		
 		// Pagination setup
 		$this->setup($config);
 	}
@@ -167,18 +144,17 @@ class Kohana_Pagination {
 			}
 			else
 			{
-				$query_key = $this->config['current_page']['key'];
-						
 				switch ($this->config['current_page']['source'])
 				{
 					case 'query_string':
-						$this->current_page = ($this->_request->query($query_key) !== NULL)
-							? (int) $this->_request->query($query_key)
+					case 'mixed':
+						$this->current_page = isset($_GET[$this->config['current_page']['key']])
+							? (int) $_GET[$this->config['current_page']['key']]
 							: 1;
 						break;
 
 					case 'route':
-						$this->current_page = (int) $this->_request->param($query_key, 1);
+						$this->current_page = (int) Request::current()->param($this->config['current_page']['key'], 1);
 						break;
 				}
 			}
@@ -217,18 +193,17 @@ class Kohana_Pagination {
 		{
 			$page = NULL;
 		}
-		
+
 		switch ($this->config['current_page']['source'])
 		{
 			case 'query_string':
-				
-				return URL::site($this->_route->uri($this->_route_params).
-					$this->query(array($this->config['current_page']['key'] => $page)));
+        return URL::site(Request::current()->uri()).URL::query(array($this->config['current_page']['key'] => $page));
 
 			case 'route':
-			
-				return URL::site($this->_route->uri(array_merge($this->_route_params, 
-					array($this->config['current_page']['key'] => $page))).$this->query());
+				return URL::site(Request::current()->route()->uri(array($this->config['current_page']['key'] => $page))).URL::query();
+
+			case 'mixed':
+			    return URL::site(Request::detect_uri()).URL::query(array($this->config['current_page']['key'] => $page));
 		}
 
 		return '#';
@@ -244,7 +219,7 @@ class Kohana_Pagination {
 	public function valid_page($page)
 	{
 		// Page number has to be a clean integer
-		if ( ! Valid::digit($page))
+		if ( ! Validate::digit($page))
 			return FALSE;
 
 		return $page > 0 AND $page <= $this->total_pages;
@@ -268,98 +243,14 @@ class Kohana_Pagination {
 			$view = $this->config['view'];
 		}
 
-		if ( ! $view instanceof View)
+		if ( ! $view instanceof Kohana_View)
 		{
 			// Load the view file
 			$view = View::factory($view);
 		}
-		
+
 		// Pass on the whole Pagination object
-		return $view->set(get_object_vars($this))->set('page', $this)->render(null,false);
-	}
-	
-	
-	/**
-	 * Request setter / getter
-	 * 
-	 * @param	Request
-	 * @return	Request	If used as getter
-	 * @return	$this	Chainable as setter
-	 */
-	public function request(Request $request = NULL)
-	{
-		if ($request === NULL)
-			return $this->_request;
-			
-		$this->_request = $request;
-		
-		return $this;
-	}
-	
-	/**
-	 * Route setter / getter
-	 * 
-	 * @param	Route
-	 * @return	Route	Route if used as getter
-	 * @return	$this	Chainable as setter
-	 */
-	public function route(Route $route = NULL)
-	{
-		if ($route === NULL)
-			return $this->_route;
-			
-		$this->_route = $route;
-		
-		return $this;
-	}
-	
-	/**
-	 * Route parameters setter / getter
-	 * 
-	 * @param	array	Route parameters to set
-	 * @return	array	Route parameters if used as getter
-	 * @return	$this	Chainable as setter
-	 */
-	public function route_params(array $route_params = NULL)
-	{
-		if ($route_params === NULL)
-			return $this->_route_params;
-			
-		$this->_route_params = $route_params;
-		
-		return $this;
-	}
-	
-	/**
-	 * URL::query() replacement for Pagination use only
-	 * 
-	 * @param	array	Parameters to override
-	 * @return	string
-	 */
-	public function query(array $params = NULL)
-	{
-		if ($params === NULL)
-		{
-			// Use only the current parameters
-			$params = $this->_request->query();
-		}
-		else
-		{
-			// Merge the current and new parameters
-			$params = array_merge($this->_request->query(), $params);
-		}
-		
-		if (empty($params))
-		{
-			// No query parameters
-			return '';
-		}
-		
-		// Note: http_build_query returns an empty string for a params array with only NULL values
-		$query = http_build_query($params, '', '&');
-		
-		// Don't prepend '?' to an empty string
-		return ($query === '') ? '' : ('?'.$query);
+		return $view->set(get_object_vars($this))->set('page', $this)->render();
 	}
 
 	/**
@@ -369,21 +260,13 @@ class Kohana_Pagination {
 	 */
 	public function __toString()
 	{
-		try
-		{
-			return $this->render();
-		}
-		catch(Exception $e)
-		{
-			Kohana_Exception::handler($e);
-			return '';
-		}
+		return $this->render();
 	}
 
 	/**
 	 * Returns a Pagination property.
 	 *
-	 * @param   string  property name
+	 * @param   string  URI of the request
 	 * @return  mixed   Pagination property; NULL if not found
 	 */
 	public function __get($key)

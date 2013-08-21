@@ -102,4 +102,15 @@ class Helper_Resource
         }
         return $link;
     }
+    
+    /**
+     * TODO 完善获取资源地址机制
+     * @param unknown_type $resourceId
+     */
+    public static function getLinkByResourceId($resourceId) {
+        $resourceObj = ORM::factory('resource')->where('id','=',$resourceId)->find();
+        $attachId = $resourceObj->attach_id;
+        $px = $resourceObj->postfix;
+        return '/attach/'.$attachId.'.'.$px;
+    }
 }

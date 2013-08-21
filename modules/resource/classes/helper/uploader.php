@@ -138,7 +138,6 @@ class Helper_Uploader
         return array(
             "originalName" => $this->oriName ,
             "name" => $this->fileName ,
-            "url" => $this->fullName ,
             "size" => $this->fileSize ,
             "type" => $this->fileType ,
             "state" => $this->stateInfo

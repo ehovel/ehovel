@@ -1,5 +1,4 @@
 <?php defined('SYSPATH') or die('No direct script access.'); ?>
-<script type="text/javascript" src="<?php echo STATICS_BASE_URL;?>js/jquery.validate.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo STATICS_BASE_URL;?>css/demo_table_jui.css">
 <script type="text/javascript" src="<?php echo STATICS_BASE_URL;?>js/jquery.dataTables.min.js"></script>
 
@@ -58,15 +57,15 @@
                             <tr class="odd gradeU">
                                 <td><?php echo $info->id;?></td>
                                 <td>
-                                            <?php echo HTML::edit_anchor(EHOVEL::url('cms_ads/edit') . '?id=' . $info->id);?>
+                                            <?php echo HTML::edit_anchor(EHOVEL::url('cms_ads/edit',array('id'=>$info->id)));?>
                                     &nbsp;&nbsp;            
-                                            <?php echo HTML::delete_anchor(EHOVEL::url('cms_ads/delete') . '?id=' . $info->id);?>
+                                            <?php echo HTML::delete_anchor(EHOVEL::url('cms_ads/delete',array('id'=>$info->id)));?>
                                 </td>
                                 <td><?php echo $info->title;?></td>
                                 <td><?php if(isset($types[$info->type])){echo $types[$info->type];}?></td>
                                 <td><?php echo $info->title;?></td>
                                 <td><?php if($info->disabled==0){echo __('start');}else{echo __('stop');}?></td>
-                                <td><?php echo $info->created?></td>
+                                <td><?php echo $info->date_add?></td>
                             </tr>
                             <?php }?>
                                 <?php }?>

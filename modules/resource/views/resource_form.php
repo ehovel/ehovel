@@ -17,7 +17,7 @@
 			<div class="control-group">
 				<label class="control-label" for="inputEmail">标题</label>
 				<div class="controls">
-					<input name="eform[title]" type="text" class="input_text medium" maxlength="255" value="<?php echo isset($resource['title']) ? $resource['title'] : ''; ?>"/>
+					<input name="eform[title]" type="text" class="input_text medium" maxlength="255" value="<?php echo isset($resource['name']) ? $resource['name'] : ''; ?>"/>
 				</div>
 			</div>
 			<div class="control-group">

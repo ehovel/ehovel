@@ -1,40 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.'); ?>
 <link rel="stylesheet" type="text/css" href="/statics/css/fancybox/jquery.fancybox-1.3.4.css" />
 <?php echo EHOVEL::js('jquery.fancybox-1.3.4');?>
-<script type="text/javascript">
-    window.onload=function()
-    {
-       change();
-    }
-    function uploadImage(image) {
-        $('#image').show();
-        $('#image').find('img').attr('src', image['url_180x180']);
-        $('#image').find('input').val(image['uri']);
-    }
-    
-    function change()
-    {
-        var t1 = document.getElementById('t1');
-        var t2 = document.getElementById('t2');
-        var ads_type = document.getElementById('ads_type');
-        if(ads_type.value=="images")
-        {
-            t1.style.display = "";
-            t2.style.display = "none";
-        }
-        else if(ads_type.value=="flash")
-        {
-            t1.style.display = "none";
-            t2.style.display = "";
-        }
-        else if(ads_type.value=="code")
-        {
-        	t1.style.display = "";
-            t2.style.display = "";
-        }
-    }
-</script>
-
+<?php echo EHOVEL::css('ehovel_modules');?>
 <section class="container_12 clearfix">
 	<article>
 		<h1><?php echo __('Edit Ads');?></h1>
@@ -42,39 +9,30 @@
 			<div class="control-group">
 				<label id="eform_alias-lbl" for="eform_alias" class="hasTip control-label" title="广告位名称"><?php echo __('名称');?></label>
 				<div class="controls">
-				    <input type="text" name="ads_title" class="inputbox medium required" maxlength="20" value="<?php if(!empty($ads_detail->title)){echo $ads_detail->title;}?>" />
+				    <input type="text" name="ads_title" id="ads_title" class="inputbox medium required" maxlength="20" value="<?php if(!empty($ads_detail->title)){echo $ads_detail->title;}?>" />
 				</div>
 			</div>
 			<div class="control-group">
-				<label id="eform_alias-lbl" for="eform_alias" class="hasTip control-label" title="广告位类型"><?php echo __('类型');?></label>
+				<label id="eform_alias-lbl" for="eform_alias" class="hasTip control-label" title="广告位名称"><?php echo __('类型');?></label>
 				<div class="controls">
 				    <input type="text" name="ads_type" id="ads_type" class="inputbox medium required" maxlength="20" value="<?php if(!empty($ads_detail->type)){echo $ads_detail->type;}?>" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label id="eform_alias-lbl" for="eform_alias" class="hasTip control-label" title="广告位名称"><?php echo __('图片');?></label>
-				<div class="controls">
-				    <div id="photo_container">
-    				    <?php foreach ($ads_detail->content as $pics) {?>
-    				    <div class="choose_pics">
-                            <div class="pic">
-                                <div class="pic">
-                                    <div class="pic_inner img120">
-                                        <img alt="" src="/attach/<?php echo $pics['banner']?>.jpg" id="upload_pic" style="max-height:120px; max-width:120px">
-                                    </div>
-                                </div>
-                                <ul class="inline">
-            					  <li><a onclick="removepic(this)" href="javascript:;"><i class="icon-remove"></i></a></li>
-            					</ul>
-                                <input type="hidden" value="/attachment/view/130415617306.jpg" name="attachs[]"> 
-                            </div> 
+				<div class="controls" id="piclist">
+				<?php foreach ($ads_detail->content as $pics){?>
+				    <div class="choose_pics">
+                                <div class="pic_inner img120">
+                                	<?php //TODO 附件地址使用助手函数生成?>
+                                	<img alt="" src="<?php echo Helper_Resource::getLinkByResourceId($pics['banner']);?>" style="max-height:120px; max-width:120px">
+								</div>                            <input type="hidden" value="<?php echo $pics['banner']?>" name="resource_ids[]"> 
                         </div>
-                        <?php }?>
-                    </div>
-				</div>
+                <?php }?>
+                </div>
 			</div>
 			<div class="control-group">
-				<a class="btn btn-primary" onclick="showresourcedialog(this,'/admin/resource/uploaddialog')">
+				<a class="btn btn-primary" id="upload_pictures" onclick="showresourcedialog()">
 					<i class="icon-picture"></i>选择图片
 				</a>
 			</div>
@@ -85,16 +43,32 @@
 		</form>
 	</article>
 </section>
+<div id="upload"><p class="upload"></p></div>
+<?php echo EHOVEL::js('ehovel_upload');?>
 <script type="text/javascript">
-function facyboxclose() {
-	$.fancybox.close();
-}
-function showresourcedialog(obj,url) {
-	$.fancybox({
-		'href':url,
-		'padding':'30',
-		'title':'选择图片',
-		'titlePosition':'inside'
+function showresourcedialog() {
+	$('#upload_pictures').Upload({
+		title: '图片上传',
+		file_size_limit: '1 MB',
+		file_types: '*.jpg;*.gif;*.png;',
+		file_upload_limit: 10,
+		session_id: $('#session_id').val(),
+		base_url: '/',
+		before_upload:function(){
+		    return true;
+		},
+		upload_success: function(server_data){
+			for (var i in server_data) {
+				var h = '';
+				h += '<div class="choose_pics"><div class="pic"><div class="pic_inner img120">';
+				h += '<img alt="" src="'+ server_data[i]['url'] +'" style="max-height:120px; max-width:120px">';
+				h += '</div>';
+				h += '<ul class="inline"><li><a onclick="removepic(this)" href="javascript:;"><i class="icon-remove"></i></a></li></ul>';
+				h += '<input type="hidden" value="'+ server_data[i]['id'] +'" name="resource_ids[]"></div></div>';
+				h = $(h);
+				$('#piclist').append(h);
+			}
+		}
 		});
 }
 function removepic(obj){

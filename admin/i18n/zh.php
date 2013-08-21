@@ -473,5 +473,6 @@ return array(
         'Upload Resource' => '从资源库选择',
         'Catalog' => '资源文件夹',
         'Resource All' => '资源库',
+        'Keywords' => '关键词'
 
 );

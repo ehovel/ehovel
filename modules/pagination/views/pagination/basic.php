@@ -1,37 +1,37 @@
-<div class="pagination pagination-centered">
-	<ul>
+<p class="pagination">
+
 	<?php if ($first_page !== FALSE): ?>
-		<li><a href="<?php echo HTML::chars($page->url($first_page)) ?>" rel="first"><?php echo __('First') ?></a></li>
+		<a href="<?php echo HTML::chars($page->url($first_page)) ?>" rel="first"><?php echo __('First') ?></a>
 	<?php else: ?>
-		<li><a href="javascript:;"><?php echo __('First') ?></a></li>
+		<?php echo __('First') ?>
 	<?php endif ?>
 
 	<?php if ($previous_page !== FALSE): ?>
-		<li><a href="<?php echo HTML::chars($page->url($previous_page)) ?>" rel="prev"><?php echo __('Previous') ?></a></li>
+		<a href="<?php echo HTML::chars($page->url($previous_page)) ?>" rel="prev"><?php echo __('Previous') ?></a>
 	<?php else: ?>
-		<li><a href="javascript:;"><?php echo __('Previous') ?></a></li>
+		<?php echo __('Previous') ?>
 	<?php endif ?>
 
 	<?php for ($i = 1; $i <= $total_pages; $i++): ?>
 
 		<?php if ($i == $current_page): ?>
-			<li class="active"><a href="javascript:;"><strong><?php echo $i ?></strong></a></li>
+			<strong><?php echo $i ?></strong>
 		<?php else: ?>
-			<li><a href="<?php echo HTML::chars($page->url($i)) ?>"><?php echo $i ?></a></li>
+			<a href="<?php echo HTML::chars($page->url($i)) ?>"><?php echo $i ?></a>
 		<?php endif ?>
 
 	<?php endfor ?>
 
 	<?php if ($next_page !== FALSE): ?>
-		<li><a href="<?php echo HTML::chars($page->url($next_page)) ?>" rel="next"><?php echo __('Next') ?></a></li>
+		<a href="<?php echo HTML::chars($page->url($next_page)) ?>" rel="next"><?php echo __('Next') ?></a>
 	<?php else: ?>
-		<li><a href="javascript:;"><?php echo __('Next') ?></a></li>
+		<?php echo __('Next') ?>
 	<?php endif ?>
 
 	<?php if ($last_page !== FALSE): ?>
-		<li><a href="<?php echo HTML::chars($page->url($last_page)) ?>" rel="last"><?php echo __('Last') ?></a></li>
+		<a href="<?php echo HTML::chars($page->url($last_page)) ?>" rel="last"><?php echo __('Last') ?></a>
 	<?php else: ?>
-		<li><a href="javascript:;"><?php echo __('Last') ?></a></li>
+		<?php echo __('Last') ?>
 	<?php endif ?>
-	</ul>
-</div><!-- .pagination -->
+
+</p><!-- .pagination -->
