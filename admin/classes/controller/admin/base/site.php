@@ -16,13 +16,11 @@ class Controller_Admin_Base_Site extends Controller_Admin_Base {
     public function __construct(Request $request, Response $response)
     {
         parent::__construct($request, $response);
-        $this->site_id = BES::get_site();
+        $this->site_id = EHOVEL::get_site();
         if(empty($this->site_id))
         {
-            Remind::factory(Remind::TYPE_ERROR)
-                ->message(__('Please select site.'))
-                ->redirect($this->request->referrer())
-                ->send();
+            Message::set(Message::ERROR,__('Please select site.'));
+            $this->redirect($this->request->referrer());
         }
     }
     

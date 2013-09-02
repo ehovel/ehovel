@@ -60,9 +60,41 @@ class Controller_Admin_Base extends Controller {
      */
     public function before()
     {
+        $session_id = NULL;
+        if ($this->request->query('session_id')) {
+            $session_id = $this->request->query('session_id');
+        }
+        //判断请求是否要验证登录
+        $user = Model_Auth_Admin::get_current_user($session_id);
+        if(empty($user) && !Helper_Auth::check_is_ignore_login($this->request->controller().'/'.$this->request->action())){
+            if (!($redirect=$this->request->query('redirect'))){
+                $redirect = URL::current(true);
+            }
+            Message::set(Message::ERROR,__('Please login'));
+            echo EHOVEL::url('auth_admin/login', array('redirect' => $redirect));
+            $this->redirect(EHOVEL::url('auth_admin/login', array('redirect' => $redirect)));
+        }
+        
+        if(!empty($user))
+        {
+            //验证站点
+            if(!$user->check_site())
+            {
+                Message::set(Message::ERROR,__('Account without permission, please contact the administrator assigned.'));
+                $this->redirect(EHOVEL::url('index'));
+            }
+        
+            //验证权限
+            if(!Helper_Auth::check($this->request->controller().'/'.$this->request->action())){
+                Message::set(Message::ERROR,__('Account without permission, please contact the administrator assigned.'));
+                $this->redirect(EHOVEL::url('index'));
+            }
+        }
+        $this->user = $user;
+        
         parent::before();
-        $urlReferrer = URL::referrer();
-        $this->_redirect = $urlReferrer=='/' ? EHOVEL::admin_base_url() :URL::referrer();
+        $urlReferrer = $this->request->referrer();
+        $this->_redirect = $urlReferrer=='/' ? EHOVEL::admin_base_url() : $urlReferrer;
     }
     
     /**

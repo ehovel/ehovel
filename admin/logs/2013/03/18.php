@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct script access.'); ?>
 
-2013-03-18 22:54:20 --- CRITICAL: ErrorException [ 1 ]: Class 'Exception_BES' not found ~ MODPATH\cms\classes\controller\admin\cms\content.php [ 127 ] in :
+2013-03-18 22:54:20 --- CRITICAL: ErrorException [ 1 ]: Class 'Kohana_Exception' not found ~ MODPATH\cms\classes\controller\admin\cms\content.php [ 127 ] in :
 2013-03-18 22:54:20 --- DEBUG: #0 [internal function]: Kohana_Core::shutdown_handler()
 #1 {main} in :
 2013-03-18 23:00:49 --- CRITICAL: ErrorException [ 8 ]: Use of undefined constant STATICS_BASE_URL - assumed 'STATICS_BASE_URL' ~ MODPATH\cms\views\content\edit.php [ 10 ] in D:\web\ehovel\source\modules\cms\views\content\edit.php:10

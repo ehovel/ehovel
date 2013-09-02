@@ -64,6 +64,7 @@ class Helper_Auth{
      */
     public static function check_is_ignore_login($mark)
     {
+        $mark = strtolower($mark);
         $node = self::get_node_by_mark($mark);
         return !empty($node) && $node->get_default_role()==Model_Auth_Node::ROLE_GUEST;
     }

@@ -19,7 +19,7 @@ class Helper_Tool{
      */
     public static function generate_navigation($navigation)
     {
-        $return_str = '<a href="'.BES::url('index').'">Home</a><span class="split">>></span>';
+        $return_str = '<a href="'.EHOVEL::url('index').'">Home</a><span class="split">>></span>';
         if(is_array($navigation)){
             $count = count($navigation);
             $i = 0;

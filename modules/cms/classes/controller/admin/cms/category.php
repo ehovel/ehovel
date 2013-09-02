@@ -12,21 +12,21 @@ class Controller_Admin_Cms_Category extends Controller_Admin_Base {
     public function action_index()
     {
         try {
-            $categories = BES::model('Product_Category')->tree();
+            $categories = EHOVEL::model('Product_Category')->tree();
             $attributesets = array();
             if ($categories->count() > 0) {
-                $attributesets = BES::model('Product_AttributeSet')
+                $attributesets = EHOVEL::model('Product_AttributeSet')
                     ->where('id', 'in', $categories->as_array('attributeset_id', 'attributeset_id'))
                     ->find_all()
                     ->as_array('id', 'name');
             }
-            $this->template = BES::view('product/category/index', array(
+            $this->template = EHOVEL::view('product/category/index', array(
                 'categories'    => $categories,
                 'attributesets' => $attributesets,
             ));
-        } catch (Exception_BES $ex) {
+        } catch (Kohana_Exception $ex) {
             Remind::factory($ex)
-                ->redirect(BES::url('index/index'))
+                ->redirect(EHOVEL::url('index/index'))
                 ->send();
         }
     }
@@ -37,7 +37,7 @@ class Controller_Admin_Cms_Category extends Controller_Admin_Base {
     public function action_add()
     {
         try {
-            $category = BES::model('Product_Category');
+            $category = EHOVEL::model('Product_Category');
             if (!empty($_POST)) {
                 $category->name             = trim($this->request->post('name'));
                 $category->attributeset_id  = trim($this->request->post('attributeset_id'));
@@ -50,9 +50,9 @@ class Controller_Admin_Cms_Category extends Controller_Admin_Base {
                 $category->meta_description = trim($this->request->post('meta_description'));
                 
                 if($this->request->post('pid') == 1){
-                    $parent = BES::model('Product_Category')->root();
+                    $parent = EHOVEL::model('Product_Category')->root();
                 }else{
-                    $parent = BES::model('Product_Category', intval($this->request->post('pid')));
+                    $parent = EHOVEL::model('Product_Category', intval($this->request->post('pid')));
                 }
                 if ($parent->loaded()) {
                     $category->insert_as_last_child($parent);
@@ -63,27 +63,27 @@ class Controller_Admin_Cms_Category extends Controller_Admin_Base {
                     } else {
                         Remind::factory(Remind::TYPE_ERROR)
                         ->message($category->validation()->errors())
-                        ->redirect(BES::url('product_category/add'))
+                        ->redirect(EHOVEL::url('product_category/add'))
                         ->send();
                     }
                 } else {
                     Remind::factory(Remind::TYPE_ERROR)
                         ->message(__('Parent error'))
-                        ->redirect(BES::url('product_category/add'))
+                        ->redirect(EHOVEL::url('product_category/add'))
                         ->send();
                 }
             } else {
-                $categories    = BES::model('Product_Category')->tree(true);
-                $attributesets = BES::model('Product_AttributeSet')
+                $categories    = EHOVEL::model('Product_Category')->tree(true);
+                $attributesets = EHOVEL::model('Product_AttributeSet')
                     ->find_all()
                     ->as_array('id', 'name');
-                $this->template = BES::view('product/category/form', array(
+                $this->template = EHOVEL::view('product/category/form', array(
                     'category'      => $category,
                     'categories'    => $categories,
                     'attributesets' => $attributesets,
                 ));
             }
-        } catch (Exception_BES $ex) {
+        } catch (Kohana_Exception $ex) {
             Remind::factory($ex)
                 ->send();
         }
@@ -95,17 +95,17 @@ class Controller_Admin_Cms_Category extends Controller_Admin_Base {
     public function action_edit()
     {
         try {
-            $category = BES::model('Product_Category', intval($this->request->query('id')));
+            $category = EHOVEL::model('Product_Category', intval($this->request->query('id')));
             if (!empty($_POST)) {
                 if($this->request->post('pid') == 1){
-                    $parent = BES::model('Product_Category')->root();
+                    $parent = EHOVEL::model('Product_Category')->root();
                 }else{
-                    $parent = BES::model('Product_Category', intval($this->request->post('pid')));
+                    $parent = EHOVEL::model('Product_Category', intval($this->request->post('pid')));
                 }
                 if (!$parent->loaded() OR $parent->pk() == $category->pk() OR $parent->is_descendant($category)) {
                     Remind::factory(Remind::TYPE_ERROR)
                         ->message(__('Parent error'))
-                        ->redirect(BES::url('product_category/edit', array('id' => $category->pk())))
+                        ->redirect(EHOVEL::url('product_category/edit', array('id' => $category->pk())))
                         ->send();
                 }
                 if ($category->pid != $parent->pk()) {
@@ -131,21 +131,21 @@ class Controller_Admin_Cms_Category extends Controller_Admin_Base {
                 } else {
                     Remind::factory(Remind::TYPE_ERROR)
                     ->message($category->validation()->errors())
-                    ->redirect(BES::url('product_category/edit', array('id' => $category->pk())))
+                    ->redirect(EHOVEL::url('product_category/edit', array('id' => $category->pk())))
                     ->send();
                 }
             } else {
-                $categories    = BES::model('Product_Category')->tree(true);
-                $attributesets = BES::model('Product_AttributeSet')
+                $categories    = EHOVEL::model('Product_Category')->tree(true);
+                $attributesets = EHOVEL::model('Product_AttributeSet')
                     ->find_all()
                     ->as_array('id', 'name');
-                $this->template = BES::view('product/category/form', array(
+                $this->template = EHOVEL::view('product/category/form', array(
                     'category'      => $category,
                     'categories'    => $categories,
                     'attributesets' => $attributesets,
                 ));
             }
-        } catch (Exception_BES $ex) {
+        } catch (Kohana_Exception $ex) {
             Remind::factory($ex)
                 ->send();
         }
@@ -157,17 +157,17 @@ class Controller_Admin_Cms_Category extends Controller_Admin_Base {
     public function action_delete()
     {
         try {
-            $category = BES::model('Product_Category', intval($this->request->query('id')));
+            $category = EHOVEL::model('Product_Category', intval($this->request->query('id')));
             if ($category->loaded()) {
                 $category->delete();
                 Remind::factory(Remind::TYPE_SUCCESS)
                     ->message(__('Deleted Successfully'))
                     ->send();
             } else {
-                throw new Exception_BES(__('Loading failed, try again'));
+                throw new Kohana_Exception(__('Loading failed, try again'));
             }
             
-        } catch (Exception_BES $ex) {
+        } catch (Kohana_Exception $ex) {
             Remind::factory($ex)
                 ->send();
         }
@@ -182,13 +182,13 @@ class Controller_Admin_Cms_Category extends Controller_Admin_Base {
      */
     protected function _available_name($name, $id)
     {
-        $model = BES::model('Product_Category')
+        $model = EHOVEL::model('Product_Category')
             ->where('name', '=', $name);
         if (!empty($id)) {
             $model->where('id', '!=', $id);
         }
-        if(BES::get_site()){
-            $model->where('site_id', '=', BES::get_site());
+        if(EHOVEL::get_site()){
+            $model->where('site_id', '=', EHOVEL::get_site());
         }
         return $model->count_all() > 0 ? FALSE : TRUE;
     }
@@ -202,13 +202,13 @@ class Controller_Admin_Cms_Category extends Controller_Admin_Base {
      */
     protected function _available_url_key($url_key, $id)
     {
-        $model = BES::model('Product_Category')
+        $model = EHOVEL::model('Product_Category')
             ->where('url_key', '=', $url_key);
         if (!empty($id)) {
             $model->where('id', '!=', $id);
         }
-        if(BES::get_site()){
-            $model->where('site_id', '=', BES::get_site());
+        if(EHOVEL::get_site()){
+            $model->where('site_id', '=', EHOVEL::get_site());
         }
         return $model->count_all() > 0 ? FALSE : TRUE;
     }

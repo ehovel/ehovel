@@ -10,7 +10,7 @@ class HTML extends Kohana_HTML {
      */
     public static function tinymce()
     {
-        echo BES::js('tiny_mce/tiny_mce#tiny_mce/init');
+        echo EHOVEL::js('tiny_mce/tiny_mce#tiny_mce/init');
     }
 
     /**

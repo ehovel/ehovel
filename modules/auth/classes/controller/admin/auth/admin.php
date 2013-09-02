@@ -17,12 +17,12 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
     {
         try{
             //取出当前用户的子账号
-            $admins = BES::model('Auth_Admin',$this->user->id)->descendants(); 
-            $this->template = BES::view('auth/admin/index',array(
+            $admins = EHOVEL::model('Auth_Admin',$this->user->id)->descendants(); 
+            $this->template = EHOVEL::view('auth/admin/index',array(
                 'admins' => $admins,
             ));
-        }catch(Exception_BES $ex){
-            Remind::factory($ex)->send();
+        }catch(Kohana_Exception $ex){
+            Message::set($ex)->send();
         }
     }
 
@@ -42,17 +42,17 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                 if (empty($username) || !$this->_available_username($username)) {
                     Remind::factory(Remind::TYPE_ERROR)
                         ->message(__('Username cannot be repeated!'))
-                        ->redirect(BES::url('auth_admin/add'))
+                        ->redirect(EHOVEL::url('auth_admin/add'))
                         ->send();
                 }
                 //邮箱不能重复
                 if (empty($email) || !$this->_available_email($email)) {
                     Remind::factory(Remind::TYPE_ERROR)
                         ->message(__('Email cannot be repeated!'))
-                        ->redirect(BES::url('auth_admin/add'))
+                        ->redirect(EHOVEL::url('auth_admin/add'))
                         ->send();
                 }
-                $admin_model = BES::model('Auth_Admin');
+                $admin_model = EHOVEL::model('Auth_Admin');
                 //站点管理员，为空表示所有站点
                 if(!empty($site_ids))
                 {
@@ -60,7 +60,7 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                     {
                         Remind::factory(Remind::TYPE_ERROR)
                             ->message(__('Some site have no permission!'))
-                            ->redirect(BES::url('auth_admin/add'))
+                            ->redirect(EHOVEL::url('auth_admin/add'))
                             ->send();
                     }
                 }
@@ -75,7 +75,7 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                 $admin_model->email = $email;
                 $admin_model->password = md5($password);
                 !empty($role) && $admin_model->role_id = $role;
-                $parent = BES::model('auth_admin', intval($this->user->id));
+                $parent = EHOVEL::model('auth_admin', intval($this->user->id));
                 if ($parent->loaded()) {
                     $admin_model->insert_as_last_child($parent);
                     //添加管理员管理站点
@@ -83,7 +83,7 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                     {
                         foreach($site_ids as $site_id)
                         {
-                            $admin_site_relation = BES::model('auth_admin_site_relation');
+                            $admin_site_relation = EHOVEL::model('auth_admin_site_relation');
                             $admin_site_relation->admin_id = $admin_model->pk();
                             $admin_site_relation->site_id = $site_id;
                             $admin_site_relation->save();
@@ -91,26 +91,26 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                     }
                     Remind::factory(Remind::TYPE_SUCCESS)
                         ->message(__('Saved Successfully!'))
-                        ->redirect(BES::url('auth_admin/index'))
+                        ->redirect(EHOVEL::url('auth_admin/index'))
                         ->send();
                 } else {
                     Remind::factory(Remind::TYPE_ERROR)
                         ->message(__('Parent error'))
-                        ->redirect(BES::url('auth_admin/add'))
+                        ->redirect(EHOVEL::url('auth_admin/add'))
                         ->send();
                 }
             }
-            $roles = BES::model('Auth_Role')->where('owner_id','=',$this->user->id)->order_by('id','desc')->find_all();
-            $parent_sites = BES::model('auth_admin')->get_sites();
-            $this->template = BES::view('auth/admin/edit', array(
+            $roles = EHOVEL::model('Auth_Role')->where('owner_id','=',$this->user->id)->order_by('id','desc')->find_all();
+            $parent_sites = EHOVEL::model('auth_admin')->get_sites();
+            $this->template = EHOVEL::view('auth/admin/edit', array(
                 'roles' => $roles,
                 'parent_sites' => $parent_sites,
             ));
             if(!$this->user->column_id)
             {
-                $this->template->columns = BES::model('column')->find_all();
+                $this->template->columns = EHOVEL::model('column')->find_all();
             }
-        } catch(Exception_BES $ex){
+        } catch(Kohana_Exception $ex){
             Remind::factory($ex)
                 ->send();
         }
@@ -123,19 +123,19 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
     {
         try {
             $id = $this->request->query('id');
-            $admin_model = BES::model('Auth_Admin', $id);
+            $admin_model = EHOVEL::model('Auth_Admin', $id);
             if(!$admin_model->loaded()){
                 Remind::factory(Remind::TYPE_ERROR)
                     ->message(__('Bad Request!'))
-                    ->redirect(BES::url('auth_admin/index'))
+                    ->redirect(EHOVEL::url('auth_admin/index'))
                     ->send();
             }
-            $current_admin_model = BES::model('auth_admin',$this->user->id);
+            $current_admin_model = EHOVEL::model('auth_admin',$this->user->id);
             if(!$admin_model->is_descendant($current_admin_model))
             {
                 Remind::factory(Remind::TYPE_ERROR)
                     ->message(__('Your do not have permission to edit this account!'))
-                    ->redirect(BES::url('auth_admin/index'))
+                    ->redirect(EHOVEL::url('auth_admin/index'))
                     ->send();
             }
 
@@ -150,23 +150,23 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                 if (empty($username) || !$this->_available_username($username)) {
                     Remind::factory(Remind::TYPE_ERROR)
                         ->message(__('Username cannot be repeated!'))
-                        ->redirect(BES::url('auth_admin/edit').'?id='.$id)
+                        ->redirect(EHOVEL::url('auth_admin/edit').'?id='.$id)
                         ->send();
                 }
                 //邮箱不能重复
                 if (empty($email) || !$this->_available_email($email)) {
                     Remind::factory(Remind::TYPE_ERROR)
                         ->message(__('Email cannot be repeated!'))
-                        ->redirect(BES::url('auth_admin/edit').'?id='.$id)
+                        ->redirect(EHOVEL::url('auth_admin/edit').'?id='.$id)
                         ->send();
                 }
-                $parent = BES::model('auth_admin', intval($pid));
+                $parent = EHOVEL::model('auth_admin', intval($pid));
                 if (!$parent->loaded() OR $parent->pk() == $admin_model->pk() OR $parent->is_descendant($admin_model)) {
-                    Remind::factory(Remind::TYPE_ERROR)->message(__('Parent Error.'))->redirect(BES::url('auth_admin/edit').'?id='.$id)->send();
+                    Remind::factory(Remind::TYPE_ERROR)->message(__('Parent Error.'))->redirect(EHOVEL::url('auth_admin/edit').'?id='.$id)->send();
                 }
                 if($parent->pk() != $current_admin_model->pk() && !$parent->is_descendant($current_admin_model))
                 {
-                    Remind::factory(Remind::TYPE_ERROR)->message(__('Parent Error.'))->redirect(BES::url('auth_admin/edit').'?id='.$id)->send();
+                    Remind::factory(Remind::TYPE_ERROR)->message(__('Parent Error.'))->redirect(EHOVEL::url('auth_admin/edit').'?id='.$id)->send();
                 }
                 //站点验证
                 if(!empty($site_ids))
@@ -175,7 +175,7 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                     {
                         Remind::factory(Remind::TYPE_ERROR)
                             ->message(__('Some site have no permission!'))
-                            ->redirect(BES::url('auth_admin/edit').'?id='.$id)
+                            ->redirect(EHOVEL::url('auth_admin/edit').'?id='.$id)
                             ->send();
                     }
                 }
@@ -201,7 +201,7 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                 {
                     $site_ids = array();
                 }
-                $old_sites = BES::model('auth_admin_site_relation')->where('admin_id','=',$admin_model->id)->find_all();
+                $old_sites = EHOVEL::model('auth_admin_site_relation')->where('admin_id','=',$admin_model->id)->find_all();
                 $old_site_ids = array();
                 foreach($old_sites as $old_site)
                 {
@@ -215,7 +215,7 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                 {
                     if(!in_array($site_id,$old_site_ids))
                     {
-                        $admin_site_relation = BES::model('auth_admin_site_relation');
+                        $admin_site_relation = EHOVEL::model('auth_admin_site_relation');
                         $admin_site_relation->admin_id = $admin_model->pk();
                         $admin_site_relation->site_id = $site_id;
                         $admin_site_relation->save();
@@ -223,15 +223,15 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                 }
                 Remind::factory(Remind::TYPE_SUCCESS)
                     ->message(__('Edit Successfully!'))
-                    ->redirect(BES::url('auth_admin/index'))
+                    ->redirect(EHOVEL::url('auth_admin/index'))
                     ->send();
             }
-            $roles = BES::model('auth_role')->where('owner_id','=',$admin_model->pid)->order_by('id','desc')->find_all();
-            $parent_model = BES::model('auth_admin',$admin_model->pid);
+            $roles = EHOVEL::model('auth_role')->where('owner_id','=',$admin_model->pid)->order_by('id','desc')->find_all();
+            $parent_model = EHOVEL::model('auth_admin',$admin_model->pid);
             $parent_sites = $parent_model->get_sites();
             $site_ids = $admin_model->get_site_ids();
             $childs = $current_admin_model->descendants(TRUE);
-            $this->template = BES::view('auth/admin/edit', array(
+            $this->template = EHOVEL::view('auth/admin/edit', array(
                 'roles' => $roles,
                 'auth_admin' => $admin_model,
                 'parent_sites' => $parent_sites,
@@ -241,10 +241,10 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
             ));
             if(!$parent_model->column_id)
             {
-                $this->template->columns = BES::model('column')->find_all();
+                $this->template->columns = EHOVEL::model('column')->find_all();
             }
 
-        } catch(Exception_BES $ex){
+        } catch(Kohana_Exception $ex){
             Remind::factory($ex)
                 ->send();
         }
@@ -257,7 +257,7 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
     {
         try{
             $admin_id= $this->request->query('id');
-            $admin_model = BES::model('Auth_Admin', $admin_id);
+            $admin_model = EHOVEL::model('Auth_Admin', $admin_id);
             if($admin_model->loaded()){
                 if($this->user->super != 'Y')
                 {
@@ -265,7 +265,7 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                     {
                         Remind::factory(Remind::TYPE_ERROR)
                             ->message(__('Your do not have permission to delete this account!'))
-                            ->redirect(BES::url('auth_admin/index'))
+                            ->redirect(EHOVEL::url('auth_admin/index'))
                             ->send();
                     }
                 }
@@ -273,21 +273,21 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                 {
                     Remind::factory(Remind::TYPE_ERROR)
                         ->message(__('The administrator have children account!'))
-                        ->redirect(BES::url('auth_admin/index'))
+                        ->redirect(EHOVEL::url('auth_admin/index'))
                         ->send();
                 }
                 $admin_model->delete();
                 Remind::factory(Remind::TYPE_SUCCESS)
                     ->message(__('Delete Successfully!'))
-                    ->redirect(BES::url('auth_admin/index'))
+                    ->redirect(EHOVEL::url('auth_admin/index'))
                     ->send();
             }else{
                 Remind::factory(Remind::TYPE_ERROR)
                     ->message(__('Bad Request!'))
-                    ->redirect(BES::url('auth_admin/index'))
+                    ->redirect(EHOVEL::url('auth_admin/index'))
                     ->send();
             }
-        } catch(Exception_BES $ex){
+        } catch(Kohana_Exception $ex){
             Remind::factory($ex)
                 ->send();
         }
@@ -309,45 +309,38 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                 if ($remember == 1) {
                     Cookie::set('remember', $remember);
                 }
-                if (Form::check_token('formhash')) {
-                    $user = BES::model('Auth_Admin')
+                if (Security::check($this->request->post('formhash'))) {
+                    $user = EHOVEL::model('Auth_Admin')
                             ->login($username, $password, $remember);
-
+                    
                     if ($user->loaded()) {
                         if (empty($redirect)) {
-                            $redirect = BES::url('index');
+                            $redirect = EHOVEL::url('index');
                         }
-                        Remind::factory(Remind::TYPE_SUCCESS)
-                            ->message(__('Login Successfully!'))
-                            ->redirect($redirect)
-                            ->send();
+                        Message::set(Message::SUCCESS,__('Login Successfully!'));
+                        $this->redirect($redirect,302);
                     }
                 } else {
-                    Remind::factory(Remind::TYPE_ERROR)
-                        ->message(__('Invalid Request'))
-                        ->redirect(BES::url('auth_admin/login'))
-                        ->send();
+                    Message::set(Message::ERROR,__('Invalid Request'));
+                    $this->redirect(EHOVEL::url('auth_admin/login'));
                 }
             } else {
-                $formtoken = Form::get_token();
+                $formtoken = Security::token();
                 $remember = Cookie::get('remember');
                 if ($remember == 1) {
                     $username = Cookie::get('username');
                 } else {
                     $username = '';
                 }
-                $this->template = BES::view('auth/admin/login', array(
+                $this->template = View::factory('auth/admin/login', array(
                     'formtoken' => $formtoken,
                     'remember'  => $remember,
                     'username'  => $username,
                 ));
                 $this->template = $this->template->render(NULL, FALSE);
             }
-        } catch (Exception_BES $ex) {
-            Remind::factory(Remind::TYPE_ERROR)
-                ->message($ex->getMessage())
-                ->redirect(BES::url('auth_admin/login'))
-                ->send();
+        } catch (Kohana_Exception $ex) {
+            Message::set($ex);
         }
         
     }
@@ -358,14 +351,14 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
     {
         try {
             $this->request->headers('Cache-Control', 'no-cache');
-            BES::model('Auth_Admin')->logout();
-            BES::app()->clear_column();
-            BES::app()->clear_site();
+            EHOVEL::model('Auth_Admin')->logout();
+            EHOVEL::app()->clear_column();
+            EHOVEL::app()->clear_site();
             Remind::factory(Remind::TYPE_SUCCESS)
                 ->message(__('Logout Successfully!'))
-                ->redirect(BES::url('auth_admin/login'))
+                ->redirect(EHOVEL::url('auth_admin/login'))
                 ->send();
-        } catch (Exception_BES $ex) {
+        } catch (Kohana_Exception $ex) {
             Remind::factory($ex)
                 ->send();
         }
@@ -386,7 +379,7 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                     if ($user->password <> md5($old_password)) {
                         Remind::factory(Remind::TYPE_ERROR)
                             ->message(__('Original password input error, please try again!'))
-                            ->redirect(BES::url('auth_admin/info'))
+                            ->redirect(EHOVEL::url('auth_admin/info'))
                             ->send();
                     }
                     $user->password = md5($password);
@@ -395,24 +388,24 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                         $user->login_set($user);
                         Remind::factory(Remind::TYPE_SUCCESS)
                             ->message(__('Edit Successfully!'))
-                            ->redirect(BES::url('auth_admin/login'))
+                            ->redirect(EHOVEL::url('auth_admin/login'))
                             ->send();
                     } else {
                         Remind::factory(Remind::TYPE_ERROR)
                             ->message($user->validation()->errors())
-                            ->redirect(BES::url('auth_admin/login'))
+                            ->redirect(EHOVEL::url('auth_admin/login'))
                             ->send();
                     }
                 } else {
                     Remind::factory(Remind::TYPE_ERROR)
                         ->message(__('The passwords do not match'))
-                        ->redirect(BES::url('auth_admin/info'))
+                        ->redirect(EHOVEL::url('auth_admin/info'))
                         ->send();
                 }
             } else {
-                $this->template= BES::view('auth/admin/info',array('data'=>$user));
+                $this->template= EHOVEL::view('auth/admin/info',array('data'=>$user));
             }
-        } catch (Exception_BES $ex) {
+        } catch (Kohana_Exception $ex) {
             Remind::factory($ex)
                 ->send();
         }
@@ -426,7 +419,7 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
     protected function _available_email($email)
     {
         $id = $this->request->query('id');
-        $admin_model = BES::model('Auth_Admin');
+        $admin_model = EHOVEL::model('Auth_Admin');
         $admin_model->where('email', '=', $email);
         if($id){
             $admin_model->where('id', '!=', $id);
@@ -442,7 +435,7 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
     protected function _available_username($username)
     {
         $id = $this->request->query('id');
-        $admin_model = BES::model('Auth_Admin');
+        $admin_model = EHOVEL::model('Auth_Admin');
         $admin_model->where('username', '=', $username);
         if($id){
             $admin_model->where('id', '!=', $id);
@@ -458,14 +451,14 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                 Remind::factory(Remind::TYPE_ERROR)->message(__('Invalid Request'))->send();
             }
             $user_id = $this->request->query('id');
-            $admin_model = BES::model('Auth_Admin',$user_id);
+            $admin_model = EHOVEL::model('Auth_Admin',$user_id);
             if(!$admin_model->loaded())
             {
                 Remind::factory(Remind::TYPE_ERROR)->message(__('Loading failed.'))->send();
             }
             $sites = $admin_model->get_sites();
-            $this->template = BES::view('auth/admin/sites',array('sites' => $sites))->render(NULL, FALSE);
-        } catch (Exception_BES $ex) {
+            $this->template = EHOVEL::view('auth/admin/sites',array('sites' => $sites))->render(NULL, FALSE);
+        } catch (Kohana_Exception $ex) {
             Remind::factory($ex)->send();
         }
     }
@@ -478,14 +471,14 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                 Remind::factory(Remind::TYPE_ERROR)->message(__('Invalid Request'))->send();
             }
             $user_id = $this->request->query('id');
-            $admin_model = BES::model('Auth_Admin',$user_id);
+            $admin_model = EHOVEL::model('Auth_Admin',$user_id);
             if(!$admin_model->loaded())
             {
                 Remind::factory(Remind::TYPE_ERROR)->message(__('Loading failed.'))->send();
             }
-            $roles = BES::model('role')->where('owner_id','=',$admin_model->id)->find_all();
-            $this->template = BES::view('auth/admin/roles',array('roles' => $roles))->render(NULL, FALSE);
-        } catch (Exception_BES $ex) {
+            $roles = EHOVEL::model('role')->where('owner_id','=',$admin_model->id)->find_all();
+            $this->template = EHOVEL::view('auth/admin/roles',array('roles' => $roles))->render(NULL, FALSE);
+        } catch (Kohana_Exception $ex) {
             Remind::factory($ex)->send();
         }
     }
@@ -498,19 +491,19 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
                 Remind::factory(Remind::TYPE_ERROR)->message(__('Invalid Request'))->send();
             }
             $user_id = $this->request->query('id');
-            $admin_model = BES::model('Auth_Admin',$user_id);
+            $admin_model = EHOVEL::model('Auth_Admin',$user_id);
             if(!$admin_model->loaded())
             {
                 Remind::factory(Remind::TYPE_ERROR)->message(__('Loading failed.'))->send();
             }
             if(!$admin_model->column_id)
             {
-                $columns = BES::model('column')->find_all();
-                $this->template = BES::view('auth/admin/columns',array('columns' => $columns))->render(NULL, FALSE);
+                $columns = EHOVEL::model('column')->find_all();
+                $this->template = EHOVEL::view('auth/admin/columns',array('columns' => $columns))->render(NULL, FALSE);
             } else {
                 exit;
             }
-        } catch (Exception_BES $ex) {
+        } catch (Kohana_Exception $ex) {
             Remind::factory($ex)->send();
         }
     }

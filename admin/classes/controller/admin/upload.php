@@ -68,15 +68,15 @@ class Controller_Admin_Upload extends Controller_Admin_Base {
                 
                 if (empty($errors)) {
                     $subcat = $type . DIRECTORY_SEPARATOR . strtr(date('Y-m-d-H', time()), '-', DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-                    $direct = BES::config('upload.direct');
+                    $direct = EHOVEL::config('upload.direct');
                     if (!is_dir($direct . $subcat) AND !@mkdir($direct . $subcat, 0777, TRUE)) {
-                        throw new Exception_BES(__('Fail to establish upload directory'));
+                        throw new Kohana_Exception(__('Fail to establish upload directory'));
                     }
                     foreach ($uploads as $upload) {
                         $destination = $subcat . uniqid() . '.' . $upload['extension'];
                         $destination = str_replace(DIRECTORY_SEPARATOR, '/', $destination);
                         if (@move_uploaded_file($upload['tmp_name'], $direct . $destination)) {
-                            $model = BES::model('Upload');
+                            $model = EHOVEL::model('Upload');
                             $model->name        = $upload['name'];
                             $model->uri         = $destination;
                             $model->type        = $type;
@@ -91,7 +91,7 @@ class Controller_Admin_Upload extends Controller_Admin_Base {
                                     'id'          => $model->pk(),
                                     'name'        => $upload['name'],
                                     'uri'         => $destination,
-                                    'url'         => BES::upload_url($destination),
+                                    'url'         => EHOVEL::upload_url($destination),
                                     'mime_type'   => $upload['mime_type'],
                                     'extension'   => $upload['extension'],
                                     'size'        => $upload['size'],
@@ -101,7 +101,7 @@ class Controller_Admin_Upload extends Controller_Admin_Base {
                                     foreach (explode('|', $url_size) as $size) {
                                         $size = trim($size);
                                         if (!empty($size)) {
-                                            $content['url_' . $size] = BES::upload_url($destination, $size);
+                                            $content['url_' . $size] = EHOVEL::upload_url($destination, $size);
                                         }
                                     }
                                 }
@@ -114,9 +114,9 @@ class Controller_Admin_Upload extends Controller_Admin_Base {
                     $return_struct['msg'] = $errors;
                 }
             } else {
-                throw new Exception_BES(__('Upload failed'));
+                throw new Kohana_Exception(__('Upload failed'));
             }
-        } catch (Exception_BES $ex) {
+        } catch (Kohana_Exception $ex) {
             $return_struct['msg'] = $ex->getMessage();
         }
         

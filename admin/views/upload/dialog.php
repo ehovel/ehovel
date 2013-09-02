@@ -212,7 +212,7 @@
         $.ajax({
             type: "GET",
             dataType:'json',
-            url: "<?php echo BES::url('resource/search');?>?id="+id+"&postfixs="+postfixs+"&catalog="+catalog+"&name="+name+"&page="+page+"&multi="+multi,
+            url: "<?php echo EHOVEL::url('resource/search');?>?id="+id+"&postfixs="+postfixs+"&catalog="+catalog+"&name="+name+"&page="+page+"&multi="+multi,
             cache:false,
             success: function(data) {
                 if(data.status == '1') {

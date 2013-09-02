@@ -1,9 +1,9 @@
 <?php defined('SYSPATH') OR die('No direct script access allowed.');
 
 if (!Route::cache()) {
-	init_site_route_before();
+	init_cms_route_before();
 }
-function init_site_route_before()
+function init_cms_route_before()
 {
     Route::set('cms/doc_view', 'cms/<type>-<id>', array(
 			'type' => '[\w\d\s\.,]+',
@@ -24,7 +24,7 @@ function init_site_route_before()
             'action'     => 'view',
         ));
 }
-function init_site_route_after()
+function init_cms_route_after()
 {
     I18n::package('zh');
 }

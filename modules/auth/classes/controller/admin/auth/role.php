@@ -18,11 +18,11 @@ class Controller_Admin_Auth_Role extends Controller_Admin_Base {
     {
         try{
             //获取当前账户的子角色
-            $roles = BES::model('Auth_Role')->where('owner_id','=',$this->user->id)->order_by('id', 'desc')->find_all();
-            $this->template = BES::view('auth/role/index',array(
+            $roles = EHOVEL::model('Auth_Role')->where('owner_id','=',$this->user->id)->order_by('id', 'desc')->find_all();
+            $this->template = EHOVEL::view('auth/role/index',array(
                 'roles' => $roles,
             ));
-        }catch(Exception_BES $ex){
+        }catch(Kohana_Exception $ex){
             Remind::factory($ex)
                 ->send();
         }
@@ -40,15 +40,15 @@ class Controller_Admin_Auth_Role extends Controller_Admin_Base {
                 $nodes = $this->request->post('nodes');
                 $owner_id = $this->user->id;
                 if(empty($name)){
-                    throw new Exception_BES(__('Please enter name!'));
+                    throw new Kohana_Exception(__('Please enter name!'));
                 }
-                if (BES::model('Auth_Role')->name_exist($name, $owner_id)) {
+                if (EHOVEL::model('Auth_Role')->name_exist($name, $owner_id)) {
                     Remind::factory(Remind::TYPE_ERROR)
                         ->message(__('Name cannot be repeated!'))
-                        ->redirect(BES::url('auth_role/add'))
+                        ->redirect(EHOVEL::url('auth_role/add'))
                         ->send();
                 }
-                $role = BES::model('Auth_Role');
+                $role = EHOVEL::model('Auth_Role');
 
                 $role->owner_id = $owner_id;
                 $role->name = $name;
@@ -58,15 +58,15 @@ class Controller_Admin_Auth_Role extends Controller_Admin_Base {
                 $role->save($role->validation());
                 Remind::factory(Remind::TYPE_SUCCESS)
                     ->message(__('Saved Successfully!'))
-                    ->redirect(BES::url('auth_role/index'))
+                    ->redirect(EHOVEL::url('auth_role/index'))
                     ->send();
             }
             //权限列表
             $nodes = Helper_Auth::get_current();
-            $this->template = BES::view('auth/role/edit',array(
+            $this->template = EHOVEL::view('auth/role/edit',array(
                 'nodes' => $nodes,
             ));
-        } catch(Exception_BES $ex){
+        } catch(Kohana_Exception $ex){
             Remind::factory($ex)
                 ->send();
         }
@@ -79,17 +79,17 @@ class Controller_Admin_Auth_Role extends Controller_Admin_Base {
     {
         try {
             $id = $this->request->query('id');
-            $role = BES::model('Auth_Role', $id);
+            $role = EHOVEL::model('Auth_Role', $id);
             if(!$role->loaded()){
                 Remind::factory(Remind::TYPE_ERROR)
                     ->message(__('Bad Request!'))
-                    ->redirect(BES::url('auth_role/index'))
+                    ->redirect(EHOVEL::url('auth_role/index'))
                     ->send();
             }
             if($role->owner_id != $this->user->id){
                 Remind::factory(Remind::TYPE_ERROR)
                     ->message(__('Your do not have permission to edit this role!'))
-                    ->redirect(BES::url('auth_role/index'))
+                    ->redirect(EHOVEL::url('auth_role/index'))
                     ->send();
             }
             if ($_POST) {
@@ -97,12 +97,12 @@ class Controller_Admin_Auth_Role extends Controller_Admin_Base {
                 $description = $this->request->post('description');
                 $nodes = $this->request->post('nodes');
                 if(empty($name)){
-                    throw new Exception_BES(__('Please enter name!'));
+                    throw new Kohana_Exception(__('Please enter name!'));
                 }
                 if ($role->name_exist($name)) {
                     Remind::factory(Remind::TYPE_ERROR)
                         ->message(__('Name cannot be repeated!'))
-                        ->redirect(BES::url('auth_role/edit',array('id'=>$role->id)))
+                        ->redirect(EHOVEL::url('auth_role/edit',array('id'=>$role->id)))
                         ->send();
                 }
                 //保存数据
@@ -112,16 +112,16 @@ class Controller_Admin_Auth_Role extends Controller_Admin_Base {
                 $role->save($role->validation());
                 Remind::factory(Remind::TYPE_SUCCESS)
                     ->message(__('Edit Successfully!'))
-                    ->redirect(BES::url('auth_role/index'))
+                    ->redirect(EHOVEL::url('auth_role/index'))
                     ->send();
             }
             //权限列表
             $role->nodes_json = !empty($role->nodes_json)?json_decode($role->nodes_json) : array();
-            $this->template = BES::view('auth/role/edit',array(
+            $this->template = EHOVEL::view('auth/role/edit',array(
                 'role' => $role,
                 'nodes' => Helper_Auth::get_current(),
             ));
-        } catch(Exception_BES $ex){
+        } catch(Kohana_Exception $ex){
             Remind::factory($ex)
                 ->send();
         }
@@ -134,33 +134,33 @@ class Controller_Admin_Auth_Role extends Controller_Admin_Base {
     {
         try{
             $role_id = $this->request->query('id');
-            $role = BES::model('Auth_Role', $role_id);
+            $role = EHOVEL::model('Auth_Role', $role_id);
             if($role->loaded()){
                 if($role->owner_id != $this->user->id)
                 {
                     Remind::factory(Remind::TYPE_ERROR)
                         ->message(__('Your do not have permission to delete this role!'))
-                        ->redirect(BES::url('auth_role/index'))
+                        ->redirect(EHOVEL::url('auth_role/index'))
                         ->send();
                 }
                 if($role->admins->count_all()>0){
                     Remind::factory(Remind::TYPE_ERROR)
                         ->message(__('Delete failed, they are many admins under this role!'))
-                        ->redirect(BES::url('auth_role/index'))
+                        ->redirect(EHOVEL::url('auth_role/index'))
                         ->send();
                 }
                 $role->delete();
                 Remind::factory(Remind::TYPE_SUCCESS)
                     ->message(__('Delete Successfully!'))
-                    ->redirect(BES::url('auth_role/index'))
+                    ->redirect(EHOVEL::url('auth_role/index'))
                     ->send();
             }else{
                 Remind::factory(Remind::TYPE_ERROR)
                     ->message(__('Bad Request!'))
-                    ->redirect(BES::url('auth_role/index'))
+                    ->redirect(EHOVEL::url('auth_role/index'))
                     ->send();
             }
-        } catch(Exception_BES $ex){
+        } catch(Kohana_Exception $ex){
             Remind::factory($ex)
                 ->send();
         }

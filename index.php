@@ -74,7 +74,7 @@ if ( ! is_dir($system) AND is_dir(DOCROOT.$system))
 define('APPPATH', realpath($application).DIRECTORY_SEPARATOR);
 define('MODPATH', realpath($modules).DIRECTORY_SEPARATOR);
 define('SYSPATH', realpath($system).DIRECTORY_SEPARATOR);
-
+define('APPNAME', 'front');
 // 前台主题模板
 define('THEME', 'kabumetro');
 

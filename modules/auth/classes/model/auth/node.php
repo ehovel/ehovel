@@ -208,7 +208,7 @@ class Model_Auth_Node {
     public function get_resources($resource_str)
     {
         $target_data = array();
-        $node_atoms = BES::config('node_atom')->as_array();
+        $node_atoms = EHOVEL::config('node_atom')->as_array();
         $resources = $this->convert_string_to_resources($resource_str);
         foreach($resources as $resource){
             $controller = substr($resource, strrpos($resource,'/')+1);

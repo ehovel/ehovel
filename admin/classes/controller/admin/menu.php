@@ -26,7 +26,7 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
             $this->template = EHOVEL::view('menu/index',array(
                 'menus' => $menus,
             ));
-        }catch(Exception_BES $ex){
+        }catch(Kohana_Exception $ex){
             Remind::factory($ex)
                 ->send();
         }
@@ -42,7 +42,7 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
                 if($pid != 0){
                     $parent_menu = EHOVEL::model($this->_model, $pid);
                     if(!$parent_menu->loaded()){
-                        throw new Exception_BES(__('Parent item Loading failed.'));
+                        throw new Kohana_Exception(__('Parent item Loading failed.'));
                     }
                 }
                 $menu_model = EHOVEL::model($this->_model);
@@ -68,7 +68,7 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
                 'menus' => $menus,
                 'nodes' => Helper_Auth::get_current(),
             ));
-        }catch(Exception_BES $ex){
+        }catch(Kohana_Exception $ex){
             Message::set($ex);
         }
     }
@@ -90,7 +90,7 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
                 if($pid != 0){
                     $parent_menu = EHOVEL::model($this->_model, $pid);
                     if(!$parent_menu->loaded()){
-                        throw new Exception_BES(__('Parent item Loading failed.'));
+                        throw new Kohana_Exception(__('Parent item Loading failed.'));
                     }
                 }
                 $current_menu->pid = $pid;
@@ -114,7 +114,7 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
                 'current_menu' => $current_menu,
                 'nodes' => Helper_Auth::get_current(),
             ));
-        }catch(Exception_BES $ex){
+        }catch(Kohana_Exception $ex){
             Message::set($ex);
         }
     }
@@ -137,7 +137,7 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
             $current_menu->delete();
             Message::set(Message::SUCCESS,__('Delete Successfully!'));
             $this->redirect(EHOVEL::url('menu/index'));
-        }catch(Exception_BES $ex){
+        }catch(Kohana_Exception $ex){
             Message::set($ex);
         }
     }

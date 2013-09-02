@@ -54,10 +54,10 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
         );
         try {
             $spaceid = intval ( $this->request->query ( 'spaceid' ) );
-            $space_info = BES::model ( 'Site_Poster_Space' )->where('id','=',$spaceid)->find();
+            $space_info = EHOVEL::model ( 'Site_Poster_Space' )->where('id','=',$spaceid)->find();
             $type =  $this->request->query ( 'type' ) ;
-            $ads_info = BES::config ( 'site_ads' );
-            $ads_detail = BES::model ( 'Site_Poster' );
+            $ads_info = EHOVEL::config ( 'site_ads' );
+            $ads_detail = EHOVEL::model ( 'Site_Poster' );
             $isHide = $type;
             
             if($_POST)
@@ -90,26 +90,26 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
                 {
                     Remind::factory ( Remind::TYPE_ERROR )
                                 ->message ( __ ('Name cannot be repeated' ) )
-                                ->redirect ( BES::url ( 'site_ads/add',array('type' => $space_info->type,'spaceid' => $spaceid ) ) )
+                                ->redirect ( EHOVEL::url ( 'site_ads/add',array('type' => $space_info->type,'spaceid' => $spaceid ) ) )
                                 ->send ();
                 }
                 
                 $ads_detail->save();
                 Remind::factory ( Remind::TYPE_SUCCESS )
                             ->message ( __ ( 'Added Successfully!' ) )
-                            ->redirect ( BES::url ( 'site_ads',array('type' => $type,'spaceid'=>$spaceid) ) )
+                            ->redirect ( EHOVEL::url ( 'site_ads',array('type' => $type,'spaceid'=>$spaceid) ) )
                             ->send ();
             }
             
-            $space_info = BES::model ( 'Site_Poster_Space', intval ( $spaceid ) );
+            $space_info = EHOVEL::model ( 'Site_Poster_Space', intval ( $spaceid ) );
             
-            $this->template = BES::view ( 'site/ads/add' , array('type' => $ads_info[$type]['type'],
+            $this->template = EHOVEL::view ( 'site/ads/add' , array('type' => $ads_info[$type]['type'],
                                                            'spaceid' => $spaceid,
                                                            'space_info'=>$space_info,
                                                            'ads_info'=>$ads_info,
                                                             'isHide'=>$isHide,
             ));
-        }catch ( Exception_BES $ex ){
+        }catch ( Kohana_Exception $ex ){
             Remind::factory($ex)
                 ->send();
         }
@@ -177,12 +177,12 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
             $type =  $this->request->query ( 'type' ) ;
             $id = $this->request->query ('id');
             $ads_info = Kohana::load('site_ads');
-            $ads_detail = BES::model ( 'Site_Poster', intval ( $id ) );
+            $ads_detail = EHOVEL::model ( 'Site_Poster', intval ( $id ) );
             if (! $ads_detail->loaded ()) 
             {
                 Remind::factory ( Remind::TYPE_ERROR )
                         ->message ( __ ('Loading failed, try again' ) )
-                        ->redirect ( BES::url ( 'site_ads' ) )
+                        ->redirect ( EHOVEL::url ( 'site_ads' ) )
                         ->send ();
             } 
             else 
@@ -192,11 +192,11 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
                 $ads_detail->disable ();
                 Remind::factory ( Remind::TYPE_SUCCESS )
                         ->message ( __ ( 'Deleted Successfully!' ) )
-                        ->redirect ( BES::url ( 'site_ads',array('spaceid'=>$spaceid,'type'=>$type) ) )
+                        ->redirect ( EHOVEL::url ( 'site_ads',array('spaceid'=>$spaceid,'type'=>$type) ) )
                         ->send ();
             }
             
-        }catch ( Exception_BES $ex ){
+        }catch ( Kohana_Exception $ex ){
             Remind::factory($ex)
                 ->send();
         }
@@ -208,13 +208,13 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
 	public function public_check_ads($name,$id='') {
 	    if(isset($id))
 	    {
-	        $ads_info = BES::model ( 'Site_Poster' )->where('id','=',$id)->find();
+	        $ads_info = EHOVEL::model ( 'Site_Poster' )->where('id','=',$id)->find();
 	        if($name == $ads_info->name)
 	        {
 	            return TRUE;
 	        }
 	    }
-		$ads_info = BES::model ( 'Site_Poster' )->find_all();
+		$ads_info = EHOVEL::model ( 'Site_Poster' )->find_all();
 		$old_ads_name = array();
 		foreach($ads_info as $ad_info)
 		{
@@ -237,19 +237,19 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
 	{
 	    $type =  $this->request->query ( 'type' ) ;
 	    $spaceid =  $this->request->query ( 'spaceid' ) ;
-	    $adsInfo = BES::model('Site_Poster')->where('spaceid','=',$spaceid)->order_by('date_upd', 'desc')->find();
+	    $adsInfo = EHOVEL::model('Site_Poster')->where('spaceid','=',$spaceid)->order_by('date_upd', 'desc')->find();
 	    Helper_Createjs::instance()->create_js($type,$spaceid,$adsInfo->id);
 	}
 	
 	public function action_show_poster() {
 	    $type =  $this->request->query ( 'type' ) ;
 	    $spaceid =  $this->request->query ( 'spaceid' ) ;
-	    $adsInfo = BES::model('Site_Poster')->where('spaceid','=',$spaceid)->order_by('date_upd', 'desc')->find();
+	    $adsInfo = EHOVEL::model('Site_Poster')->where('spaceid','=',$spaceid)->order_by('date_upd', 'desc')->find();
 	    $id = $adsInfo->id;
 		/**需要求变量 根据 $id,$spaceid 
         */
-        $spaceInfo = BES::model ( 'Site_Poster_Space' )->where('id','=',$spaceid)->find();
-        $upload_url =  (array)BES::config('upload.base_url');
+        $spaceInfo = EHOVEL::model ( 'Site_Poster_Space' )->where('id','=',$spaceid)->find();
+        $upload_url =  (array)EHOVEL::config('upload.base_url');
         if(!empty($spaceInfo))
         {
             isset($spaceInfo->type) ? $type = $spaceInfo->type : $type='';
@@ -266,12 +266,12 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
             
         if($type == 'imagechange' || $type == 'imagelist' || $type == 'text')
         {
-            $adsInfo = BES::model ( 'Site_Poster' )->where('spaceid','=',$spaceid)->find_all();
+            $adsInfo = EHOVEL::model ( 'Site_Poster' )->where('spaceid','=',$spaceid)->find_all();
             $linkurl=$imageurl=$alt=$ads_type=$flashurl=$title='';
         }
         else
         {
-            $adsInfo = BES::model ( 'Site_Poster' )->where('id','=',$id)->find();
+            $adsInfo = EHOVEL::model ( 'Site_Poster' )->where('id','=',$id)->find();
             if(!empty($adsInfo))
             {
                 isset($adsInfo->linkurl) ? $linkurl = $adsInfo->linkurl : $linkurl='';
@@ -283,7 +283,7 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
                 $adsInfo->linkurl == 'http://' ? $linkurl = '' : $linkurl = $adsInfo->linkurl;
             }
         }
-            $view = BES::view('site/advjs/'.$type, array('app_path'=>$app_path,'spaceid' => $spaceid,
+            $view = EHOVEL::view('site/advjs/'.$type, array('app_path'=>$app_path,'spaceid' => $spaceid,
                     'id'=>$id,'type'=>$ads_type,'name'=>$name,'linkurl'=>$linkurl,'imageurl'=>$upload_url[0].$imageurl,'alt'=>$alt,'flashurl'=>$upload_url[0].$flashurl,
                     'siteid'=>$siteid,'width'=>$width,'height'=>$height,'scroll'=>$scroll,'align'=>$align,'paddleft'=>$paddleft,'paddtop'=>$paddtop,'title'=>$title,
                     'pinfo'=>$adsInfo,'spaceInfo'=>$spaceInfo,'upload_url'=>$upload_url,
@@ -295,9 +295,9 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
 	{
 	    $type =  $this->request->query ( 'type' ) ;
 	    $spaceid =  $this->request->query ( 'spaceid' ) ;
-	    $adsInfo = BES::model('Site_Poster')->order_by('date_upd', 'desc')->find();
-	    $space_info = BES::model ( 'Site_Poster_Space' )->where('id','=',$spaceid)->find();
-	    $view = BES::view ( 'site/ads/call_js' , array('space_info'=>$space_info,'spaceid'=>$spaceid,'type'=>$type,'id'=>$adsInfo->id))->render(NULL,false);
+	    $adsInfo = EHOVEL::model('Site_Poster')->order_by('date_upd', 'desc')->find();
+	    $space_info = EHOVEL::model ( 'Site_Poster_Space' )->where('id','=',$spaceid)->find();
+	    $view = EHOVEL::view ( 'site/ads/call_js' , array('space_info'=>$space_info,'spaceid'=>$spaceid,'type'=>$type,'id'=>$adsInfo->id))->render(NULL,false);
 	    echo $view;
 	    
 	}

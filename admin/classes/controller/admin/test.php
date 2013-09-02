@@ -18,7 +18,7 @@ class Controller_Admin_Test extends Controller_Admin_Base
     public function action_index ()
     {
         try{
-            $model = BES::model('test')->root();
+            $model = EHOVEL::model('test')->root();
             if($model->loaded())
             {
                 $childrens = $model->descendants();
@@ -27,7 +27,7 @@ class Controller_Admin_Test extends Controller_Admin_Base
                     echo  str_repeat('...',($val->lvl-1)).$val->name.'<br>';
                 }
             }
-        }catch(Exception_BES $ex){
+        }catch(Kohana_Exception $ex){
             print_r($ex->getMessage());exit;
         }
     }
@@ -37,22 +37,22 @@ class Controller_Admin_Test extends Controller_Admin_Base
         $pid = $this->request->query('pid');
         if(empty($pid))
         {
-            $model = BES::model('test')->root();
+            $model = EHOVEL::model('test')->root();
             if(!$model->loaded())
             {
-                $root = BES::model('test');
+                $root = EHOVEL::model('test');
                 $root->insert_as_new_root();
                 $pid = $root->pk();
             } else {
                 $pid = $model->pk();
             }
         }
-        $parent = BES::model('test',$pid);
+        $parent = EHOVEL::model('test',$pid);
         if(!$parent->loaded())
         {
-            throw new Exception_BES(__('Parent error'));
+            throw new Kohana_Exception(__('Parent error'));
         }
-        $add = BES::model('test');
+        $add = EHOVEL::model('test');
         $add->name = 'test1';
         $add->insert_as_last_child($parent);
     }

@@ -28,7 +28,7 @@ abstract class Kohana_HTTP_Exception_Redirect extends HTTP_Exception_Expected {
 			// Make the URI into a URL
 			$uri = URL::site($uri, TRUE, ! empty(Kohana::$index_file));
 		}
-
+		
 		$this->headers('Location', $uri);
 
 		return $this;

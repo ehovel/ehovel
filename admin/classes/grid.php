@@ -191,7 +191,7 @@ class Grid {
                         {
                         	if($rule['field'] == 'type')
                         	{
-                        		$rule['data'] = BES::model('User_MessageType')->where('name','like','%'.$rule['data'].'%')->find()->id;	
+                        		$rule['data'] = EHOVEL::model('User_MessageType')->where('name','like','%'.$rule['data'].'%')->find()->id;	
                         	}
                         	
                         	if($rule['field'] == 'date_add' || $rule['field'] == 'date_pay')

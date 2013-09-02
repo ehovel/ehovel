@@ -173,11 +173,11 @@ class Controller_Admin_Resource extends Controller_Admin_Base
             $multi = intval($this->request->query('multi'));
     
             //文件夹
-            $catalog = BES::model('resource_catalog')->order_by('date_add', 'DESC')->find_all();
-            $catalog = BES::model('resource_catalog')->tree($catalog);
+            $catalog = EHOVEL::model('resource_catalog')->order_by('date_add', 'DESC')->find_all();
+            $catalog = EHOVEL::model('resource_catalog')->tree($catalog);
     
             //资源
-            $model_upload = BES::model('upload');
+            $model_upload = EHOVEL::model('upload');
             if(!empty($catalog_id)) {
                 $model_upload = $model_upload->where('catalog_id', '=', $catalog_id);
             }
@@ -202,7 +202,7 @@ class Controller_Admin_Resource extends Controller_Admin_Base
             $this->pagination = $this->pagination->render('resource_search_page');
     
             //模板
-            $result = BES::view('resource_search', array('id' => $id, 'count' => $count, 'data' => $data, 'pagination' => $this->pagination, 'catalog' => $catalog, 'catalog_id' => $catalog_id, 'name' => $name, 'multi' => $multi))->render(NULL,FALSE);
+            $result = EHOVEL::view('resource_search', array('id' => $id, 'count' => $count, 'data' => $data, 'pagination' => $this->pagination, 'catalog' => $catalog, 'catalog_id' => $catalog_id, 'name' => $name, 'multi' => $multi))->render(NULL,FALSE);
             exit(json_encode(array(
                     'status' => 1,
                     'code' => 200,
@@ -212,7 +212,7 @@ class Controller_Admin_Resource extends Controller_Admin_Base
                             'data' => (string)$result
                     ),
             )));
-        } catch ( Exception_BES $ex ) {
+        } catch ( Kohana_Exception $ex ) {
             $this->_ex($ex, $return_struct);
         }
     }

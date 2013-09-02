@@ -17,12 +17,12 @@ class Controller_Admin_Auth_Log extends Controller_Admin_Base{
     {
         try{
             //取出当前用户的子账号
-            $logs = BES::model('Auth_Log')->find_all();
+            $logs = EHOVEL::model('Auth_Log')->find_all();
             
-            $this->template = BES::view('auth/log/index',array(
+            $this->template = EHOVEL::view('auth/log/index',array(
                 'logs' => $logs,
             ));
-        }catch(Exception_BES $ex){
+        }catch(Kohana_Exception $ex){
             Remind::factory($ex)->send();
         }
     }
@@ -33,17 +33,17 @@ class Controller_Admin_Auth_Log extends Controller_Admin_Base{
     {
         try {
             $log_id= $this->request->query('id');
-            $log_model = BES::model('Auth_Log', $log_id);
+            $log_model = EHOVEL::model('Auth_Log', $log_id);
             if(!$log_model->loaded()){
                 Remind::factory(Remind::TYPE_ERROR)
                     ->message(__('Bad Request!'))
-                    ->redirect(BES::url('auth_log/index'))
+                    ->redirect(EHOVEL::url('auth_log/index'))
                     ->send();
             }
-            $this->template = BES::view('auth/log/edit', array(
+            $this->template = EHOVEL::view('auth/log/edit', array(
                 'data' => $log_model,
             ))->render(NULL,FALSE);
-        } catch(Exception_BES $ex){
+        } catch(Kohana_Exception $ex){
             Remind::factory($ex)
                 ->send();
         }
@@ -56,20 +56,20 @@ class Controller_Admin_Auth_Log extends Controller_Admin_Base{
     {
         try{
             $log_id= $this->request->query('id');
-            $log_model = BES::model('Auth_Log', $log_id);
+            $log_model = EHOVEL::model('Auth_Log', $log_id);
             if($log_model->loaded()){
                 $log_model->delete();
                 Remind::factory(Remind::TYPE_SUCCESS)
                     ->message(__('Delete Successfully!'))
-                    ->redirect(BES::url('auth_log/index'))
+                    ->redirect(EHOVEL::url('auth_log/index'))
                     ->send();
             }else{
                 Remind::factory(Remind::TYPE_ERROR)
                     ->message(__('Bad Request!'))
-                    ->redirect(BES::url('auth_log/index'))
+                    ->redirect(EHOVEL::url('auth_log/index'))
                     ->send();
             }
-        } catch(Exception_BES $ex){
+        } catch(Kohana_Exception $ex){
             Remind::factory($ex)
                 ->send();
         }

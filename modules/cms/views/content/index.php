@@ -15,7 +15,7 @@
             }
         }
         function iconEdit(id) {
-            return '<a href="<?php echo EHOVEL::url('cms_content/edit');?>/' + id + '" title="edit"><i style="color:#51A351;" class="icon-ok"></i></a>'
+            return '<a href="<?php echo EHOVEL::url('cms_content/edit');?>/' + id + '" title="edit"><i style="color:#51A351;" class="icon-edit"></i></a>'
         }
     $('.on_sale').live('click', function(){
         var obj = $(this);

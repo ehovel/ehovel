@@ -49,8 +49,8 @@ class Model_Auth_Admin extends ORM {
      * @return Model_Auth_Admin
      */
     public static function get_current_user($session_id=null) {
-        $user = ORM::factory('Auth_admin',1);
-        self::$_current_user = $user;
+        //$user = ORM::factory('Auth_admin',1);
+        //self::$_current_user = $user;
         if(empty(self::$_current_user))
         {
             $session = Session::instance(NULL, $session_id);
@@ -74,28 +74,27 @@ class Model_Auth_Admin extends ORM {
      * @param $username
      * @param $password
      * @return void
-     * @throw Exception_BES
+     * @throw Kohana_Exception
      */
     public function login($username, $password, $remember = 0)
     {
-        $user = BES::model('Auth_Admin')->where('username', '=', $username)->find();
-
+        $user = EHOVEL::model('Auth_Admin')->where('username', '=', $username)->find();
+        
         if ($user->loaded()) {
             if ($user->password == md5($password)) {
                 //更新最后登录时间和最后登录IP
-                $ip = Tool::get_client_ip();
+                $ip = Request::$current->ip_address();
                 $last_login_date = date('Y-m-d H:i:s', time());
                 $user->last_login_ip = $ip;
                 $user->last_login_date = $last_login_date;
                 $user->save();
                 $this->login_set($user, $remember);
-
                 return $user;
             } else {
-                throw new Exception_BES(__('User or password error.'));
+                throw new Kohana_Exception(__('User or password error.'));
             }
         } else {
-            throw new Exception_BES(__('The user does not exist.'));
+            throw new Kohana_Exception(__('The user does not exist.'));
         }
     }
 
@@ -118,7 +117,7 @@ class Model_Auth_Admin extends ORM {
         Cookie::set('adminname', $user->username, $expiration);
         Cookie::set('expiration', $expiration, $expiration);
         Cookie::set('remember', $remember, $expiration);
-        $ip = Tool::get_client_ip();
+        $ip = Request::$current->ip_address();
         $session = Session::instance();
         $session->set('BES_admin', $user);
         $session->set('BES_admin_secure', md5($user->id . $user->username . $ip));
@@ -149,7 +148,7 @@ class Model_Auth_Admin extends ORM {
                 $site_ids[] = $site->site_id;
             }
         } else {
-            $site_ids = BES::registry('Global/site_ids');
+            $site_ids = EHOVEL::registry('Global/site_ids');
         }
         return $site_ids;
     }
@@ -162,12 +161,12 @@ class Model_Auth_Admin extends ORM {
             $admin_site_ids = $this->get_site_ids();
             if(!empty($admin_site_ids))
             {
-                $sites = BES::model('site')->where('id','in',$admin_site_ids)->where('active','=','Y')->find_all();
+                $sites = EHOVEL::model('site')->where('id','in',$admin_site_ids)->where('active','=','Y')->find_all();
             } else {
-                $sites = BES::model('site')->where('active','=','Y')->find_all();
+                $sites = EHOVEL::model('site')->where('active','=','Y')->find_all();
             }
         } else {
-            $sites = BES::registry('Global/sites');
+            $sites = EHOVEL::registry('Global/sites');
         }
         return $sites;
     }
@@ -181,36 +180,24 @@ class Model_Auth_Admin extends ORM {
     public function check_site()
     {
         //当前站点全局数据
-        $site_id = BES::get_site();
-        $g_site = BES::model('site',$site_id);
+        $site_id = EHOVEL::get_site();
+        $g_site = EHOVEL::model('site',$site_id);
         if($g_site->loaded())
         {
-            BES::register('Global/site', $g_site);
+            EHOVEL::register('Global/site', $g_site);
         }
 
         //当前用户可管理站点全局数据
         $admin_site_ids = $this->get_site_ids();
-        BES::register('Global/site_ids', $admin_site_ids);
+        EHOVEL::register('Global/site_ids', $admin_site_ids);
         
         $g_sites = $this->get_sites();
-        BES::register('Global/sites', $g_sites);
-
-        //当前栏目全局数据
-        $column_id = BES::get_column();
-        $g_column = BES::model('column',$column_id);
-        if($g_column->loaded())
-        {
-            BES::register('Global/column', $g_column);
-        }
-
-        //所有栏目全局数据
-        $g_columns = BES::model('column')->find_all();
-        BES::register('Global/columns', $g_columns);
+        EHOVEL::register('Global/sites', $g_sites);
 
         //验证当前站点是否在可管理站点中
         if(!empty($site_id) && !empty($admin_site_ids) && !in_array($site_id, $admin_site_ids))
         {
-            BES::app()->clear_site();
+            EHOVEL::app()->clear_site();
             return FALSE;
         }
         return TRUE;

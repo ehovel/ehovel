@@ -65,7 +65,7 @@
 			</div>
 			<!-- /logo -->	
 
-			<div class="date">装饰一个梦</div>
+			<div class="date"></div>
 
 			<div class="search">
 				<form method="get" id="searchform" action="http://demo.wellthemes.com/metro/">
@@ -148,23 +148,23 @@
 					<ul class="slides">
 						<li>
 							<a href="http://demo.wellthemes.com/metro/2013/01/piha/" >
-								<img width="640" height="320" src="http://demo.wellthemes.com/metro/wp-content/uploads/2013/01/6-640x320.jpg" class="attachment-wt-slider-img wp-post-image" alt="Piha, New Zealand" title="" />	
+								<img width="640" height="320" src="/attach/banner1.jpg" class="attachment-wt-slider-img wp-post-image" alt="Piha, New Zealand" title="" />	
 							</a>
 
 							<div class="slider-text">
 								<div class="wrap">
 									<h2>
-										<a href="http://demo.wellthemes.com/metro/2013/01/piha/">For the days of peace and warmth</a>
+										<a href="http://demo.wellthemes.com/metro/2013/01/piha/">温馨卧室,简单梦境</a>
 									</h2>
 									<p>
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id velit ut neque rhoncus venenatis. Nunc sit amet mi ante. Aenean quam lorem, cursus ac...
+										我不去想太多关于未来的事，因为未来是由现在所产生出来的。如果我们能够照... 
 									</p>
 								</div>
 							</div>
 						</li>
-						<li>
+						<li style="display:none;">
 							<a href="http://demo.wellthemes.com/metro/2013/01/shooting/" >
-								<img width="640" height="320" src="http://demo.wellthemes.com/metro/wp-content/uploads/2013/01/14-640x320.jpg" class="attachment-wt-slider-img wp-post-image" alt="Goodies" title="" />	
+								<img width="640" height="320" src="/attach/banner2.jpg" class="attachment-wt-slider-img wp-post-image" alt="Goodies" title="" />	
 							</a>
 
 							<div class="slider-text">
@@ -178,9 +178,9 @@
 								</div>
 							</div>
 						</li>
-						<li>
+						<li style="display:none;">
 							<a href="http://demo.wellthemes.com/metro/2013/01/shots/" >
-								<img width="640" height="320" src="http://demo.wellthemes.com/metro/wp-content/uploads/2013/01/41-640x320.jpg" class="attachment-wt-slider-img wp-post-image" alt="A few shots" title="" />	
+								<img width="640" height="320" src="/attach/banner3.jpg" class="attachment-wt-slider-img wp-post-image" alt="A few shots" title="" />	
 							</a>
 
 							<div class="slider-text">
@@ -194,9 +194,9 @@
 								</div>
 							</div>
 						</li>
-						<li>
+						<li style="display:none;">
 							<a href="http://demo.wellthemes.com/metro/2013/01/sin-fang/" >
-								<img width="640" height="320" src="http://demo.wellthemes.com/metro/wp-content/uploads/2013/01/7-640x320.jpg" class="attachment-wt-slider-img wp-post-image" alt="Sin Fang" title="" />	
+								<img width="640" height="320" src="/attach/banner4.jpg" class="attachment-wt-slider-img wp-post-image" alt="Sin Fang" title="" />	
 							</a>
 
 							<div class="slider-text">
@@ -210,9 +210,25 @@
 								</div>
 							</div>
 						</li>
-						<li>
+						<li style="display:none;">
 							<a href="http://demo.wellthemes.com/metro/2013/01/bairro/" >
-								<img width="640" height="320" src="http://demo.wellthemes.com/metro/wp-content/uploads/2013/01/8-640x320.jpg" class="attachment-wt-slider-img wp-post-image" alt="Bairro Alto" title="" />	
+								<img width="640" height="320" src="/attach/banner5.jpg" class="attachment-wt-slider-img wp-post-image" alt="Bairro Alto" title="" />	
+							</a>
+
+							<div class="slider-text">
+								<div class="wrap">
+									<h2>
+										<a href="http://demo.wellthemes.com/metro/2013/01/bairro/">Bairro Alto in Lisboa, Portugal</a>
+									</h2>
+									<p>
+										Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id velit ut neque rhoncus venenatis. Nunc sit amet mi ante. Aenean quam lorem, cursus ac...
+									</p>
+								</div>
+							</div>
+						</li>
+						<li style="display:none;">
+							<a href="http://demo.wellthemes.com/metro/2013/01/bairro/" >
+								<img width="640" height="320" src="/attach/banner6.jpg" class="attachment-wt-slider-img wp-post-image" alt="Bairro Alto" title="" />	
 							</a>
 
 							<div class="slider-text">
@@ -233,7 +249,7 @@
 				<div id="feat-textposts">
 
 					<header class="cat-header1">
-						<h6>Post of the day</h6>
+						<h6>KABU 家饰生活</h6>
 					</header>
 
 					<div class="main-post">
@@ -241,7 +257,7 @@
 							<a href="http://demo.wellthemes.com/metro/tag/city/">city</a>
 						</span>
 						<h1>
-							<a href="http://demo.wellthemes.com/metro/2013/01/darkness/">Breaking the darkness</a>
+							<a href="http://demo.wellthemes.com/metro/2013/01/darkness/">赶走黑暗,点亮你的世界</a>
 						</h1>
 						<div class="entry-meta">
 							<span class="date">January 21, 2013</span>
@@ -1595,24 +1611,6 @@
 			    		</li>
 			    	</ul>
 
-			    </aside>
-			    <aside id="wellthemes_googleplus_widget-2" class="widget widget_googleplus">
-			    	<h3>Follow us on Google+</h3>
-			    	<div class="google-box">
-			    		<!-- Google +1 script -->	    
-			    		<script type="text/javascript">
-						  (function() {
-							var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-							po.src = 'https://apis.google.com/js/plusone.js';
-							var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-						  })();
-						</script>
-			    		<!-- Link blog to Google+ page -->	    
-			    		<a style='display: block; height: 0;' href="https://plus.google.com/+Coldplay" rel="publisher">&nbsp;</a>
-			    		<!-- Google +1 Page badge -->	    
-			    		<g:plus href="https://plus.google.com/+Coldplay" height="131" width="270" theme="light"></g:plus>
-
-			    	</div>
 			    </aside>
 			    <aside id="wellthemes_pinterest_widget-2" class="widget widget_pinterest">
 			    	<h3>Recent Pins</h3>

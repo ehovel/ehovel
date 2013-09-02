@@ -52,7 +52,7 @@ class Model_Auth_Role extends ORM {
                     //可以是ID序列，也可以是对象的序列
                     if (!($item instanceof ORM)) {
                         if (is_int($item)) {
-                            $tmp_role = BES::model($this->_object_name, $item);
+                            $tmp_role = EHOVEL::model($this->_object_name, $item);
                         }
                     } else {
                         $tmp_role = $item;
@@ -60,7 +60,7 @@ class Model_Auth_Role extends ORM {
 
                     if ($tmp_role->loaded()) {
                         if ($tmp_role->node_type == 'all') {
-                            $nodes = BES::model('Auth_Node')->find_all();
+                            $nodes = EHOVEL::model('Auth_Node')->find_all();
                         } else {
                             $nodes = $tmp_role->node->find_all();
                         }
