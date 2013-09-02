@@ -498,6 +498,6 @@
 2013-03-13 22:55:51 --- CRITICAL: ErrorException [ 1 ]: Cannot access protected property Route::$_routes ~ MODPATH\ehovel\classes\ehovel.php [ 109 ] in :
 2013-03-13 22:55:51 --- DEBUG: #0 [internal function]: Kohana_Core::shutdown_handler()
 #1 {main} in :
-2013-03-13 22:58:50 --- CRITICAL: ErrorException [ 1 ]: Class 'Exception_BES' not found ~ APPPATH\classes\controller\admin\base.php [ 103 ] in :
+2013-03-13 22:58:50 --- CRITICAL: ErrorException [ 1 ]: Class 'Kohana_Exception' not found ~ APPPATH\classes\controller\admin\base.php [ 103 ] in :
 2013-03-13 22:58:50 --- DEBUG: #0 [internal function]: Kohana_Core::shutdown_handler()
 #1 {main} in :
