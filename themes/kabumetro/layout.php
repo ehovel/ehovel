@@ -153,9 +153,6 @@
 
 							<div class="slider-text">
 								<div class="wrap">
-									<h2>
-										<a href="http://demo.wellthemes.com/metro/2013/01/piha/">温馨卧室,简单梦境</a>
-									</h2>
 									<p>
 										我不去想太多关于未来的事，因为未来是由现在所产生出来的。如果我们能够照... 
 									</p>
@@ -169,9 +166,6 @@
 
 							<div class="slider-text">
 								<div class="wrap">
-									<h2>
-										<a href="http://demo.wellthemes.com/metro/2013/01/shooting/">Shooting for new goodies</a>
-									</h2>
 									<p>
 										Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id velit ut neque rhoncus venenatis. Nunc sit amet mi ante. Aenean quam lorem, cursus ac...
 									</p>
@@ -185,9 +179,6 @@
 
 							<div class="slider-text">
 								<div class="wrap">
-									<h2>
-										<a href="http://demo.wellthemes.com/metro/2013/01/shots/">A few shots</a>
-									</h2>
 									<p>
 										Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id velit ut neque rhoncus venenatis. Nunc sit amet mi ante. Aenean quam lorem, cursus ac...
 									</p>
@@ -201,41 +192,6 @@
 
 							<div class="slider-text">
 								<div class="wrap">
-									<h2>
-										<a href="http://demo.wellthemes.com/metro/2013/01/sin-fang/">A picture of Sin Fang in Bairro Alto</a>
-									</h2>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id velit ut neque rhoncus venenatis. Nunc sit amet mi ante. Aenean quam lorem, cursus ac...
-									</p>
-								</div>
-							</div>
-						</li>
-						<li style="display:none;">
-							<a href="http://demo.wellthemes.com/metro/2013/01/bairro/" >
-								<img width="640" height="320" src="/attach/banner5.jpg" class="attachment-wt-slider-img wp-post-image" alt="Bairro Alto" title="" />	
-							</a>
-
-							<div class="slider-text">
-								<div class="wrap">
-									<h2>
-										<a href="http://demo.wellthemes.com/metro/2013/01/bairro/">Bairro Alto in Lisboa, Portugal</a>
-									</h2>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id velit ut neque rhoncus venenatis. Nunc sit amet mi ante. Aenean quam lorem, cursus ac...
-									</p>
-								</div>
-							</div>
-						</li>
-						<li style="display:none;">
-							<a href="http://demo.wellthemes.com/metro/2013/01/bairro/" >
-								<img width="640" height="320" src="/attach/banner6.jpg" class="attachment-wt-slider-img wp-post-image" alt="Bairro Alto" title="" />	
-							</a>
-
-							<div class="slider-text">
-								<div class="wrap">
-									<h2>
-										<a href="http://demo.wellthemes.com/metro/2013/01/bairro/">Bairro Alto in Lisboa, Portugal</a>
-									</h2>
 									<p>
 										Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id velit ut neque rhoncus venenatis. Nunc sit amet mi ante. Aenean quam lorem, cursus ac...
 									</p>
@@ -254,27 +210,14 @@
 
 					<div class="main-post">
 						<span class="tag-title">
-							<a href="http://demo.wellthemes.com/metro/tag/city/">city</a>
+							<a href="http://demo.wellthemes.com/metro/tag/city/">推荐</a>
 						</span>
-						<h1>
+						<h2>
 							<a href="http://demo.wellthemes.com/metro/2013/01/darkness/">赶走黑暗,点亮你的世界</a>
-						</h1>
-						<div class="entry-meta">
-							<span class="date">January 21, 2013</span>
-							<span class="author">
-								<a href="http://demo.wellthemes.com/metro/author/sami/" title="Posts by sami" rel="author">sami</a>
-							</span>
-							<span class="category">
-								<a href="http://demo.wellthemes.com/metro/category/travel/" title="View all posts in Travel" rel="category tag">Travel</a>
-							</span>
-							<span class="comments">
-								<a href="http://demo.wellthemes.com/metro/2013/01/darkness/#respond" title="Comment on Breaking the darkness">No comments</a>
-							</span>
-
-						</div>
+						</h2>
 						<!-- /entry-meta -->	
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id velit ut neque rhoncus venenatis. Nunc sit amet mi ante. Aenean quam lorem, cursus ac rutrum ut, auctor eu orci. Aenean pellentesque tempus risus et pharetra. Morbi tellus metus, pretium vel iaculis semper, iaculis quis libero. In tempus, dolor ut viverra feugiat, arcu est ornare&#8230;
+							玄关、起居室、餐厅、卧室、厨房、卫生间、书房、储物间，灯饰让你的世界充满温馨和舒适。这里的灯使用频率最高，你在这里欢迎来做客的好朋友，灯光决定了他们对你家的第一印象如何。玄关的光线应该明亮且友好，让初次到访的人感觉舒适亲切，同时也能迅速准确地了解清楚空间环境。玄关的灯光同时要考虑到功能性和实用性...
 						</p>
 
 					</div>
