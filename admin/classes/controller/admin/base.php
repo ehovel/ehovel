@@ -68,7 +68,7 @@ class Controller_Admin_Base extends Controller {
         $user = Model_Auth_Admin::get_current_user($session_id);
         if(empty($user) && !Helper_Auth::check_is_ignore_login($this->request->controller().'/'.$this->request->action())){
             if (!($redirect=$this->request->query('redirect'))){
-                $redirect = URL::current(true);
+                $redirect = Request::$current->url();
             }
             Message::set(Message::ERROR,__('Please login'));
             echo EHOVEL::url('auth_admin/login', array('redirect' => $redirect));

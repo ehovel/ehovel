@@ -6,14 +6,8 @@
     <meta http-equiv="expires" content="0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache">
-    <?php echo EHOVEL::css('style');?>
-    <!--[if lte IE 8]>
-    <?php echo EHOVEL::js('html5');?>
-    <![endif]-->
-    <?php echo EHOVEL::js('jquery-1.4.4.min');?>
-    <?php echo EHOVEL::js('cufon-yui');?>
-    <?php echo EHOVEL::js('Delicious_500.font');?>
-    <?php echo EHOVEL::js('jquery.validate');?>
+    <?php echo EHOVEL::css('style-min');?>
+    <?php echo EHOVEL::css('font-awesome');?>
     <script type="text/javascript">
         jQuery(function($) {
             $('#myForm').validate({errorPlacement: function(error, element) {  
@@ -30,61 +24,46 @@
             });
         });
     </script>
-
 </head>
 <body>
 
-<header id="top">
-    <div class="container_12 clearfix">
-        <div id="logo" class="grid_12">
-            <!-- replace with your website title or logo -->
-            <a id="site-title" href="<?php echo EHOVEL::url('index');?>" title="Bizark E-commerce System"><span>BES</span></a>
-            <a id="view-site" href="/" target="_blank"><?php echo __('View Site');?></a>
-        </div>
-    </div>
-</header>
-
 <div id="login" class="box">
-    <h2><?php echo __('Login');?></h2>
-    <section>
         <?php Message::render();?>
-        <form id="myForm" method="post" action="<?php echo Request::$current->url();?>">
+        <form id="myForm" method="post" action="<?php echo URL::current();?>">
             <input type="hidden" value="<?php echo $formtoken;?>" name="formhash">
-            <dl>
-                <dt><label for="username"><?php echo __('Username');?></label></dt>
-                <dd><input class="required" maxlength="40" id="username" name="username" type="text" value="<?php echo $username;?>"/></dd>
+            <!-- Login Widget -->
+              <div class="login-widget login-login">
+                <header class="login-header">
+                  <a href="#">
+                    <img src="/statics/img/acura-logo.png" alt="">
+                  </a>
+                </header>
+                <h4 class="typo login-title">Login </h4>
+                <form action="index.html">
+                  <div class="form-separator form-field">
+                    <div class="field-icon field-icon-left">
+                      <i class="i">&#xf007;</i>
+                      <input type="text" class="form form-full" placeholder="username" name="username" value="<?php echo $username;?>">
+                    </div>
+                  </div>
+                  <div class="form-separator form-field">
+                    <div class="field-icon field-icon-left">
+                      <i class="i">&#xf023;</i>
+                      <input type="password" class="form form-full" placeholder="Password" name="adminpassword">
+                    </div>
+                  </div>
+                  <div class="login-submit">
+                    <input type="checkbox" name="remember" value="1"/><?php echo __('Remember username');?>
+                    <input value="Login" type="submit" class="btn btn-submit">
+                  </div>
+                </form>
+                <footer class="login-footer">
+                  Copyright © 2012-2013 Mahieddine Abdelkader.
+                </footer>
+              </div>
 
-                <dt><label for="adminpassword"><?php echo __('Password');?></label></dt>
-                <dd><input class="required" id="adminpassword" minlength="6" maxlength="30" name="adminpassword" type="password"/></dd>
-            </dl>
-            <label><input type="checkbox" name="remember" value="1"/><?php echo __('Remember username');?></label>
-
-            <p>
-                <button type="submit" class="button gray" id="loginbtn"><?php echo __('Login');?></button>
-                <!--<a id="forgot" href="#">Forgot Password?</a>-->
-            </p>
         </form>
-    </section>
 </div>
 
 </body>
 </html>
-<script type="text/javascript">
-if(typeof jQuery.validator != 'undefined')
-{
-    jQuery.extend(jQuery.validator.messages, {
-        required: "<?php echo __('This field is required.')?>",
-        username: "<?php echo __('Please enter no more than {0} characters.');?>",
-        date: "<?php echo __('Please enter a valid date.');?>",
-        number: "<?php echo __('Please enter a valid number.');?>",
-        digits: "<?php echo __('Please enter only digits.');?>",
-        url:"<?php echo __('Please enter a valid URL.');?>",
-        maxlength: jQuery.validator.format("<?php echo __('Please enter no more than {0} characters.');?>"),
-        minlength: jQuery.validator.format("<?php echo __('Please enter at least {0} characters.');?>"),
-        rangelength: jQuery.validator.format("<?php echo __('Please enter a value between {0} and {1} characters long.');?>"),
-        range: jQuery.validator.format("<?php echo __('Please enter a value between {0} and {1}.');?>"),
-        max: jQuery.validator.format("<?php echo __('Please enter a value less than or equal to {0}.');?>"),
-        min: jQuery.validator.format("<?php echo __('Please enter a value greater than or equal to {0}.');?>")
-    });
-}
-</script>
