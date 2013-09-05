@@ -35,7 +35,7 @@ class Controller_Admin_Cms_Content extends Controller_Admin_Base {
 				$modifiers = ORM::factory('Auth_Admin')
 				->where('id', 'in', $modifier_ids)
 				->find_all()
-				->as_array('id', 'name');
+				->as_array('id', 'username');
 			}
 			if (!empty($cateogry_ids)) {
 				$cateogries = ORM::factory('Content_Category')

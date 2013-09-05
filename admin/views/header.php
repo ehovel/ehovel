@@ -22,7 +22,7 @@
 				<ul class="dropdown-menu">
 					<li><a href="#">Profile</a></li>
 					<li class="divider"></li>
-					<li><a href="login.html">Logout</a></li>
+					<li><a href="<?php echo EHOVEL::url('auth_admin/logout')?>">Logout</a></li>
 				</ul>
 				<!-- end: User Dropdown -->
 			</div>

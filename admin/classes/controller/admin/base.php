@@ -71,7 +71,6 @@ class Controller_Admin_Base extends Controller {
                 $redirect = Request::$current->url();
             }
             Message::set(Message::ERROR,__('Please login'));
-            echo EHOVEL::url('auth_admin/login', array('redirect' => $redirect));
             $this->redirect(EHOVEL::url('auth_admin/login', array('redirect' => $redirect)));
         }
         

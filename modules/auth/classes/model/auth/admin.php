@@ -56,7 +56,7 @@ class Model_Auth_Admin extends ORM {
             $session = Session::instance(NULL, $session_id);
             $user = $session->get('EH_admin');
             $secure = $session->get('EH_admin_secure');
-            $ip = Helper_Tool::get_client_ip();
+            $ip = Request::$current->ip_address();
             if(!empty($user) && $user->loaded())
             {
                 $cur_secure = md5($user->id . $user->username . $ip);
@@ -119,8 +119,8 @@ class Model_Auth_Admin extends ORM {
         Cookie::set('remember', $remember, $expiration);
         $ip = Request::$current->ip_address();
         $session = Session::instance();
-        $session->set('BES_admin', $user);
-        $session->set('BES_admin_secure', md5($user->id . $user->username . $ip));
+        $session->set('EH_admin', $user);
+        $session->set('EH_admin_secure', md5($user->id . $user->username . $ip));
     }
 
     /**

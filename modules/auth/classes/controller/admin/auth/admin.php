@@ -298,51 +298,45 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
      */
     public function action_login()
     {
-        try {
-            $this->request->headers('Cache-Control', 'no-cache');
-            $this->request->headers('Expires', '0');
-            if ($_POST) {
-                $username = $this->request->post('username');
-                $password = $this->request->post('adminpassword');
-                $remember = $this->request->post('remember');
-                $redirect = urldecode($this->request->query('redirect'));
-                if ($remember == 1) {
-                    Cookie::set('remember', $remember);
-                }
-                if (Security::check($this->request->post('formhash'))) {
-                    $user = EHOVEL::model('Auth_Admin')
-                            ->login($username, $password, $remember);
-                    
-                    if ($user->loaded()) {
-                        if (empty($redirect)) {
-                            $redirect = EHOVEL::url('index');
-                        }
-                        Message::set(Message::SUCCESS,__('Login Successfully!'));
-                        $this->redirect($redirect,302);
+        $this->request->headers('Cache-Control', 'no-cache');
+        $this->request->headers('Expires', '0');
+        if ($_POST) {
+            $username = $this->request->post('username');
+            $password = $this->request->post('adminpassword');
+            $remember = $this->request->post('remember');
+            $redirect = urldecode($this->request->query('redirect'));
+            if ($remember == 1) {
+                Cookie::set('remember', $remember);
+            }
+            if (Security::check($this->request->post('formhash'))) {
+                $user = EHOVEL::model('Auth_Admin')
+                        ->login($username, $password, $remember);
+                
+                if ($user->loaded()) {
+                    if (empty($redirect)) {
+                        $redirect = EHOVEL::url('index');
                     }
-                } else {
-                    Message::set(Message::ERROR,__('Invalid Request'));
-                    $this->redirect(EHOVEL::url('auth_admin/login'));
+                    Message::set(Message::SUCCESS,__('Login Successfully!'));
+                    $this->redirect($redirect);
                 }
             } else {
-                $formtoken = Security::token();
-                $remember = Cookie::get('remember');
-                if ($remember == 1) {
-                    $username = Cookie::get('username');
-                } else {
-                    $username = '';
-                }
-                $this->template = View::factory('auth/admin/login', array(
-                    'formtoken' => $formtoken,
-                    'remember'  => $remember,
-                    'username'  => $username,
-                ));
-                $this->template = $this->template->render(NULL, FALSE);
+                Message::set(Message::ERROR,__('Invalid Request'));
+                $this->redirect(EHOVEL::url('auth_admin/login'));
             }
-        } catch (Kohana_Exception $ex) {
-            Message::set($ex);
+        } else {
+            $formtoken = Security::token();
+            $remember = Cookie::get('remember');
+            if ($remember == 1) {
+                $username = Cookie::get('username');
+            } else {
+                $username = '';
+            }
+            $this->template = View::factory('auth/admin/login', array(
+                'formtoken' => $formtoken,
+                'remember'  => $remember,
+                'username'  => $username,
+            ))->render(null,false);
         }
-        
     }
     /**
      * 退出
@@ -352,15 +346,12 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
         try {
             $this->request->headers('Cache-Control', 'no-cache');
             EHOVEL::model('Auth_Admin')->logout();
-            EHOVEL::app()->clear_column();
             EHOVEL::app()->clear_site();
-            Remind::factory(Remind::TYPE_SUCCESS)
-                ->message(__('Logout Successfully!'))
-                ->redirect(EHOVEL::url('auth_admin/login'))
-                ->send();
+            Message::set(Message::SUCCESS,__('Logout Successfully!'));
+            $this->redirect(EHOVEL::url('auth_admin/login'));
         } catch (Kohana_Exception $ex) {
-            Remind::factory($ex)
-                ->send();
+            Message::set($ex);
+            $this->redirect(EHOVEL::url('auth_admin/login'));
         }
     }
     /**
