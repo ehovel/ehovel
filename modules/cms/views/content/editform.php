@@ -258,7 +258,7 @@
 		                            <ul class="inline">
 									  <li><a onclick="removepic(this)" href="javascript:;"><i class="icon-remove"></i></a></li>
 									</ul>
-		                            <input type="hidden" value="/attachment/view/5467.jpg" name="attachs[]"> 
+		                            <input type="hidden" value="5467" name="eform[attachs][]"> 
 	                            </div> 
 	                        </div>
 						</div>

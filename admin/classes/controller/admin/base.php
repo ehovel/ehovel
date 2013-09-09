@@ -176,6 +176,7 @@ class Controller_Admin_Base extends Controller {
 				}
 			}
 		}
+		return $eformData;
     }
     
     /**
@@ -188,7 +189,6 @@ class Controller_Admin_Base extends Controller {
     	$this->$processAction();
     	//TODO access controller
     	//$this->authorise($controller,$action);
-    	
     }
     
     /**

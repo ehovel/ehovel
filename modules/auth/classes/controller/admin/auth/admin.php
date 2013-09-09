@@ -343,16 +343,16 @@ class Controller_Admin_Auth_Admin extends Controller_Admin_Base{
      */
     public function action_logout()
     {
+        $this->request->headers('Cache-Control', 'no-cache');
         try {
-            $this->request->headers('Cache-Control', 'no-cache');
-            EHOVEL::model('Auth_Admin')->logout();
-            EHOVEL::app()->clear_site();
-            Message::set(Message::SUCCESS,__('Logout Successfully!'));
-            $this->redirect(EHOVEL::url('auth_admin/login'));
+        EHOVEL::model('Auth_Admin')->logout();
+        EHOVEL::app()->clear_site();
         } catch (Kohana_Exception $ex) {
             Message::set($ex);
             $this->redirect(EHOVEL::url('auth_admin/login'));
         }
+        Message::set(Message::SUCCESS,__('Logout Successfully!'));
+        $this->redirect(EHOVEL::url('auth_admin/login'));
     }
     /**
      * 更改密码

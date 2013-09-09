@@ -166,3 +166,6 @@ pip-log.txt
 /front/logs/2013/08
 
 /*.komodoproject
+/admin/logs/2013/08
+/modules/pagination/views/pagination/floating1.php
+/front/logs/2013/09

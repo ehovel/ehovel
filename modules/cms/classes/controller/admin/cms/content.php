@@ -1,9 +1,18 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Admin_Cms_Content extends Controller_Admin_Base {
-
+    public $task = '';//提交的类型,edit,save,save2new,save2copy,cancel
+    public $type = '';//提交的类型
+    
+    
 	public function before()
 	{
+	    $taskinfo = $this->request->post('task');
+	    if ($taskinfo && strpos($taskinfo, '.') !== false)
+		{
+			// Explode the controller.task command.
+			list ($this->type, $this->task) = explode('.', $taskinfo);
+		}
 		parent::before();
 	}
 	
@@ -14,7 +23,6 @@ class Controller_Admin_Cms_Content extends Controller_Admin_Base {
 		$this->toolBar =  $toolBarhelper->render();
 		if ($this->request->is_ajax()) {
 			$contents       = ORM::factory('content');
-			
 			$state = trim($this->request->query('state'));
 			if (is_numeric($state)) {
 				$contents->where('state', '=', $state);
@@ -74,20 +82,27 @@ class Controller_Admin_Cms_Content extends Controller_Admin_Base {
         $categories = $categoriesModel->where('extension','=','com_content')->find_all()->as_array();
         if ($content->loaded()) {
             if (!empty($_POST)) {
-                	$this->_prepareData($content);
-                	//图片信息
-                	if ($resourceIds = $this->request->post('resource_ids')) {
-                	    foreach ($resourceIds as $rId) {
-                	        
-                	    }
-                	}
-                	$content->save();
-                    if ($content->saved()) {
-                        Message::set(Message::SUCCESS, __('Edited Successfully'));
-                    } else {
-                    	Message::set(Message::ERROR, $content->validation()->errors());
-                    }
+                if ($this->task=='cancel') {
+                    $this->redirect(EHOVEL::url('cms_content'));
+                }
+            	$eformData = $this->_prepareData($content);
+            	//图片信息
+            	if ($resourceIds = $eformData['attachs']) {
+            	     $attachs_str = implode(',', $resourceIds);
+                     $content->images = $attachs_str;
+            	}
+            	$content->save();
+                if ($content->saved()) {
+                    Message::set(Message::SUCCESS, __('Edited Successfully'));
+                } else {
+                	Message::set(Message::ERROR, $content->validation()->errors());
+                }
+                if ($this->task == 'edit') {
                     $this->go();
+                } elseif ($this->task == 'save') {
+                    $this->redirect(EHOVEL::url('cms_content/index'));
+                }
+                
             } else {
                 $toolBarhelper = Helper_Toolbar::getInstance();
             	$toolBarhelper->appendButton('edit','保存','content.edit');
