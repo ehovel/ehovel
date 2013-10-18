@@ -13,6 +13,13 @@ class Controller_Admin_Resource extends Controller_Admin_Base
 
 	public function before()
 	{
+	    $requestSid = $this->request->post('session_id');
+        //for uploadify or other flash obj ,reset the 
+	    if ($requestSid) {
+	        $stest = Session::instance();
+	        $stest->write();
+	        $stest->read($requestSid);
+	    }
 		parent::before();
 	}
 

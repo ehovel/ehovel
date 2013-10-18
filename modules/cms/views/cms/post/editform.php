@@ -10,7 +10,7 @@
 <?php echo EHOVEL::js('ueditor125/editor_all');?>
 <script type="text/javascript">
 	//实例化编辑器
-	var ue = UE.getEditor('introtext');
+	var ue = UE.getEditor('content');
 </script>
 <section class="container_12 clearfix">
     <?php Message::render();?>
@@ -37,12 +37,12 @@
 									<label id="eform_catid-lbl" for="eform_catid" class="hasTip required" title="分类::被分配给这个条目的分类。">分类<span class="star">&#160;*</span></label>
 									<select id="eform_catid" name="eform[catid]" class="inputbox required">
 										<?php foreach ($categories as $category) {?>
-										<option value="<?php echo $category->id?>">- <?php echo $category->title;?></option>
+										<option value="<?php echo $category->id?>">- <?php echo $category->name;?></option>
 										<?php }?>
 									</select>
 								</div>
-								<script name="eform[introtext]" type="text/plain" id="introtext">
-									<?php echo $content->introtext;?>
+								<script name="eform[content]" type="text/plain" id="content">
+									<?php echo $content->content;?>
 								</script>
 								<div class="clearfix"></div>
 							</fieldset>
@@ -69,40 +69,12 @@
 											<div class="controls">
 												<input type="text" name="eform[position]" id="position"
 													class="tiny digits" maxlength="255"
-													value="<?php echo !empty($content) ? $content->ordering : 0;?>" />
-											</div>
-										</div>
-										<div class="control-group">
-											<label id="eform_attribs_alternative_readmore-lbl"
-												for="eform_attribs_alternative_readmore"
-												class="hasTip control-label"
-												title="替代“阅读更多”的说法::添加自定义文字用于替代'阅读更多'的说法">替代“阅读更多”的说法</label>
-											<div class="controls">
-												<input type="text" name="eform[attribs][alternative_readmore]"
-													id="eform_attribs_alternative_readmore" value=""
-													class="inputbox" size="25" />
-											</div>
-										</div>
-										<div class="control-group">
-											<label id="eform_attribs_article_layout-lbl"
-												for="eform_attribs_article_layout" class="hasTip control-label"
-												title="备用布局::使用由组件或模板提供的不同的布局。">备用布局</label>
-											<div class="controls">
-												<select id="eform_attribs_article_layout"
-													name="eform[attribs][article_layout]">
-													<optgroup label="---从全局设置---">
-														<option value="0" selected="selected">使用全局设置</option>
-													</optgroup>
-													<optgroup id="eform_attribs_article_layout__" label="---从组件---">
-														<option value="_:default">默认</option>
-													</optgroup>
-												</select>
+													value="<?php echo !empty($content) ? $content->position : 0;?>" />
 											</div>
 										</div>
 								</div>
 							</div>
 						</div>
-	
 						<div class="tab-pane" id="publishing">
 							<div class="row-fluid">
 								<div class="span6">
@@ -121,7 +93,7 @@
 												title="ID::在数据库中的记录编号">ID</label>
 										</div>
 										<div class="controls">
-											<input type="text" name="eform[id]" id="eform_id" value="3"
+											<input type="text" name="eform[id]" id="eform_id" value="<?php echo $content->id?>"
 												class="readonly" size="10" readonly="readonly" disabled="disabled"/>
 										</div>
 									</div>
@@ -142,23 +114,13 @@
 										</div>
 									</div>
 									<div class="control-group">
-										<label id="eform_created_by_alias-lbl"
-											for="eform_created_by_alias" class="hasTip control-label"
-											title="作者笔名::输入别名。可以在前台显示时取代创建者的用户姓名。（笔名）">作者笔名</label>
-										<div class="controls">
-											<input type="text" name="eform[created_by_alias]"
-												id="eform_created_by_alias" value="<?php echo $content->created_by_alias;?>" class="inputbox"
-												size="20" />
-										</div>
-									</div>
-									<div class="control-group">
 										<label id="eform_created-lbl" for="eform_created"
 											class="hasTip control-label" title="创建时间::创建时间">创建时间</label>
 										<div class="controls">
 											<div class="input-append">
 												<input type="text" title="2011-01-01 10:01"
 													name="eform[created]" id="eform_created"
-													value="<?php echo $content->created;?>" size="22" class="inputbox" />
+													value="<?php echo $content->date_add;?>" size="22" class="inputbox" />
 												<button class="btn" id="eform_created_img">
 													&nbsp;<i class="icon-calendar"></i>
 												</button>
@@ -961,7 +923,7 @@ function showresourcedialog() {
 		file_size_limit: '1 MB',
 		file_types: '*.jpg;*.gif;*.png;',
 		file_upload_limit: 10,
-		session_id: $('#session_id').val(),
+		session_id: '<?php echo Session::instance()->id();?>',
 		base_url: '/',
 		before_upload:function(){
 		    return true;
@@ -973,7 +935,7 @@ function showresourcedialog() {
 				h += '<img alt="" src="'+ server_data[i]['url'] +'" style="max-height:120px; max-width:120px">';
 				h += '</div>';
 				h += '<ul class="inline"><li><a onclick="removepic(this)" href="javascript:;"><i class="icon-remove"></i></a></li></ul>';
-				h += '<input type="hidden" value="'+ server_data[i]['id'] +'" name="resource_ids[]"></div></div>';
+				h += '<input type="hidden" value="'+ server_data[i]['id'] +'" name="eform[\'resource_ids\'][]"></div></div>';
 				h = $(h);
 				$('#piclist').append(h);
 			}

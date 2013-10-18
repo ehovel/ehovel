@@ -26,7 +26,7 @@
                 } 
                 catch (ex) {
                 }
-                var _this = $(this);alert($('p#uploaddialog').children().length);
+                var _this = $(this);
                 if($('p#uploaddialog').children().length > 0) {
                 	
                 } else {
@@ -41,9 +41,7 @@
 	                        location.reload();
 	                        return false;
 	                    }
-	                    alert($('p#uploaddialog').children().length);
 	                    $('#btnSubmit1').click(function(){
-	                        //alert('aaaa');
 	                        var resource_data = [];
 	                        $('input[name^="resource_ids"]').each(function(){
 	                            resource_data.push({

@@ -6,16 +6,16 @@
 
 <script type="text/javascript">
         function iconState_content(product_id, active) {
-            if (active === true || active == 1) {
-                return '<a href="javascript:void(0);" rel="id='+product_id+'&on_sale=N" title="published"><i style="color:#51A351;" class="icon-ok"></i></a>';
-            } else if(active==0) {
-                return '<a href="javascript:void(0);" rel="id='+product_id+'&on_sale=Y" title="unpublished"><i style="color:#bd362f;" class="icon-remove"></i></a>';
-            } else if(active==-1){
-                return '<a href="javascript:void(0);" rel="id='+product_id+'&on_sale=Y" title="deleted"><i class="icon-trash"></i></a>';
+            if (active === 'published') {
+                return '<a href="javascript:void(0);" rel="id='+product_id+'&state=published" title="published"><i style="color:#51A351;" class="icon-ok"></i></a>';
+            } else if(active=='saved') {
+                return '<a href="javascript:void(0);" rel="id='+product_id+'&state=saved" title="saved"><i style="color:#bd362f;" class="icon-remove"></i></a>';
+            } else if(active=='trashed'){
+                return '<a href="javascript:void(0);" rel="id='+product_id+'&state=trashed" title="trashed"><i class="icon-trash"></i></a>';
             }
         }
         function iconEdit(id) {
-            return '<a href="<?php echo EHOVEL::url('cms_content/edit');?>/' + id + '" title="edit"><i style="color:#51A351;" class="icon-edit"></i></a>'
+            return '<a href="<?php echo EHOVEL::url('cms_post/edit');?>/' + id + '" title="edit"><i style="color:#51A351;" class="icon-edit"></i></a>'
         }
     $('.on_sale').live('click', function(){
         var obj = $(this);
@@ -40,7 +40,7 @@
     jQuery(document).ready(function(){
         jQuery("#whitelist").jqGrid({
             url: '<?php echo Request::factory()->current()->url(); ?>',
-            colNames:['<?php echo __('Action') ?>','<?php echo __('Title') ?>','<?php echo __('Category') ?>','<?php echo __('User') ?>','<?php echo __('Language') ?>','<?php echo __('Modified Time'); ?>','<?php echo __('Status'); ?>','<?php echo __('ID'); ?>'],
+            colNames:['<?php echo __('Action') ?>','<?php echo __('Title') ?>','<?php echo __('Category') ?>','<?php echo __('Modified Time'); ?>','<?php echo __('Status'); ?>','<?php echo __('ID'); ?>'],
             colModel:[ 
                        {name:'id',index:'id', width:50,align:"right",formatter:function(cellValue, options, rowObject){
                                     return iconEdit(rowObject.id, cellValue);
@@ -48,9 +48,7 @@
                         },
                        {name:'title',index:'title', width:500}, 
                        {name:'cat_name',index:'cat_name', width:300}, 
-                       {name:'modified_by',index:'modified_by', width:100, align:"center"}, 
-                       {name:'language',index:'language', width:60, align:"right"}, 
-                       {name:'modified',index:'modified', width:150, align:"right"}, 
+                       {name:'date_upd',index:'date_upd', width:150, align:"right"}, 
                        {name:'state',index:'state', align:"center",width:100,
                       		formatter:function(cellValue, options, rowObject){
       				                return iconState_content(rowObject.id, cellValue);

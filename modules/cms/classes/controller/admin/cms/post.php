@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Admin_Cms_Content extends Controller_Admin_Base {
+class Controller_Admin_Cms_Post extends Controller_Admin_Base {
     public $task = '';//提交的类型,edit,save,save2new,save2copy,cancel
     public $type = '';//提交的类型
     
@@ -22,9 +22,9 @@ class Controller_Admin_Cms_Content extends Controller_Admin_Base {
 		$toolBarhelper->appendButton('new','新建','content.add');
 		$this->toolBar =  $toolBarhelper->render();
 		if ($this->request->is_ajax()) {
-			$contents       = ORM::factory('content');
+			$contents       = ORM::factory('Cms_Post');
 			$state = trim($this->request->query('state'));
-			if (is_numeric($state)) {
+			if ($state) {
 				$contents->where('state', '=', $state);
 			}
 			
@@ -32,19 +32,10 @@ class Controller_Admin_Cms_Content extends Controller_Admin_Base {
 			
 			if (!empty($return_struct['rows'])) {
 				foreach ($return_struct['rows'] as $index => $row) {
-	                $modifier_ids[$row['modified_by']] = $row['modified_by'];
-	                $creater_ids[$row['created_by']] = $row['modified_by'];
-	                $cateogry_ids[$row['catid']] = $row['catid'];
-	                $indexs[$row['id']] = $index;
+	                $cateogry_ids[$row['category_id']] = $row['category_id'];
             	}
 			}
-			$modifiers = $cateogries = array();
-			if (!empty($modifier_ids)) {
-				$modifiers = ORM::factory('Auth_Admin')
-				->where('id', 'in', $modifier_ids)
-				->find_all()
-				->as_array('id', 'username');
-			}
+			$cateogries = array();
 			if (!empty($cateogry_ids)) {
 				$cateogries = ORM::factory('Content_Category')
 				->where('id', 'in', $cateogry_ids)
@@ -53,23 +44,17 @@ class Controller_Admin_Cms_Content extends Controller_Admin_Base {
 			}
 			
 			foreach ($return_struct['rows'] as $index => $row) {
-				if (isset($modifiers[$row['modified_by']])) {
-					$return_struct['rows'][$index]['modified_by'] = $modifiers[$row['modified_by']];
-				} else {
-					$return_struct['rows'][$index]['modified_by'] = '';
-				}
-				if (isset($cateogries[$row['catid']])) {
-					$return_struct['rows'][$index]['cat_name'] = $cateogries[$row['catid']];
+				if (isset($cateogries[$row['category_id']])) {
+					$return_struct['rows'][$index]['cat_name'] = $cateogries[$row['category_id']];
 				} else {
 					$return_struct['rows'][$index]['cat_name'] = '';
 				}
 			}
-		
 			exit(json_encode($return_struct));
 		} else {
 			$this->title = 'Hello Post!';
 			$categories = array();
-			$this->template = view::factory('content/index', array(
+			$this->template = view::factory('cms/post/index', array(
 					'categories' => $categories,
 			));
 		}
@@ -77,17 +62,17 @@ class Controller_Admin_Cms_Content extends Controller_Admin_Base {
 
 	public function action_edit()
 	{
-		$content = EHOVEL::model('content', intval($this->request->param('id')));
-        $categoriesModel = EHOVEL::model('content_category');
-        $categories = $categoriesModel->where('extension','=','com_content')->find_all()->as_array();
+		$content = EHOVEL::model('Cms_Post', intval($this->request->param('id')));
+        $categoriesModel = EHOVEL::model('Cms_Category');
+        $categories = $categoriesModel->descendants();
         if ($content->loaded()) {
             if (!empty($_POST)) {
                 if ($this->task=='cancel') {
-                    $this->redirect(EHOVEL::url('cms_content'));
+                    $this->redirect(EHOVEL::url('Cms_Post'));
                 }
             	$eformData = $this->_prepareData($content);
             	//图片信息
-            	if ($resourceIds = $eformData['attachs']) {
+            	if ($resourceIds = $eformData['resource_ids']) {
             	     $attachs_str = implode(',', $resourceIds);
                      $content->images = $attachs_str;
             	}
@@ -100,7 +85,7 @@ class Controller_Admin_Cms_Content extends Controller_Admin_Base {
                 if ($this->task == 'edit') {
                     $this->go();
                 } elseif ($this->task == 'save') {
-                    $this->redirect(EHOVEL::url('cms_content/index'));
+                    $this->redirect(EHOVEL::url('cms_post/index'));
                 }
                 
             } else {
@@ -112,7 +97,7 @@ class Controller_Admin_Cms_Content extends Controller_Admin_Base {
                 $toolBarhelper->appendButton('undo','取消','content.cancel');
                 $this->toolBar =  $toolBarhelper->render();
                 
-                $this->template = EHOVEL::view('content/editform', array(
+                $this->template = EHOVEL::view('cms/post/editform', array(
                 	    'content'       => $content
                     	,'categories'=>$categories
                 ));
@@ -131,9 +116,9 @@ class Controller_Admin_Cms_Content extends Controller_Admin_Base {
     protected function _searchoptions_state()
     {
         return array(
-            '1' => __('Published'),
-            '0' => __('Unpublished'),
-            '-1' => __('Deleted'),
+            'published' => __('Published'),
+            'saved' => __('Saved'),
+            'trashed' => __('Trashed'),
         );
     }
 

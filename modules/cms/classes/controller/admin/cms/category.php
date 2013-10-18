@@ -6,210 +6,272 @@
  */
 class Controller_Admin_Cms_Category extends Controller_Admin_Base {
     
-    /**
-     * 商品分类列表页
+     /**
+     * 当前控制器对应的主模型
+     * @var string
      */
-    public function action_index()
+    protected $_model = 'Cms_Category';
+    
+    // 当前的模型ID
+    protected $curr_model_id;
+    
+    /**
+     * do something before action
+     * @see Controller_Admin_Base::before()
+     */
+    public function before()
     {
-        try {
-            $categories = EHOVEL::model('Product_Category')->tree();
-            $attributesets = array();
-            if ($categories->count() > 0) {
-                $attributesets = EHOVEL::model('Product_AttributeSet')
-                    ->where('id', 'in', $categories->as_array('attributeset_id', 'attributeset_id'))
-                    ->find_all()
-                    ->as_array('id', 'name');
-            }
-            $this->template = EHOVEL::view('product/category/index', array(
-                'categories'    => $categories,
-                'attributesets' => $attributesets,
-            ));
-        } catch (Kohana_Exception $ex) {
-            Remind::factory($ex)
-                ->redirect(EHOVEL::url('index/index'))
-                ->send();
+        parent::before();
+        $session = Session::instance();
+        if ($set_model_id = $this->request->query("set_model_id")) {
+            $set_model_id = intval($set_model_id);
+            $session->set('default_model_id', $set_model_id);
+    
+            $params = $this->request->query();
+            unset($params["language"]);
+            unset($params["set_model_id"]);
+    
+            $this->redirect(URL::current(FALSE) . URL::query($params, FALSE));
         }
+    
+        $default_model_id = $session->get('default_model_id');
+        if (!$default_model_id) {
+            $first_model = EHOVEL::model('Cms_Model')->find();
+            if ($first_model->loaded()) {
+                $default_model_id = $first_model->id;
+                $session->set('default_model_id', $default_model_id);
+            }
+        }
+    
+        if ($default_model_id <= 0) {
+            $ex = new Exception(__("default_model_id missing"));
+    
+            Message::set($ex);
+        }
+    
+        $this->curr_model_id = $default_model_id;
     }
     
     /**
-     * 添加商品分类
+     * 模型分类列表
+     */
+    public function action_index()
+    {
+        $all_models = ORM::factory('Cms_Model')->find_all()->as_array();
+        $model = EHOVEL::model('Cms_Model', $this->curr_model_id);
+        $cms_categories = EHOVEL::model($this->_model, 1)->descendants();
+        
+        $this->template = EHOVEL::view('cms/category/index', array(
+            'all_models' => $all_models,
+            'model' => $model,
+            'cms_categories' => $cms_categories,
+        ));
+    }
+    
+    /**
+     * 添加模型分类
      */
     public function action_add()
     {
         try {
-            $category = EHOVEL::model('Product_Category');
-            if (!empty($_POST)) {
-                $category->name             = trim($this->request->post('name'));
-                $category->attributeset_id  = trim($this->request->post('attributeset_id'));
-                $category->url_key          = trim($this->request->post('url_key'));
-                $category->active           = trim($this->request->post('active')) === 'Y' ? 'Y' : 'N';
-                $category->image            = trim($this->request->post('image'));
-                $category->description      = $this->request->post('description');
-                $category->meta_title       = trim($this->request->post('meta_title'));
-                $category->meta_keywords    = trim($this->request->post('meta_keywords'));
-                $category->meta_description = trim($this->request->post('meta_description'));
-                
-                if($this->request->post('pid') == 1){
-                    $parent = EHOVEL::model('Product_Category')->root();
-                }else{
-                    $parent = EHOVEL::model('Product_Category', intval($this->request->post('pid')));
+            $model = EHOVEL::model('Cms_Model', $this->curr_model_id);
+            if (! $model->loaded()) {
+                throw new Exception_BES(__('Bad Request!'));
+            }
+            
+            if ($_POST) {
+                $name = $this->request->post('name');
+                $description = $this->request->post('description');
+                $pid= $this->request->post('pid');
+                //用户名不重复
+                if (empty($name) || !$this->_available_name($name)) {
+                    Remind::factory(Remind::TYPE_ERROR)
+                        ->message(__('Name cannot be repeated!'))
+                        ->redirect(EHOVEL::url('cms_category/add'))
+                        ->send();
+                }
+                $parent = EHOVEL::model($this->_model, $pid);
+                if(!$parent->loaded()){
+                    $root = EHOVEL::model($this->_model);
+                    $root->name = 'Root';
+                    $parent = $root->insert_as_new_root();
                 }
                 if ($parent->loaded()) {
-                    $category->insert_as_last_child($parent);
-                    if ($category->saved()) {
+                    $category_model = EHOVEL::model($this->_model);
+                    $category_model->name = $name;
+                    $category_model->description = $description;
+                    $category_model->model_id = $model->id;
+                    $category_model->insert_as_last_child($parent);
+
+                    if ($category_model->saved()) {
                         Remind::factory(Remind::TYPE_SUCCESS)
-                        ->message(__('Added Successfully'))
-                        ->send();
+                            ->message(__('Saved Successfully!'))
+                            ->redirect(EHOVEL::url('cms_category/index'))
+                            ->send();
                     } else {
                         Remind::factory(Remind::TYPE_ERROR)
-                        ->message($category->validation()->errors())
-                        ->redirect(EHOVEL::url('product_category/add'))
-                        ->send();
+                            ->message($category_model->validation()->errors())
+                            ->redirect(EHOVEL::url('cms_category/add'))
+                            ->send();
                     }
                 } else {
                     Remind::factory(Remind::TYPE_ERROR)
-                        ->message(__('Parent error'))
-                        ->redirect(EHOVEL::url('product_category/add'))
+                        ->message(__('Parent item Loading failed.'))
+                        ->redirect(EHOVEL::url('cms_category/add'))
                         ->send();
                 }
-            } else {
-                $categories    = EHOVEL::model('Product_Category')->tree(true);
-                $attributesets = EHOVEL::model('Product_AttributeSet')
-                    ->find_all()
-                    ->as_array('id', 'name');
-                $this->template = EHOVEL::view('product/category/form', array(
-                    'category'      => $category,
-                    'categories'    => $categories,
-                    'attributesets' => $attributesets,
-                ));
             }
-        } catch (Kohana_Exception $ex) {
-            Remind::factory($ex)
+            
+            $cms_categories = EHOVEL::model($this->_model, 1)->descendants();
+
+            $this->template = EHOVEL::view('cms/category/edit', array(
+                'model' => $model,
+                'cms_categories' => $cms_categories,
+            ));
+        } catch (Exception_BES $e) {
+            Remind::factory($e)
                 ->send();
         }
     }
     
     /**
-     * 编辑商品分类
+     * 编辑模型分类
      */
     public function action_edit()
     {
         try {
-            $category = EHOVEL::model('Product_Category', intval($this->request->query('id')));
-            if (!empty($_POST)) {
-                if($this->request->post('pid') == 1){
-                    $parent = EHOVEL::model('Product_Category')->root();
-                }else{
-                    $parent = EHOVEL::model('Product_Category', intval($this->request->post('pid')));
-                }
-                if (!$parent->loaded() OR $parent->pk() == $category->pk() OR $parent->is_descendant($category)) {
+            $model = EHOVEL::model('Cms_Model', $this->curr_model_id);
+            
+            $id = $this->request->query('id');
+            $category_model = EHOVEL::model($this->_model, $id);
+            if(!$category_model->loaded()){
+                Remind::factory(Remind::TYPE_ERROR)
+                    ->message(__('Bad Request!'))
+                    ->redirect(EHOVEL::url('cms_category/index'))
+                    ->send();
+            }
+            
+            if ($_POST) {
+                $name = $this->request->post('name');
+                $description = $this->request->post('description');
+                $pid = $this->request->post('pid');
+                //用户名不重复
+                if (empty($name) || !$this->_available_name($name, $id)) {
                     Remind::factory(Remind::TYPE_ERROR)
-                        ->message(__('Parent error'))
-                        ->redirect(EHOVEL::url('product_category/edit', array('id' => $category->pk())))
+                        ->message(__('Name cannot be repeated!'))
+                        ->redirect(EHOVEL::url('cms_category/edit',array('id'=>$id)))
                         ->send();
                 }
-                if ($category->pid != $parent->pk()) {
-                    $category->pid = $parent->pk();
-                    $category->move_to_last_child($parent);
-                    $category->reload();
-                }
-                
-                $category->name             = trim($this->request->post('name'));
-                $category->attributeset_id  = trim($this->request->post('attributeset_id'));
-                $category->url_key          = trim($this->request->post('url_key'));
-                $category->active           = trim($this->request->post('active')) === 'Y' ? 'Y' : 'N';
-                $category->image            = trim($this->request->post('image'));
-                $category->description      = $this->request->post('description');
-                $category->meta_title       = trim($this->request->post('meta_title'));
-                $category->meta_keywords    = trim($this->request->post('meta_keywords'));
-                $category->meta_description = trim($this->request->post('meta_description'));
-                $category->save();
-                if ($category->saved()) {
-                    Remind::factory(Remind::TYPE_SUCCESS)
-                    ->message(__('Edited Successfully'))
-                    ->send();
-                } else {
+                $parent = EHOVEL::model($this->_model, $pid);
+                if($parent->loaded()){
+                    if($parent->is_descendant($category_model)){
+                        throw new Exception_BES(__('Request error, try again'));
+                    }
+                    $current_parent = $category_model->parent();
+                    if ($current_parent->id != $parent->id) {
+                        $category_model->pid = $parent->id;
+                        $category_model->move_to_last_child($parent);
+                        $category_model->reload();
+                    }
+                    $category_model->name = $name;
+                    $category_model->description = $description;
+                    $category_model->model_id = $model->id;
+                    $category_model->save();
+                    if($category_model->saved()){
+                        Remind::factory(Remind::TYPE_SUCCESS)
+                            ->message(__('Edit Successfully!'))
+                            ->redirect(EHOVEL::url('cms_category/index'))
+                            ->send();
+                    }else{
+                        Remind::factory(Remind::TYPE_ERROR)
+                            ->message($category_model->validation()->errors())
+                            ->redirect(EHOVEL::url('cms_category/edit', array('id'=>$id)))
+                            ->send();
+                    }
+                }else{
                     Remind::factory(Remind::TYPE_ERROR)
-                    ->message($category->validation()->errors())
-                    ->redirect(EHOVEL::url('product_category/edit', array('id' => $category->pk())))
-                    ->send();
+                        ->message(__('Parent item Loading failed.'))
+                        ->redirect(EHOVEL::url('cms_category/edit', array('id'=>$id)))
+                        ->send();
                 }
-            } else {
-                $categories    = EHOVEL::model('Product_Category')->tree(true);
-                $attributesets = EHOVEL::model('Product_AttributeSet')
-                    ->find_all()
-                    ->as_array('id', 'name');
-                $this->template = EHOVEL::view('product/category/form', array(
-                    'category'      => $category,
-                    'categories'    => $categories,
-                    'attributesets' => $attributesets,
-                ));
             }
-        } catch (Kohana_Exception $ex) {
-            Remind::factory($ex)
+            $cms_categories = EHOVEL::model($this->_model, 1)->descendants()->as_array('id');
+            unset($cms_categories[$category_model->id]);
+
+            $this->template = EHOVEL::view('cms/category/edit', array(
+                'model' => $model,
+                'cms_categories' => $cms_categories,
+                'category' => $category_model,
+            ));
+        } catch(Exception_BES $e){
+            Remind::factory($e)
                 ->send();
         }
     }
     
     /**
-     * 删除商品分类
+     * 删除模型分类
      */
     public function action_delete()
     {
         try {
-            $category = EHOVEL::model('Product_Category', intval($this->request->query('id')));
-            if ($category->loaded()) {
-                $category->delete();
-                Remind::factory(Remind::TYPE_SUCCESS)
-                    ->message(__('Deleted Successfully'))
-                    ->send();
+            $id = $this->request->query('id');
+            $category_model = EHOVEL::model($this->_model, $id);
+            if ($category_model->loaded()) {
+                //该分类下有内容不能删除
+                if ($category_model->count_content()>0) {
+                    Remind::factory(Remind::TYPE_ERROR)
+                        ->message(__('Deleting failed, this category has content!'))
+                        ->redirect(EHOVEL::url('cms_category/index'))
+                        ->send();
+                } else if ($category_model->has_children()) {
+                    //该分类下有子分类不能删除
+                    Remind::factory(Remind::TYPE_ERROR)
+                        ->message(__('Deleting failed with child nodes!'))
+                        ->redirect(EHOVEL::url('cms_category/index'))
+                        ->send();
+                } else {
+                    $category_model->delete();
+                    Remind::factory(Remind::TYPE_SUCCESS)
+                        ->message(__('Delete Successfully!'))
+                        ->redirect(EHOVEL::url('cms_category/index'))
+                        ->send();
+                }
             } else {
-                throw new Kohana_Exception(__('Loading failed, try again'));
+                Remind::factory(Remind::TYPE_ERROR)
+                    ->message(__('Bad Request!'))
+                    ->redirect(EHOVEL::url('cms_category/index'))
+                    ->send();
             }
-            
-        } catch (Kohana_Exception $ex) {
-            Remind::factory($ex)
+        } catch (Exception_BES $e) {
+            Remind::factory($e)
                 ->send();
         }
     }
-    
+
     /**
-     * 检查分类名称是否重复
-     * 
+     * 验证分类名是否存在
      * @param string $name
-     * @param int $id
      * @return bool
      */
-    protected function _available_name($name, $id)
+    protected function _available_name($name, $id=0)
     {
-        $model = EHOVEL::model('Product_Category')
-            ->where('name', '=', $name);
-        if (!empty($id)) {
-            $model->where('id', '!=', $id);
+        $category_model = EHOVEL::model($this->_model);
+        $category_model->where('name', '=', $name);
+        if($id){
+            $category_model->where('id', '!=', $id);
         }
-        if(EHOVEL::get_site()){
-            $model->where('site_id', '=', EHOVEL::get_site());
-        }
-        return $model->count_all() > 0 ? FALSE : TRUE;
+        return $category_model->count_all()==0;
     }
     
+    
+
     /**
-     * 检查分类 URL 关键字是否重复
-     * 
-     * @param string $url_key
-     * @param int $id
-     * @return bool
+     * do something after action
+     * @see Controller_Admin_Base::before()
      */
-    protected function _available_url_key($url_key, $id)
+    public function after()
     {
-        $model = EHOVEL::model('Product_Category')
-            ->where('url_key', '=', $url_key);
-        if (!empty($id)) {
-            $model->where('id', '!=', $id);
-        }
-        if(EHOVEL::get_site()){
-            $model->where('site_id', '=', EHOVEL::get_site());
-        }
-        return $model->count_all() > 0 ? FALSE : TRUE;
+        parent::after();
     }
 }

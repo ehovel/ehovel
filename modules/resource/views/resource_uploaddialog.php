@@ -60,7 +60,8 @@
 	        $("#file_upload").uploadify({
 	        	'formData'     : {
 					'timestamp' : '<?php echo $timestamp;?>',
-					'token'     : '<?php echo md5('unique_salt' . $timestamp);?>'
+					'token'     : '<?php echo md5('unique_salt' . $timestamp);?>',
+					'session_id': '<?php echo Session::instance()->id();?>'
 				},
 	            //开启调试
 	            'debug' : false,

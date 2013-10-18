@@ -2,13 +2,6 @@
 // $Id$
 /**
  * 内容发布模型分类模型
- *
- * @package Cms
- * @category Model
- * @author zhubin
- * @version $Id$
- * @copyright Ketai, 2011
- * @since 2011-12-07
  */
 class Model_Category extends ORM_MPTT{
     

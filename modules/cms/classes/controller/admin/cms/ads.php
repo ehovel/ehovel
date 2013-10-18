@@ -25,18 +25,14 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
             'msg' => 'Not Implemented',
             'content' => array(),
         );
-        try {
-            $adsObj = EHOVEL::model('ads');
-            $ads = $adsObj->find_all();
-            
-            $this->template = EHOVEL::view ( 'ads/index' , array(
-                            'ads' => $ads,
-                            'types' => $this->types,
-                                        )               
-                            );
-        }catch ( Exception $ex ){
-            Message::set($ex);
-        }
+        $adsObj = EHOVEL::model('ads');
+        $ads = $adsObj->find_all();
+        
+        $this->template = EHOVEL::view ( 'cms/ads/index' , array(
+                'ads' => $ads,
+                'types' => $this->types,
+            )
+        );
     }
     
     /**
@@ -128,35 +124,31 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
             'msg' => 'Not Implemented',
             'content' => array(),
         );
-        try {
-            $id = intval ($this->request->param('id'));
-            $ads_detail = EHOVEL::model ( 'ads', intval ( $id ) );
-            if (!$ads_detail->loaded()) {
-                echo 'Load Failed';
-                exit;
-            }
-            if($_POST)
-            {
-                $ads_detail->type = $this->request->post ( 'ads_type' );
-                $ads_detail->modified = date('Y-m-d H:i:s');
-				$resource_ids = $this->request->post('resource_ids');
-                foreach ($resource_ids as $id) {
-                    $ads_content[] = array('banner'=>$id,'bannerurl'=>Helper_Resource::getLinkByResourceId($id));
-                }
-                $ads_detail->content = serialize($ads_content);
-                $ads_detail->save();
-                Message::set ( Message::SUCCESS,__ ( 'Edited Successfully!' ) );
-                $this->redirect ( EHOVEL::url ( 'cms_ads',array('id'=>$ads_detail->id)) );
-            }
-            $ads_detail->content = unserialize($ads_detail->content);
-            $this->template = EHOVEL::view ( 'ads/edit' , array(
-                                                            'types'=>$this->types,
-                                                            'id' => $id,
-                                                            'ads_detail'=>$ads_detail,
-            ));
-        }catch (Exception $ex ){
-            Message::set($ex);
+        $id = intval ($this->request->param('id'));
+        $ads_detail = EHOVEL::model ( 'ads', intval ( $id ) );
+        if (!$ads_detail->loaded()) {
+            echo 'Load Failed';
+            exit;
         }
+        if($_POST)
+        {
+            $ads_detail->type = $this->request->post ( 'ads_type' );
+            $ads_detail->modified = date('Y-m-d H:i:s');
+			$resource_ids = $this->request->post('resource_ids');
+            foreach ($resource_ids as $id) {
+                $ads_content[] = array('banner'=>$id,'bannerurl'=>Helper_Resource::getLinkByResourceId($id));
+            }
+            $ads_detail->content = serialize($ads_content);
+            $ads_detail->save();
+            Message::set ( Message::SUCCESS,__ ( 'Edited Successfully!' ) );
+            $this->redirect ( EHOVEL::url ( 'cms_ads',array('id'=>$ads_detail->id)) );
+        }
+        $ads_detail->content = unserialize($ads_detail->content);
+        $this->template = EHOVEL::view ( 'cms/ads/edit' , array(
+                                                        'types'=>$this->types,
+                                                        'id' => $id,
+                                                        'ads_detail'=>$ads_detail,
+        ));
     }
     
     /**
@@ -202,7 +194,7 @@ class Controller_Admin_Cms_Ads extends Controller_Admin_Base
         }
     }
     
-/**
+    /**
 	 * 检测广告名称是否存在
 	 */
 	public function public_check_ads($name,$id='') {

@@ -66,7 +66,7 @@ class ORM extends Kohana_ORM {
 	{
 		// Set class name
 		$model = 'Model_'.ucfirst($model);
-	
+
 		return new $model($id);
 	}
 	
@@ -82,10 +82,10 @@ class ORM extends Kohana_ORM {
 				case ORM::ALLOW_ALL:
 					break;
 				case ORM::ALLOW_ENABLED:
-					$this->where($this->_disabled_column, '=', '0');
+					$this->where($this->_disabled_column, '=', 'N');
 					break;
 				case ORM::ALLOW_DISABLED:
-					$this->where($this->_disabled_column, '=', '1');
+					$this->where($this->_disabled_column, '=', 'Y');
 					break;
 				default:
 			}
