@@ -234,14 +234,14 @@ class Controller_Admin_Resource extends Controller_Admin_Base
 		$pagination = Pagination::factory(
 			array(
 				'total_items' => $count,
-				'items_per_page' => 12,
+				'items_per_page' => 5,
 				'view' => 'pagination/floating',
 			)
 		);
 		$page = $this->request->query('page');
 		$page = $page?$page:1;
 		$resourceObject->order_by('date_add','DESC');
-		$resourceObject->offset(($page - 1) * 12);
+		$resourceObject->offset(($page - 1) * 5);
 		$resourceObject->limit(12);
 		$resources = $resourceObject->find_all()->as_array();
         

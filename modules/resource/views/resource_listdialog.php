@@ -42,7 +42,7 @@
                                     <td>
                                         <span class="file_pic">
                                         	<a class="ori_img" href="<?php echo $resource['is_storage']?Helper_Resource::get_img(array($resource['attach_id'],$resource['postfix']),'o'):$resource['link']; ?>">
-                                            	<img style="max-height:120px; max-width:120px" src="<?php echo $resource['is_storage']?Helper_Resource::get_img(array($resource['attach_id'],$resource['postfix'])):$resource['link']; ?>" alt="<?php echo $resource['name']; ?>" />
+                                            	<img style="max-height:60px; max-width:60px" src="<?php echo $resource['is_storage']?Helper_Resource::get_img(array($resource['attach_id'],$resource['postfix'])):$resource['link']; ?>" alt="<?php echo $resource['name']; ?>" />
                                             </a>
                                         </span> 
                                     </td>
@@ -62,16 +62,6 @@
             </div>
         </div>
         <?php } ?>
-        <div class="container">
-		    <div class="form-horizontal">
-                <div class="control-group">
-              	    <div class="controls">
-                  		<button type="submit" class="btn btn-primary" id="btnSubmit2">插入选中</button>
-           				<button type="button" class="btn" id="btnCancel2">取消</button>
-                  	</div>
-        	    </div>
-            </div>
-    	</div>
     </div>
     <script type="text/javascript">
         $(document).ready(function(){

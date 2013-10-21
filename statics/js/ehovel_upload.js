@@ -41,7 +41,7 @@
 	                        location.reload();
 	                        return false;
 	                    }
-	                    $('#btnSubmit1').click(function(){
+	                    $('#btnSubmit1').click(function(){alert('a');
 	                        var resource_data = [];
 	                        $('input[name^="resource_ids"]').each(function(){
 	                            resource_data.push({

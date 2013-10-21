@@ -9,7 +9,7 @@
 <div class="container">
     	<ul class="nav nav-tabs" id="myTab">
 			<li class="active"><a data-toggle="tab" href="#resource_local">本地上传</a></li>
-			<li><a data-toggle="tab" href="#resource_data">资源库选择</a></li>
+			<li><a data-toggle="tab" href="#resource_data_c">资源库选择</a></li>
 			<li><a data-toggle="tab" href="#resource_remote">网络资源</a></li>
 		</ul>
 		<div class="tab-content" id="myTabContent">
@@ -44,8 +44,18 @@
 			    	</div>
 		    	</div>
 			</div>
-			<div class="tab-pane fade" id="resource_data">
-				<?php //echo $resourceList;?>
+			<div class="tab-pane fade" id="resource_data_c">
+			    <div id="resource_data"><?php echo $resourceList;?></div>
+				<div class="container">
+        		    <div class="form-horizontal">
+                        <div class="control-group">
+                      	    <div class="controls">
+                          		<button type="submit" class="btn btn-primary" id="btnSubmit2">插入选中</button>
+                   				<button type="button" class="btn" id="btnCancel2">取消</button>
+                          	</div>
+                	    </div>
+                    </div>
+            	</div>
 			</div>
 			<div class="tab-pane fade" id="resource_remote">
 				网络资源

@@ -24,7 +24,6 @@
 						<li><a href="#publishing" data-toggle="tab"><?php echo __('发布信息');?></a></li>
 						<li><a href="#piclist" data-toggle="tab"><?php echo __('图片信息');?></a></li>
 						<li><a href="#metadata" data-toggle="tab"><?php echo __('SEO相关');?></a></li>
-						<li><a href="#permissions" data-toggle="tab"><?php echo __('权限设置');?></a></li>
 					</ul>
 					<div class="tab-content">
 						<!-- Begin Tabs -->
@@ -67,9 +66,7 @@
 												for="eform_images_image_intro_caption"
 												class="hasTip control-label" title="标题::图片的标题"><?php echo __('Position');?></label>
 											<div class="controls">
-												<input type="text" name="eform[position]" id="position"
-													class="tiny digits" maxlength="255"
-													value="<?php echo !empty($content) ? $content->position : 0;?>" />
+												<input type="text" name="eform[position]" id="position" class="tiny digits" maxlength="255" value="<?php echo !empty($content) ? $content->position : 0;?>" />
 											</div>
 										</div>
 								</div>
@@ -79,12 +76,9 @@
 							<div class="row-fluid">
 								<div class="span6">
 									<div class="control-group">
-										<label id="eform_alias-lbl" for="eform_alias"
-											class="hasTip control-label"
-											title="别名::别名将被用于搜索引擎友好链接（SEF URL）。留空则从根据标题中填写一个默认值，此值将取决于搜索引擎优化设置（全局设置-&gt;网站）。 &lt;br /&gt;使用Unicode别名将产生 UTF-8 的链接。 您也可以手动输入任何UTF-8字符。空格和一些被禁止使用的字符将被更改为连字符（-）。&lt;br /&gt;在使用默认直译的时候，生成的小写字母组成的别名，并且空格将会被小写的连字符（-）代替。您可以手动输入别名，使用小写字母和连字符（-）。 不允许使用空格和下划线（ _ ）。如果标题输入的是非拉丁字母时，默认值由发表日期和时间组成。">别名</label>
+										<label id="eform_alias-lbl" for="eform_alias" class="hasTip control-label" title="别名::别名将被用于搜索引擎友好链接（SEF URL）。">别名</label>
 										<div class="controls">
-											<input type="text" name="eform[alias]" id="eform_alias"
-												value="<?php echo $content->alias;?>" class="inputbox" size="45" />
+											<input type="text" name="eform[alias]" id="eform_alias" value="<?php echo $content->alias;?>" class="inputbox" size="45" />
 										</div>
 									</div>
 									<div class="control-group">
@@ -210,36 +204,40 @@
 									<i class="icon-picture"></i>选择图片
 								</a>
 							</div>
+							<?php foreach ($content->images as $imgId) {?>
 							<div class="choose_pics">
 		                        <div class="pic">
 		                            <div class="pic">
 		                                <div class="pic_inner img120">
-		                                    <img alt="" src="/statics/img/no_image_available.png" id="upload_pic" style="max-height:120px; max-width:120px">
+		                                    <img alt="" src="<?php echo Helper_Resource::getLinkByResourceId($imgId)?>" id="upload_pic" style="max-height:120px; max-width:120px">
 		                                </div>
 		                            </div>
 		                            <ul class="inline">
 									  <li><a onclick="removepic(this)" href="javascript:;"><i class="icon-remove"></i></a></li>
 									</ul>
-		                            <input type="hidden" value="5467" name="eform[attachs][]"> 
-	                            </div> 
+	                            </div>
+	                            <input type="hidden" name="eform[resource_ids][]" value="<?php echo $imgId?>" />
 	                        </div>
+	                        <?php }?>
 						</div>
 	
 						<div class="tab-pane" id="metadata">
-								<div class="control-group">
-									<label id="eform_metadesc-lbl" for="eform_metadesc" class="hasTip control-label" title="简介::可选。该段文字用于在页面HTML中的description标签。description标签常常被搜索引擎用于搜索结果中。">简介</label>
+						        <div class="control-group">
+									<label id="eform_metadesc-lbl" for="eform_metadesc" class="hasTip control-label" title="title">T</label>
 									<div class="controls">
-										<textarea name="eform[metadesc]" id="eform_metadesc" cols="30"
-											rows="3" class="inputbox"></textarea>
+										<input type="text" name="eform[seo_title]" id="eform_metadesc" value="<?php echo $content->seo_title?>" class="inputbox input-xxlarge" />
 									</div>
 								</div>
 								<div class="control-group">
-									<label id="eform_metakey-lbl" for="eform_metakey"
-										class="hasTip control-label"
-										title="关键词::可选。逗号分隔的关键词、短语用于HTML输出。">关键词</label>
+									<label id="eform_metadesc-lbl" for="eform_metadesc" class="hasTip control-label" title="keywords">K</label>
 									<div class="controls">
-										<textarea name="eform[metakey]" id="eform_metakey" cols="30"
-											rows="3" class="inputbox"></textarea>
+										<textarea name="eform[seo_keywords]" id="eform_metadesc" cols="30" rows="3" class="inputbox input-xxlarge"><?php echo $content->seo_keywords?></textarea>
+									</div>
+								</div>
+								<div class="control-group">
+									<label id="eform_metakey-lbl" for="eform_metakey" class="hasTip control-label" title="关键词::可选。逗号分隔的关键词、短语用于HTML输出。">D</label>
+									<div class="controls">
+										<textarea name="eform[seo_description]" id="eform_metakey" cols="30" rows="3" class="inputbox input-xxlarge"><?php echo $content->seo_description?></textarea>
 									</div>
 								</div>
 								<div class="control-group">
@@ -247,8 +245,7 @@
 										for="eform_metadata_robots" class="hasTip control-label"
 										title="机器人::机器人说明">机器人</label>
 									<div class="controls">
-										<select id="eform_metadata_robots"
-											name="eform[metadata][robots]">
+										<select id="eform_metadata_robots" name="eform[metadata][robots]">
 											<option value="" selected="selected">使用全局设置</option>
 											<option value="index, follow">Index,Follow</option>
 											<option value="noindex, follow">No index,follow</option>
@@ -286,626 +283,6 @@
 									</div>
 								</div>
 						</div>
-	
-						<div class="tab-pane" id="permissions">
-							<fieldset>
-								<p class="rule-desc">管理此用户组的权限设置。</p>
-								<div id="permissions-sliders" class="tabbable tabs-left">
-									<ul class="nav nav-tabs">
-										<li class="active"><a href="#permission-1" data-toggle="tab">
-												Public </a></li>
-										<li class=""><a href="#permission-9" data-toggle="tab"> <span
-												class="level">&ndash;</i> Guest </a></li>
-										<li class=""><a href="#permission-6" data-toggle="tab"> <span
-												class="level">&ndash;</i> Manager </a></li>
-										<li class=""><a href="#permission-7" data-toggle="tab"> <span
-												class="level">&ndash;</i> <span class="level">&ndash;</i>
-														Administrator </a></li>
-										<li class=""><a href="#permission-2" data-toggle="tab"> <span
-												class="level">&ndash;</i> Registered </a></li>
-										<li class=""><a href="#permission-3" data-toggle="tab"> <span
-												class="level">&ndash;</i> <span class="level">&ndash;</i>
-														Author </a></li>
-										<li class=""><a href="#permission-4" data-toggle="tab"> <span
-												class="level">&ndash;</i> <span class="level">&ndash;</i> <span
-														class="level">&ndash;</i> Editor </a></li>
-										<li class=""><a href="#permission-5" data-toggle="tab"> <span
-												class="level">&ndash;</i> <span class="level">&ndash;</i> <span
-														class="level">&ndash;</i> <span class="level">&ndash;</i>
-																Publisher </a></li>
-										<li class=""><a href="#permission-8" data-toggle="tab"> <span
-												class="level">&ndash;</i> Super Users </a></li>
-									</ul>
-									<div class="tab-content">
-										<div class="tab-pane active" id="permission-1">
-											<table class="table table-striped">
-												<thead>
-													<tr>
-														<th class="actions" id="actions-th1"><span
-															class="acl-action">操作</span></th>
-														<th class="settings" id="settings-th1"><span
-															class="acl-action">选择新设置<sup>1</sup></span></th>
-														<th id="aclactionth1"><span class="acl-action">计算出的实际设置<sup>2</sup></span>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td headers="actions-th1"><label class="tip"
-															for="eform_rules_core.delete_1"
-															title="删除任何内容 该文章的&lt;strong&gt;删除功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																删除任何内容 </label></td>
-														<td headers="settings-th1"><select class="input-small"
-															name="eform[rules][core.delete][1]"
-															id="eform_rules_core.delete_1"
-															title="允许或拒绝删除任何内容，对于 Public 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth1"><span
-															class="label label-important">不允许</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th1"><label class="tip"
-															for="eform_rules_core.edit_1"
-															title="编辑任何内容 该文章的&lt;strong&gt;编辑功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																编辑任何内容 </label></td>
-														<td headers="settings-th1"><select class="input-small"
-															name="eform[rules][core.edit][1]"
-															id="eform_rules_core.edit_1"
-															title="允许或拒绝编辑任何内容，对于 Public 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth1"><span
-															class="label label-important">不允许</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th1"><label class="tip"
-															for="eform_rules_core.edit.state_1"
-															title="修改任何内容的状态 该文章的&lt;strong&gt;修改状态&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																修改任何内容的状态 </label></td>
-														<td headers="settings-th1"><select class="input-small"
-															name="eform[rules][core.edit.state][1]"
-															id="eform_rules_core.edit.state_1"
-															title="允许或拒绝修改任何内容的状态，对于 Public 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth1"><span
-															class="label label-important">不允许</span></td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<div class="tab-pane" id="permission-9">
-											<table class="table table-striped">
-												<thead>
-													<tr>
-														<th class="actions" id="actions-th9"><span
-															class="acl-action">操作</span></th>
-														<th class="settings" id="settings-th9"><span
-															class="acl-action">选择新设置<sup>1</sup></span></th>
-														<th id="aclactionth9"><span class="acl-action">计算出的实际设置<sup>2</sup></span>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td headers="actions-th9"><label class="tip"
-															for="eform_rules_core.delete_9"
-															title="删除任何内容 该文章的&lt;strong&gt;删除功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																删除任何内容 </label></td>
-														<td headers="settings-th9"><select class="input-small"
-															name="eform[rules][core.delete][9]"
-															id="eform_rules_core.delete_9"
-															title="允许或拒绝删除任何内容，对于 Guest 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth9"><span
-															class="label label-important">不允许</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th9"><label class="tip"
-															for="eform_rules_core.edit_9"
-															title="编辑任何内容 该文章的&lt;strong&gt;编辑功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																编辑任何内容 </label></td>
-														<td headers="settings-th9"><select class="input-small"
-															name="eform[rules][core.edit][9]"
-															id="eform_rules_core.edit_9"
-															title="允许或拒绝编辑任何内容，对于 Guest 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth9"><span
-															class="label label-important">不允许</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th9"><label class="tip"
-															for="eform_rules_core.edit.state_9"
-															title="修改任何内容的状态 该文章的&lt;strong&gt;修改状态&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																修改任何内容的状态 </label></td>
-														<td headers="settings-th9"><select class="input-small"
-															name="eform[rules][core.edit.state][9]"
-															id="eform_rules_core.edit.state_9"
-															title="允许或拒绝修改任何内容的状态，对于 Guest 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth9"><span
-															class="label label-important">不允许</span></td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<div class="tab-pane" id="permission-6">
-											<table class="table table-striped">
-												<thead>
-													<tr>
-														<th class="actions" id="actions-th6"><span
-															class="acl-action">操作</span></th>
-														<th class="settings" id="settings-th6"><span
-															class="acl-action">选择新设置<sup>1</sup></span></th>
-														<th id="aclactionth6"><span class="acl-action">计算出的实际设置<sup>2</sup></span>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td headers="actions-th6"><label class="tip"
-															for="eform_rules_core.delete_6"
-															title="删除任何内容 该文章的&lt;strong&gt;删除功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																删除任何内容 </label></td>
-														<td headers="settings-th6"><select class="input-small"
-															name="eform[rules][core.delete][6]"
-															id="eform_rules_core.delete_6"
-															title="允许或拒绝删除任何内容，对于 Manager 用户组里的用户">
-																<option value="">继承</option>
-																<option value="1" selected="selected">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth6"><span
-															class="label label-success">允许</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th6"><label class="tip"
-															for="eform_rules_core.edit_6"
-															title="编辑任何内容 该文章的&lt;strong&gt;编辑功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																编辑任何内容 </label></td>
-														<td headers="settings-th6"><select class="input-small"
-															name="eform[rules][core.edit][6]"
-															id="eform_rules_core.edit_6"
-															title="允许或拒绝编辑任何内容，对于 Manager 用户组里的用户">
-																<option value="">继承</option>
-																<option value="1" selected="selected">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth6"><span
-															class="label label-success">允许</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th6"><label class="tip"
-															for="eform_rules_core.edit.state_6"
-															title="修改任何内容的状态 该文章的&lt;strong&gt;修改状态&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																修改任何内容的状态 </label></td>
-														<td headers="settings-th6"><select class="input-small"
-															name="eform[rules][core.edit.state][6]"
-															id="eform_rules_core.edit.state_6"
-															title="允许或拒绝修改任何内容的状态，对于 Manager 用户组里的用户">
-																<option value="">继承</option>
-																<option value="1" selected="selected">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth6"><span
-															class="label label-success">允许</span></td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<div class="tab-pane" id="permission-7">
-											<table class="table table-striped">
-												<thead>
-													<tr>
-														<th class="actions" id="actions-th7"><span
-															class="acl-action">操作</span></th>
-														<th class="settings" id="settings-th7"><span
-															class="acl-action">选择新设置<sup>1</sup></span></th>
-														<th id="aclactionth7"><span class="acl-action">计算出的实际设置<sup>2</sup></span>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td headers="actions-th7"><label class="tip"
-															for="eform_rules_core.delete_7"
-															title="删除任何内容 该文章的&lt;strong&gt;删除功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																删除任何内容 </label></td>
-														<td headers="settings-th7"><select class="input-small"
-															name="eform[rules][core.delete][7]"
-															id="eform_rules_core.delete_7"
-															title="允许或拒绝删除任何内容，对于 Administrator 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth7"><span
-															class="label label-success">允许</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th7"><label class="tip"
-															for="eform_rules_core.edit_7"
-															title="编辑任何内容 该文章的&lt;strong&gt;编辑功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																编辑任何内容 </label></td>
-														<td headers="settings-th7"><select class="input-small"
-															name="eform[rules][core.edit][7]"
-															id="eform_rules_core.edit_7"
-															title="允许或拒绝编辑任何内容，对于 Administrator 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth7"><span
-															class="label label-success">允许</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th7"><label class="tip"
-															for="eform_rules_core.edit.state_7"
-															title="修改任何内容的状态 该文章的&lt;strong&gt;修改状态&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																修改任何内容的状态 </label></td>
-														<td headers="settings-th7"><select class="input-small"
-															name="eform[rules][core.edit.state][7]"
-															id="eform_rules_core.edit.state_7"
-															title="允许或拒绝修改任何内容的状态，对于 Administrator 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth7"><span
-															class="label label-success">允许</span></td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<div class="tab-pane" id="permission-2">
-											<table class="table table-striped">
-												<thead>
-													<tr>
-														<th class="actions" id="actions-th2"><span
-															class="acl-action">操作</span></th>
-														<th class="settings" id="settings-th2"><span
-															class="acl-action">选择新设置<sup>1</sup></span></th>
-														<th id="aclactionth2"><span class="acl-action">计算出的实际设置<sup>2</sup></span>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td headers="actions-th2"><label class="tip"
-															for="eform_rules_core.delete_2"
-															title="删除任何内容 该文章的&lt;strong&gt;删除功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																删除任何内容 </label></td>
-														<td headers="settings-th2"><select class="input-small"
-															name="eform[rules][core.delete][2]"
-															id="eform_rules_core.delete_2"
-															title="允许或拒绝删除任何内容，对于 Registered 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth2"><span
-															class="label label-important">不允许</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th2"><label class="tip"
-															for="eform_rules_core.edit_2"
-															title="编辑任何内容 该文章的&lt;strong&gt;编辑功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																编辑任何内容 </label></td>
-														<td headers="settings-th2"><select class="input-small"
-															name="eform[rules][core.edit][2]"
-															id="eform_rules_core.edit_2"
-															title="允许或拒绝编辑任何内容，对于 Registered 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth2"><span
-															class="label label-important">不允许</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th2"><label class="tip"
-															for="eform_rules_core.edit.state_2"
-															title="修改任何内容的状态 该文章的&lt;strong&gt;修改状态&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																修改任何内容的状态 </label></td>
-														<td headers="settings-th2"><select class="input-small"
-															name="eform[rules][core.edit.state][2]"
-															id="eform_rules_core.edit.state_2"
-															title="允许或拒绝修改任何内容的状态，对于 Registered 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth2"><span
-															class="label label-important">不允许</span></td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<div class="tab-pane" id="permission-3">
-											<table class="table table-striped">
-												<thead>
-													<tr>
-														<th class="actions" id="actions-th3"><span
-															class="acl-action">操作</span></th>
-														<th class="settings" id="settings-th3"><span
-															class="acl-action">选择新设置<sup>1</sup></span></th>
-														<th id="aclactionth3"><span class="acl-action">计算出的实际设置<sup>2</sup></span>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td headers="actions-th3"><label class="tip"
-															for="eform_rules_core.delete_3"
-															title="删除任何内容 该文章的&lt;strong&gt;删除功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																删除任何内容 </label></td>
-														<td headers="settings-th3"><select class="input-small"
-															name="eform[rules][core.delete][3]"
-															id="eform_rules_core.delete_3"
-															title="允许或拒绝删除任何内容，对于 Author 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth3"><span
-															class="label label-important">不允许</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th3"><label class="tip"
-															for="eform_rules_core.edit_3"
-															title="编辑任何内容 该文章的&lt;strong&gt;编辑功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																编辑任何内容 </label></td>
-														<td headers="settings-th3"><select class="input-small"
-															name="eform[rules][core.edit][3]"
-															id="eform_rules_core.edit_3"
-															title="允许或拒绝编辑任何内容，对于 Author 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth3"><span
-															class="label label-important">不允许</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th3"><label class="tip"
-															for="eform_rules_core.edit.state_3"
-															title="修改任何内容的状态 该文章的&lt;strong&gt;修改状态&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																修改任何内容的状态 </label></td>
-														<td headers="settings-th3"><select class="input-small"
-															name="eform[rules][core.edit.state][3]"
-															id="eform_rules_core.edit.state_3"
-															title="允许或拒绝修改任何内容的状态，对于 Author 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth3"><span
-															class="label label-important">不允许</span></td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<div class="tab-pane" id="permission-4">
-											<table class="table table-striped">
-												<thead>
-													<tr>
-														<th class="actions" id="actions-th4"><span
-															class="acl-action">操作</span></th>
-														<th class="settings" id="settings-th4"><span
-															class="acl-action">选择新设置<sup>1</sup></span></th>
-														<th id="aclactionth4"><span class="acl-action">计算出的实际设置<sup>2</sup></span>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td headers="actions-th4"><label class="tip"
-															for="eform_rules_core.delete_4"
-															title="删除任何内容 该文章的&lt;strong&gt;删除功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																删除任何内容 </label></td>
-														<td headers="settings-th4"><select class="input-small"
-															name="eform[rules][core.delete][4]"
-															id="eform_rules_core.delete_4"
-															title="允许或拒绝删除任何内容，对于 Editor 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth4"><span
-															class="label label-important">不允许</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th4"><label class="tip"
-															for="eform_rules_core.edit_4"
-															title="编辑任何内容 该文章的&lt;strong&gt;编辑功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																编辑任何内容 </label></td>
-														<td headers="settings-th4"><select class="input-small"
-															name="eform[rules][core.edit][4]"
-															id="eform_rules_core.edit_4"
-															title="允许或拒绝编辑任何内容，对于 Editor 用户组里的用户">
-																<option value="">继承</option>
-																<option value="1" selected="selected">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth4"><span
-															class="label label-success">允许</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th4"><label class="tip"
-															for="eform_rules_core.edit.state_4"
-															title="修改任何内容的状态 该文章的&lt;strong&gt;修改状态&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																修改任何内容的状态 </label></td>
-														<td headers="settings-th4"><select class="input-small"
-															name="eform[rules][core.edit.state][4]"
-															id="eform_rules_core.edit.state_4"
-															title="允许或拒绝修改任何内容的状态，对于 Editor 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth4"><span
-															class="label label-important">不允许</span></td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<div class="tab-pane" id="permission-5">
-											<table class="table table-striped">
-												<thead>
-													<tr>
-														<th class="actions" id="actions-th5"><span
-															class="acl-action">操作</span></th>
-														<th class="settings" id="settings-th5"><span
-															class="acl-action">选择新设置<sup>1</sup></span></th>
-														<th id="aclactionth5"><span class="acl-action">计算出的实际设置<sup>2</sup></span>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td headers="actions-th5"><label class="tip"
-															for="eform_rules_core.delete_5"
-															title="删除任何内容 该文章的&lt;strong&gt;删除功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																删除任何内容 </label></td>
-														<td headers="settings-th5"><select class="input-small"
-															name="eform[rules][core.delete][5]"
-															id="eform_rules_core.delete_5"
-															title="允许或拒绝删除任何内容，对于 Publisher 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth5"><span
-															class="label label-important">不允许</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th5"><label class="tip"
-															for="eform_rules_core.edit_5"
-															title="编辑任何内容 该文章的&lt;strong&gt;编辑功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																编辑任何内容 </label></td>
-														<td headers="settings-th5"><select class="input-small"
-															name="eform[rules][core.edit][5]"
-															id="eform_rules_core.edit_5"
-															title="允许或拒绝编辑任何内容，对于 Publisher 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth5"><span
-															class="label label-success">允许</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th5"><label class="tip"
-															for="eform_rules_core.edit.state_5"
-															title="修改任何内容的状态 该文章的&lt;strong&gt;修改状态&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																修改任何内容的状态 </label></td>
-														<td headers="settings-th5"><select class="input-small"
-															name="eform[rules][core.edit.state][5]"
-															id="eform_rules_core.edit.state_5"
-															title="允许或拒绝修改任何内容的状态，对于 Publisher 用户组里的用户">
-																<option value="">继承</option>
-																<option value="1" selected="selected">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth5"><span
-															class="label label-success">允许</span></td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<div class="tab-pane" id="permission-8">
-											<table class="table table-striped">
-												<thead>
-													<tr>
-														<th class="actions" id="actions-th8"><span
-															class="acl-action">操作</span></th>
-														<th class="settings" id="settings-th8"><span
-															class="acl-action">选择新设置<sup>1</sup></span></th>
-														<th id="aclactionth8"><span class="acl-action">计算出的实际设置<sup>2</sup></span>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td headers="actions-th8"><label class="tip"
-															for="eform_rules_core.delete_8"
-															title="删除任何内容 该文章的&lt;strong&gt;删除功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																删除任何内容 </label></td>
-														<td headers="settings-th8"><select class="input-small"
-															name="eform[rules][core.delete][8]"
-															id="eform_rules_core.delete_8"
-															title="允许或拒绝删除任何内容，对于 Super Users 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth8"><span
-															class="label label-success"><i
-																class="icon-lock icon-white"></i> 允许（超级管理）</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th8"><label class="tip"
-															for="eform_rules_core.edit_8"
-															title="编辑任何内容 该文章的&lt;strong&gt;编辑功能&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																编辑任何内容 </label></td>
-														<td headers="settings-th8"><select class="input-small"
-															name="eform[rules][core.edit][8]"
-															id="eform_rules_core.edit_8"
-															title="允许或拒绝编辑任何内容，对于 Super Users 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth8"><span
-															class="label label-success"><i
-																class="icon-lock icon-white"></i> 允许（超级管理）</span></td>
-													</tr>
-													<tr>
-														<td headers="actions-th8"><label class="tip"
-															for="eform_rules_core.edit.state_8"
-															title="修改任何内容的状态 该文章的&lt;strong&gt;修改状态&lt;/strong&gt;的权限设置和基于父级分类和用户组权限计算出来的权限。">
-																修改任何内容的状态 </label></td>
-														<td headers="settings-th8"><select class="input-small"
-															name="eform[rules][core.edit.state][8]"
-															id="eform_rules_core.edit.state_8"
-															title="允许或拒绝修改任何内容的状态，对于 Super Users 用户组里的用户">
-																<option value="" selected="selected">继承</option>
-																<option value="1">允许</option>
-																<option value="0">拒绝</option>
-														</select>&#160;</td>
-														<td headers="aclactionth8"><span
-															class="label label-success"><i
-																class="icon-lock icon-white"></i> 允许（超级管理）</span></td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-								<div class="alert">
-									如果你改变了设置，它将应用于这篇文章。注意：<br />
-									<strong>继承</strong>的意思是将会使用从全局设置、上级用户组和分类继承来的权限。<br />
-									<strong>拒绝</strong>的意思是不管全局设置、上级用户组或分类的设置，正在编辑的用户组不能操作这篇文章。<br />
-									<strong>允许</strong>的意思是正在编辑的用户组可以操作这篇文章（如果这与全局设置、上级用户组或分类冲突，它不会有任何影响；冲突将会根据计算出来的设置被标记为“不允许（锁定）”）。<br />2、如果你选择一个新的设置，点击<strong>保存</strong>以刷新设置。
-								</div>
-							</fieldset>
-						</div>
 						<!-- End Tabs -->
 					</div>
 				</div>
@@ -935,7 +312,7 @@ function showresourcedialog() {
 				h += '<img alt="" src="'+ server_data[i]['url'] +'" style="max-height:120px; max-width:120px">';
 				h += '</div>';
 				h += '<ul class="inline"><li><a onclick="removepic(this)" href="javascript:;"><i class="icon-remove"></i></a></li></ul>';
-				h += '<input type="hidden" value="'+ server_data[i]['id'] +'" name="eform[\'resource_ids\'][]"></div></div>';
+				h += '<input type="hidden" value="'+ server_data[i]['id'] +'" name="eform[resource_ids][]"></div></div>';
 				h = $(h);
 				$('#piclist').append(h);
 			}

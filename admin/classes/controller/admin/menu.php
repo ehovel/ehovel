@@ -78,45 +78,41 @@ class Controller_Admin_Menu extends Controller_Admin_Base {
      */
     public function action_edit()
     {
-        try{
-            $id = $this->request->param('id');
-            $current_menu = EHOVEL::model($this->_model, $id);
-            if(!$current_menu->loaded()){
-                Message::set(Message::SUCCESS, __('加载失败'));
-                
-            }
-            if($_POST){
-                $pid = $this->request->post('pid');
-                if($pid != 0){
-                    $parent_menu = EHOVEL::model($this->_model, $pid);
-                    if(!$parent_menu->loaded()){
-                        throw new Kohana_Exception(__('Parent item Loading failed.'));
-                    }
-                }
-                $current_menu->pid = $pid;
-                $current_menu->name = trim($this->request->post('name'));
-                $current_menu->title = trim($this->request->post('title'));
-                $current_menu->uri= trim($this->request->post('uri'));
-                $current_menu->position= trim($this->request->post('position'));
-                $current_menu->is_show = trim($this->request->post('is_show'));
-                $current_menu->save($current_menu->validation());
-                if($current_menu->saved()){
-                    Message::set(Message::SUCCESS,__('Edited Successfully!'));
-                    $this->redirect(EHOVEL::url('menu/index'));
-                }else{
-                    Message::set(Message::ERROR,json_encode($current_menu->validation()->errors()));
-                    $this->redirect(EHOVEL::url('menu/edit', array('id'=>$id)));
-                }
-            }
-            $menus = EHOVEL::model($this->_model)->get_all_menus();
-            $this->template = EHOVEL::view('menu/edit',array(
-                'menus' => $menus,
-                'current_menu' => $current_menu,
-                'nodes' => Helper_Auth::get_current(),
-            ));
-        }catch(Kohana_Exception $ex){
-            Message::set($ex);
+        $id = $this->request->param('id');
+        $current_menu = EHOVEL::model($this->_model, $id);
+        if(!$current_menu->loaded()){
+            Message::set(Message::SUCCESS, __('加载失败'));
+            
         }
+        if($_POST){
+            $pid = $this->request->post('pid');
+            if($pid != 0){
+                $parent_menu = EHOVEL::model($this->_model, $pid);
+                if(!$parent_menu->loaded()){
+                    throw new Kohana_Exception(__('Parent item Loading failed.'));
+                }
+            }
+            $current_menu->pid = $pid;
+            $current_menu->name = trim($this->request->post('name'));
+            $current_menu->title = trim($this->request->post('title'));
+            $current_menu->uri= trim($this->request->post('uri'));
+            $current_menu->position= trim($this->request->post('position'));
+            $current_menu->is_show = trim($this->request->post('is_show'));
+            $current_menu->save($current_menu->validation());
+            if($current_menu->saved()){
+                Message::set(Message::SUCCESS,__('Edited Successfully!'));
+                $this->redirect(EHOVEL::url('menu/index'));
+            }else{
+                Message::set(Message::ERROR,json_encode($current_menu->validation()->errors()));
+                $this->redirect(EHOVEL::url('menu/edit', array('id'=>$id)));
+            }
+        }
+        $menus = EHOVEL::model($this->_model)->get_all_menus();
+        $this->template = EHOVEL::view('menu/edit',array(
+            'menus' => $menus,
+            'current_menu' => $current_menu,
+            'nodes' => Helper_Auth::get_current(),
+        ));
     }
     /**
      * 菜单删除

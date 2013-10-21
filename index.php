@@ -1,6 +1,7 @@
 <?php
 //xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);
 // xhprof_enable();
+error_reporting(E_ALL);
 /**
  * The directory in which your application specific resources are located.
  * The application directory must contain the bootstrap.php file.

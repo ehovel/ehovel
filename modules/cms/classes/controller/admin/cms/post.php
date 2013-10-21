@@ -72,9 +72,14 @@ class Controller_Admin_Cms_Post extends Controller_Admin_Base {
                 }
             	$eformData = $this->_prepareData($content);
             	//图片信息
-            	if ($resourceIds = $eformData['resource_ids']) {
+            	$resourceIds = isset($eformData['resource_ids']) ? $eformData['resource_ids'] : '';
+            	if ($resourceIds) {
             	     $attachs_str = implode(',', $resourceIds);
                      $content->images = $attachs_str;
+            	}
+            	$metaData = isset($eformData['metadata']) ? $eformData['metadata'] : '';
+            	if ($metaData) {
+            	    $content->seo_metadata = serialize($metaData);
             	}
             	$content->save();
                 if ($content->saved()) {
@@ -96,6 +101,8 @@ class Controller_Admin_Cms_Post extends Controller_Admin_Base {
                 $toolBarhelper->appendButton('copy','保存为副本','content.save2copy');
                 $toolBarhelper->appendButton('undo','取消','content.cancel');
                 $this->toolBar =  $toolBarhelper->render();
+                $content->images = explode(',', $content->images);
+                
                 
                 $this->template = EHOVEL::view('cms/post/editform', array(
                 	    'content'       => $content
